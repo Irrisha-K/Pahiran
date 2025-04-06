@@ -1,3 +1,190 @@
-.file {
-  font-size: 10rem;
+.homepage {
+  font-family: "Raleway", sans-serif;
+  background-color: #fdfdfd;
+  color: #333;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  text-align: center;
+  background: url("/images/hero.jpg") no-repeat center center/cover;
+  padding: 0 20px;
+  color: white;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  max-width: 600px;
+}
+
+.hero button {
+  background-color: #e91e63;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.hero button:hover {
+  background-color: #d81b60;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 60px 20px;
+  background-color: #fff;
+}
+
+.category-card {
+  background-color: #fefefe;
+  border-radius: 20px;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+}
+
+.category-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.category-card h3 {
+  padding: 15px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.featured-collection {
+  padding: 60px 20px;
+  background-color: #f8f8f8;
+  text-align: center;
+}
+
+.featured-collection h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+.featured-items {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.featured-card {
+  background-color: #fff;
+  border-radius: 15px;
+  width: 250px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.featured-card:hover {
+  transform: translateY(-8px);
+}
+
+.featured-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.featured-card h4,
+.featured-card p {
+  padding: 10px 15px;
+}
+
+.testimonials {
+  padding: 60px 20px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.testimonials h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+.testimonial-items {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.testimonial-card {
+  max-width: 300px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fafafa;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  text-align: left;
+}
+
+.newsletter {
+  background-color: #e91e63;
+  color: white;
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.newsletter h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.newsletter form {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.newsletter input[type="email"] {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 300px;
+  font-size: 1rem;
+}
+
+.newsletter button {
+  padding: 10px 20px;
+  border: none;
+  background-color: white;
+  color: #e91e63;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.newsletter button:hover {
+  background-color: #f1f1f1;
 }
