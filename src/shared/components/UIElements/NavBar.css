@@ -17,7 +17,10 @@
   position: fixed;
   top: 0;
   left: 0;
-  background: transparent;
+  /* background: transparent; */
+  background: rgba(0, 0, 0, 0.7); /* or a color that suits your theme */
+  backdrop-filter: blur(10px); /* optional, for a nice glassy effect */
+
   z-index: 1000;
   font-family: "Raleway", sans-serif;
 }

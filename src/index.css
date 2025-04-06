@@ -66,3 +66,9 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* App.css */
+main {
+  padding-top: 120px;
+  /* background: #fefefe; */
+}
