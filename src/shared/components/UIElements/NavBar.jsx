@@ -50,10 +50,10 @@ const Navbar = () => {
             <a href="#">Gifting</a>
           </li>
           <li>
-            <a href="#">Track Order</a>
+            <a href="#">Seasonal Collection</a>
           </li>
           <li>
-            <a href="#">Return & Exchange</a>
+            <a href="#">Track Order</a>
           </li>
           <li>
             <a href="#">About Us</a>
