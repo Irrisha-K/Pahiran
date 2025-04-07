@@ -1,6 +1,7 @@
 import React from "react";
 import "./ProductsPage.css";
 import ProductsList from "../components/ProductsList";
+import ImageSlider from "../../shared/components/FormElements/ImageSlider";
 
 const products = [
   {
@@ -67,7 +68,12 @@ const ProductsPage = () => {
   //     ))}
   //   </div>
   // );
-  return <ProductsList items={products} />;
+  return (
+    <>
+      <ImageSlider />
+      <ProductsList items={products} />;
+    </>
+  );
 };
 
 export default ProductsPage;

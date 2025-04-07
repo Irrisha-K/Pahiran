@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+
 import "./Navbar.css";
 import {
   FaSearch,
@@ -26,7 +28,10 @@ const Navbar = () => {
         </div>
 
         <div className="icons">
+          {/* <FaUser NavLink to="/home" className="icon" /> */}
+          {/* <NavLink to="/home" className="icon-link"> */}
           <FaUser className="icon" />
+          {/* </NavLink> */}
           <FaHeart className="icon" />
           <FaShoppingBag className="icon" />
         </div>

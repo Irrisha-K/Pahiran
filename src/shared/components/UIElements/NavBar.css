@@ -200,3 +200,20 @@
 .nav-links .dropdown-menu li a {
   color: black;
 }
+
+.icons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.icon {
+  font-size: 1.5rem;
+  color: #fff;
+  transition: color 0.3s, transform 0.2s;
+}
+
+.icon-link:hover .icon {
+  color: #ffd900;
+  transform: scale(1.1);
+}
