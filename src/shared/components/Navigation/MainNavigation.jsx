@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+
 import {
   FaSearch,
   FaUser,
@@ -17,7 +19,9 @@ const Navbar = () => {
       <nav className="navbar">
         {/* Top Section: Logo, Search Bar, and Icons */}
         <div className="nav-top">
-          <div className="logo">PAHIRAN</div>
+          <div className="logo">
+            <NavLink to="/"> PAHIRAN</NavLink>
+          </div>
 
           <div className="search-bar">
             <input type="text" placeholder="Search for products..." />
@@ -37,84 +41,57 @@ const Navbar = () => {
         <div className="nav-links">
           <ul>
             <li>
-              <a href="#">New Arrivals</a>
+              <NavLink to="/new-arrivals">New Arrivals</NavLink>
             </li>
             <li>
-              <a href="#">Best Sellers</a>
+              <NavLink to="/best-sellers">Best Sellers</NavLink>
             </li>
-            {/* <li
-            className="dropdown"
-            onMouseEnter={() => setCollectionsOpen(true)}
-            onMouseLeave={() => setCollectionsOpen(false)}
-          >
-            <a href="#">Collections ▾</a>
-            {collectionsOpen && (
-              <ul className="dropdown-menu">
-                <li>
-                  <a href="#">Spring Collection</a>
-                </li>
-                <li>
-                  <a href="#">Ethnic Wear</a>
-                </li>
-                <li>
-                  <a href="#">Western</a>
-                </li>
-                <li>
-                  <a href="#">Work Wear</a>
-                </li>
-                <li>
-                  <a href="#">Casuals</a>
-                </li>
-              </ul>
-            )}
-          </li> */}
-            {/* <!-- NAVIGATION MENU --> */}
-
             <li className="dropdown">
-              <a
-                href="#"
+              <NavLink
+                to="#"
                 onClick={(e) => {
-                  e.preventDefault(); // prevent page jump
+                  e.preventDefault();
                   setCollectionsOpen((prev) => !prev);
                 }}
               >
                 Collections ▾
-              </a>
+              </NavLink>
               {collectionsOpen && (
                 <ul className="dropdown-menu">
                   <li>
-                    <a href="#">Spring Collection</a>
+                    <NavLink to="/collections/spring">
+                      Spring Collection
+                    </NavLink>
                   </li>
                   <li>
-                    <a href="#">Ethnic Wear</a>
+                    <NavLink to="/collections/ethnic">Ethnic Wear</NavLink>
                   </li>
                   <li>
-                    <a href="#">Western</a>
+                    <NavLink to="/collections/western">Western</NavLink>
                   </li>
                   <li>
-                    <a href="#">Work Wear</a>
+                    <NavLink to="/collections/work">Work Wear</NavLink>
                   </li>
                   <li>
-                    <a href="#">Casuals</a>
+                    <NavLink to="/collections/casuals">Casuals</NavLink>
                   </li>
                 </ul>
               )}
             </li>
-
             <li>
-              <a href="#">Shop By</a>
+              <NavLink to="/shop-by">Shop By</NavLink>
             </li>
             <li>
-              <a href="#">Gifting</a>
+              <NavLink to="/gifting">Gifting</NavLink>
             </li>
             <li>
-              <a href="#">Seasonal Collection</a>
+              <NavLink to="/seasonal">Seasonal Collection</NavLink>
             </li>
             <li>
-              <a href="#">Track Order</a>
+              <NavLink to="/track-order">Track Order</NavLink>
             </li>
             <li>
-              <a href="#">About Us</a>
+              <NavLink to="/about">About Us</NavLink>
             </li>
           </ul>
         </div>

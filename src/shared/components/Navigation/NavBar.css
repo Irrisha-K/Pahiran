@@ -1,0 +1,138 @@
+.navbar {
+  background: white;
+  padding: 10px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Raleway", sans-serif;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  /* flex: 1; */
+}
+
+/* .nav-inner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  gap: 20px;
+} */
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.search-container svg {
+  margin-left: 8px; /* Reduce if needed */
+}
+/* 
+.logo {
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  white-space: nowrap;
+} */
+
+.logo {
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  white-space: nowrap;
+  margin-right: 20px;
+}
+
+/* .search-container {
+  display: flex;
+  align-items: center;
+  background: #f4f0eb;
+  border-radius: 30px;
+  padding: 6px 12px;
+  flex: 1;
+} */
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background: #f4f0eb;
+  border-radius: 30px;
+  padding: 6px 12px;
+  flex: 1;
+  max-width: 600px; /* optional: keeps it from stretching too wide */
+  margin: 0 20px;
+}
+
+/* .search-container input {
+  border: none;
+  background: transparent;
+  padding: 4px;
+  width: 100%;
+  font-size: 14px;
+} */
+.search-container input {
+  border: none;
+  background: transparent;
+  padding: 4px;
+  width: 100%;
+  font-size: 14px;
+}
+/* 
+.nav-icons {
+  color: black;
+  display: flex;
+  align-items: center;
+} */
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+  color: black;
+  gap: 15px;
+}
+
+.nav-icons a {
+  color: black;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+
+.nav-icons a:hover {
+  color: #555;
+}
+
+.nav-icons a.active {
+  color: #555;
+  /* color: #000; */
+}
+
+.nav-icons svg {
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-top: 8px;
+  font-size: 14px;
+  justify-content: center;
+}
+
+.nav-links a {
+  color: #333;
+  text-decoration: none;
+}
+
+.nav-links a.active {
+  font-weight: bold;
+  color: black;
+  border-bottom: 2px solid black;
+}
