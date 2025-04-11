@@ -33,7 +33,8 @@
 .product-card img {
   width: 100%;
   height: 400px;
-  object-fit: cover;
+  object-fit: contain;
+  background-color: #f9f9f9;
 }
 
 .product-details {

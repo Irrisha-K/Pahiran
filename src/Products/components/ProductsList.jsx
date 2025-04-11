@@ -17,16 +17,13 @@ export default function ProductsList(props) {
 
   return (
     <ul className="product-list">
-      {props.items.map((place) => (
+      {props.items.map((item) => (
         <ProductsItem
-          key={place.id}
-          id={place.id}
-          image={place.image}
-          title={place.title}
-          description={place.description}
-          address={place.address}
-          creatorId={place.creator}
-          coordinates={place.location}
+          key={item.id}
+          id={item.id}
+          image={item.image}
+          name={item.name}
+          price={item.price}
         />
       ))}
     </ul>

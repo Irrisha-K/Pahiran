@@ -64,14 +64,14 @@ export default function ProductsItem(props) {
           can't be undone thereafter!
         </p>
       </Modal> */}
-      <li className="product-item">
+      {/* <li className="product-item">
         <Card className="product-item__content">
           <div className="product-item__image">
             <img src={props.image} alt={props.title} />
           </div>
           <div className="product-item__info">
-            <h2>{props.title}</h2>
-            <h3>{props.address}</h3>
+            <h2>{props.name}</h2>
+            <h3>{props.price}</h3>
             <p>{props.description}</p>
           </div>
           <div className="product-item__actions">
@@ -80,6 +80,24 @@ export default function ProductsItem(props) {
               <button className="btn--edit">EDIT</button>
               <button className="btn--delete">DELETE</button>
             </div>
+          </div>
+        </Card>
+      </li> */}
+      <li className="product-item">
+        <Card className="product-item__content">
+          <div className="product-item__image">
+            <img src={props.image} alt={props.name} />
+          </div>
+          <div className="product-item__info">
+            <h2 className="product-item__title">
+              {props.name} <br />
+              <span className="product-item__price">{props.price}</span>
+            </h2>
+          </div>
+          <div className="product-item__actions">
+            <button className="btn--view">VIEW</button>
+            <button className="btn--edit">EDIT</button>
+            <button className="btn--delete">DELETE</button>
           </div>
         </Card>
       </li>
