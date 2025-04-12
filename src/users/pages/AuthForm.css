@@ -1,0 +1,130 @@
+/* Fullscreen wrapper with gradient background */
+.auth-wrapper {
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(to right, #fdfbfb, #ebedee);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* prevent any scrolling */
+  /* padding: 0; */
+  box-sizing: border-box;
+  padding: 0 1rem;
+  /* margin: 0; */
+}
+
+/* Container limited to half width */
+.auth-container {
+  /* width: 50vw; fixed half screen
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
+
+  width: 100%;
+  max-width: 600px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+/* Card appearance */
+.auth-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 500px;
+  height: 520px; /* fix height */
+  padding: 2.5rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden; /* prevents extra content from pushing the layout */
+  transition: none; /* prevents slide effect */
+}
+
+/* Title */
+.auth-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #1f2937;
+}
+
+/* Form layout */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Input fields */
+.auth-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-field label {
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  color: #374151;
+}
+
+.auth-field input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.6rem;
+  font-size: 1rem;
+  transition: all 0.25s ease;
+  background-color: #f9fafb;
+}
+
+.auth-field input:focus {
+  outline: none;
+  border-color: #6366f1;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+/* Button style */
+.auth-button {
+  padding: 0.85rem 1rem;
+  background-color: #4f46e5;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.auth-button:hover {
+  background-color: #4338ca;
+}
+
+/* Toggle text */
+.auth-toggle {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+.auth-toggle button {
+  background: none;
+  border: none;
+  color: #4f46e5;
+  font-weight: 600;
+  cursor: pointer;
+  padding-left: 0.3rem;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.auth-toggle button:hover {
+  color: #4338ca;
+}

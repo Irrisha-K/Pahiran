@@ -8,7 +8,10 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="nav-inner">
-        <div className="logo">PALMONAS</div>
+        {/* <div className="logo">PALMONAS</div> */}
+        <NavLink to="/" className="logo">
+          PALMONAS
+        </NavLink>
 
         <div className="search-container">
           <input type="text" placeholder="Search for Necklaces..." />
@@ -16,7 +19,7 @@ const Navbar = () => {
         </div>
 
         <div className="nav-icons">
-          <NavLink to="/home">
+          <NavLink to="/auth">
             <FaUser />
           </NavLink>
           <NavLink to="/wishlist">

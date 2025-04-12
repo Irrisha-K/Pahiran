@@ -86,8 +86,9 @@ export default function ProductsItem(props) {
       <li className="product-item">
         <Card className="product-item__content">
           <div className="product-item__image">
-            <img src={props.image} alt={props.name} />
+            <img src={props.image} alt={props.name} />\
           </div>
+
           <div className="product-item__info">
             <h2 className="product-item__title">
               {props.name} <br />

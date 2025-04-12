@@ -2,7 +2,6 @@ import React from "react";
 import "./ProductsPage.css";
 import ProductsList from "../components/ProductsList";
 import ImageSlider from "../../shared/components/FormElements/ImageSlider";
-import ProductCarousel from "./ProductCarousel";
 
 const products = [
   {
@@ -79,27 +78,13 @@ const products = [
   },
 ];
 
-const ProductsPage = () => {
-  // return (
-  //   <div className="product-container">
-  //     {products.map((item) => (
-  //       <div className="product-card" key={item.id}>
-  //         <img src={item.image} alt={item.name} />
-  //         <div className="product-details">
-  //           <h3>{item.name}</h3>
-  //           <p>{item.price}</p>
-  //         </div>
-  //       </div>
-  //     ))}
-  //   </div>
-  // );
+const NewArrivalsPage = () => {
   return (
     <>
       <ImageSlider />
-      <ProductCarousel />
       <ProductsList items={products} />
     </>
   );
 };
 
-export default ProductsPage;
+export default NewArrivalsPage;

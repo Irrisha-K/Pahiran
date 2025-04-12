@@ -48,6 +48,10 @@
   margin-right: 20px;
 }
 
+.logo:hover {
+  color: #555;
+}
+
 /* .search-container {
   display: flex;
   align-items: center;
