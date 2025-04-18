@@ -9,7 +9,7 @@ const products = [
     price: 1899,
     originalPrice: 3226,
     discount: 41,
-    image: "/images/bawstrip.jpeg",
+    image: "/images/bawstrip.jpg",
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const products = [
     originalPrice: 3380,
     discount: 30,
     offer: "BUY 1 GET 1",
-    image: "/images/bogo.jpeg",
+    image: "/images/bogo.jpg",
   },
   {
     id: 4,

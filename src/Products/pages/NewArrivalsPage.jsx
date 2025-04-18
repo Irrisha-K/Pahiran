@@ -10,7 +10,7 @@ const products = [
     price: 1899,
     originalPrice: 3226,
     discount: 41,
-    image: "/images/blp.jpeg",
+    image: "/images/blp.jpg",
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ const products = [
     price: 1899,
     originalPrice: 2847,
     discount: 33,
-    image: "/images/blcorset.jpeg",
+    image: "/images/blcorset.jpg",
   },
   {
     id: 3,
@@ -36,19 +36,19 @@ const products = [
     originalPrice: 3686,
     discount: 30,
     offer: "BUY 1 GET 1",
-    image: "/images/fullpj.jpeg",
+    image: "/images/fullpj.jpg",
   },
   {
     id: 5,
     name: "Olive oversized T-shirt",
     price: "Rs. 2,199",
-    image: "/images/oliveoversi.jpeg",
+    image: "/images/oliveoversi.jpg",
   },
   {
     id: 6,
     name: "Wool co-ord set",
     price: "Rs. 2,199",
-    image: "/images/wollset.jpeg",
+    image: "/images/wollset.jpg",
   },
   {
     id: 7,
@@ -60,7 +60,7 @@ const products = [
     id: 8,
     name: "Polka Pajama Set",
     price: "Rs. 2,199",
-    image: "/images/polkapj.jpeg",
+    image: "/images/polkapj.jpg",
   },
   {
     id: 9,
@@ -72,19 +72,19 @@ const products = [
     id: 10,
     name: "White Shorts",
     price: "Rs. 2,199",
-    image: "/images/whshorts.jpeg",
+    image: "/images/whshorts.jpg",
   },
   {
     id: 11,
     name: "Wool Frock",
     price: "Rs. 2,199",
-    image: "/images/wolfr.jpeg",
+    image: "/images/wolfr.jpg",
   },
   {
     id: 12,
     name: "White High Neck",
     price: "Rs. 2,199",
-    image: "/images/whineck.jpeg",
+    image: "/images/whineck.jpg",
   },
 ];
 
