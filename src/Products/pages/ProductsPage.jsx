@@ -13,7 +13,7 @@ const products = [
   },
   {
     id: 2,
-    name: "Assymetric Hem T-shirt",
+    name: "Assymetric  Matcha Hem T-shirt",
     price: "Rs. 2,499",
     image: "/images/assyhemt.jpg",
   },
