@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import "./App.css";
 // import Navbar from "./shared/components/UIElements/NavBar";
 import ProductsPage from "./Products/pages/ProductsPage";
 import Homepage from "./pages/Home";
