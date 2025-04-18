@@ -80,6 +80,18 @@ const products = [
     price: "Rs. 2,199",
     image: "/images/redt.jpg",
   },
+  {
+    id: 13,
+    name: "Full Set pj",
+    price: "Rs. 2,199",
+    image: "/images/bwpj.jpeg",
+  },
+  {
+    id: 14,
+    name: "Black Skinny Jeans",
+    price: "Rs. 2,199",
+    image: "/images/blskinny.jpeg",
+  },
 ];
 
 const BestSellersPage = () => {
