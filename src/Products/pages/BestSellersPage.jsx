@@ -2,6 +2,7 @@ import React from "react";
 import "./ProductsPage.css";
 import ProductsList from "../components/ProductsList";
 import ImageSlider from "../../shared/components/FormElements/ImageSlider";
+import NewArrivalsList from "../../NewArrivals/Components/NewArrivalsList";
 
 const products = [
   {
@@ -97,8 +98,8 @@ const products = [
 const BestSellersPage = () => {
   return (
     <>
-      <ImageSlider />
-      <ProductsList items={products} />
+      {/* <ImageSlider /> */}
+      <NewArrivalsList items={products} />
     </>
   );
 };

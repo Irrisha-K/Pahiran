@@ -1,7 +1,7 @@
 import React from "react";
-import "./ProductsPage.css";
-import ProductsList from "../components/ProductsList";
+import "./NewArrivalsPage.css";
 import ImageSlider from "../../shared/components/FormElements/ImageSlider";
+import NewArrivalsList from "../Components/NewArrivalsList";
 
 const products = [
   {
@@ -91,8 +91,9 @@ const products = [
 const NewArrivalsPage = () => {
   return (
     <>
-      <ImageSlider />
-      <ProductsList items={products} />
+      {/* <ImageSlider /> */}
+
+      <NewArrivalsList items={products} />
     </>
   );
 };

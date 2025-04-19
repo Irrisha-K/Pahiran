@@ -1,0 +1,85 @@
+.product-item {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-item__content {
+  height: 100%;
+  aspect-ratio: 1 / 1; /* Makes each card square */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 1rem;
+  overflow: hidden;
+  background-color: #111;
+  transition: transform 0.3s ease;
+}
+
+.product-item__content:hover {
+  transform: translateY(-5px);
+}
+
+.product-item__image {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Ensures square image box */
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.product-item__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.product-item__info {
+  padding: 1rem;
+  flex-grow: 1;
+  text-align: center;
+  color: #ddd;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.product-item__info h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #f1f1f1;
+}
+
+.product-item__info .product-item__price {
+  font-size: 1rem;
+  color: #ffd900;
+}
+
+.product-item__actions {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.product-item__actions button {
+  padding: 0.6rem 1rem;
+  font-weight: bold;
+  background: transparent;
+  color: #ddd;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-item__actions button:hover {
+  transform: scale(1.05);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #000;
+  box-shadow: 0 0 8px rgba(255, 217, 0, 0.4);
+}

@@ -31,6 +31,12 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden;
+  padding: 0;
+}
+
+html {
+  margin: 0;
+  padding: 0;
 }
 
 h1 {
@@ -72,6 +78,6 @@ button:focus-visible {
 
 /* App.css */
 main {
-  padding-top: 120px;
+  padding-top: 70px;
   /* background: #fefefe; */
 }
