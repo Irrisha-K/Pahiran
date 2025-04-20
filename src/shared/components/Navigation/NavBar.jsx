@@ -14,7 +14,7 @@ const Navbar = () => {
         </NavLink>
 
         <div className="search-container">
-          <input type="text" placeholder="Search for Necklaces..." />
+          <input type="text" placeholder="Search for clothes..." />
           <FaSearch />
         </div>
 
@@ -35,7 +35,7 @@ const Navbar = () => {
         <div className="left-section">
           <div className="logo">PAHIRAN</div>
           <div className="search-container">
-            <input type="text" placeholder="Search for Necklaces..." />
+            <input type="text" placeholder="Search for clothes..." />
             <FaSearch />
           </div>
         </div>
@@ -50,13 +50,7 @@ const Navbar = () => {
         {[
           "New Arrivals",
           "Best Seller",
-          "Lab Grown Diamond",
-          "Emily In Paris",
           "Collection",
-          "Shop By",
-          "Gifting",
-          "Track Order",
-          "Return & Exchange",
           "About Us",
         ].map((text, i) => (
           <li key={i}>
@@ -72,10 +66,13 @@ const Navbar = () => {
           <NavLink to="/best-seller">Best Seller</NavLink>
         </li>
         <li>
-          <NavLink to="/lab-grown-diamond">Lab Grown Diamond</NavLink>
+          <NavLink to="/collection">Collection</NavLink>
         </li>
         <li>
-          <NavLink to="/emily-in-paris">Emily In Paris</NavLink>
+          <NavLink to="/shop-by">Shop By</NavLink>
+        </li>
+        <li>
+          <NavLink to="/about">About Us</NavLink>
         </li>
         {/* Continue for other links */}
       </ul>

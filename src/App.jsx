@@ -9,6 +9,7 @@ import Navbar from "./shared/components/Navigation/NavBar";
 import BestSellersPage from "./Products/pages/BestSellersPage";
 import AuthForm from "./users/pages/AuthForm";
 import NewArrivalsPage from "./NewArrivals/Pages/NewArrivalsPage";
+import AboutUs from "./pages/AboutUs";
 
 const routes = [
   {
@@ -21,6 +22,7 @@ const routes = [
       { path: "/new-arrivals", element: <NewArrivalsPage /> },
       { path: "/best-seller", element: <BestSellersPage /> },
       { path: "/auth", element: <AuthForm /> },
+      { path: "/about", element: <AboutUs /> },
     ],
   },
   // { path: "/auth", element: <AuthForm /> },
@@ -40,3 +42,5 @@ function App() {
 }
 
 export default App;
+
+

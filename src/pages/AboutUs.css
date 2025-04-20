@@ -1,0 +1,68 @@
+/* AboutUs.css */
+
+.about-page {
+    background-color: #f9f4f1; /* nude, soft beige background */
+    min-height: 100vh;
+    padding: 4rem 1.5rem;
+    color: #4e4e4e;
+    font-family: "Segoe UI", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .about-container {
+    max-width: fit-content;
+    width: 100%;
+    text-align: center;
+    padding: 3rem;
+    justify-content: center;
+    
+  }
+  
+  .about-title {
+    font-size: 2.8rem;
+    font-weight: 600;
+    color: #a9746e; /* soft dusty rose */
+    margin-bottom: 1rem;
+  }
+  
+  .about-intro {
+    font-size: 1.1rem;
+    color: #7a6e68; /* soft gray-brown */
+    margin-bottom: 2rem;
+  }
+  
+  .brand-name {
+    color: #a9746e;
+    font-weight: 500;
+  }
+  
+  .about-text {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #5c524d;
+    margin-bottom: 2.5rem;
+  }
+  
+  .about-text p {
+    margin-bottom: 1.2rem;
+  }
+  
+  .about-thanks h2 {
+    font-size: 1.4rem;
+    color: #a9746e;
+    margin-bottom: 0.5rem;
+  }
+  
+  .about-thanks p {
+    font-style: italic;
+    font-weight: 400;
+    color: #837670;
+  }
+.about-container,
+.about-text p,
+.about-thanks {
+  transition: all 0.3s ease-in-out;
+}
+  

@@ -26,7 +26,7 @@ const products = [
     originalPrice: 3380,
     discount: 30,
     offer: "BUY 1 GET 1",
-    image: "/images/bogo.jpg",
+    image: "/images/bogosweat.jpg",
   },
   {
     id: 4,
