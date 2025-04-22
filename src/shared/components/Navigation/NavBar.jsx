@@ -65,12 +65,31 @@ const Navbar = () => {
         <li>
           <NavLink to="/best-seller">Best Seller</NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink to="/collection">Collection</NavLink>
-        </li>
-        <li>
+        </li> */}
+        <div className="dropdown">
+        <a href="#" className="dropbtn">Collection</a>
+        <div className="dropdown-content">
+          <a href="#">Casual Wear</a>
+          <a href="#">Party Fits</a>
+          <a href="#">Workwear Edits</a>
+          <a href="#">Ethnic Elegance</a>
+        </div>
+      </div>
+        {/* <li>
           <NavLink to="/shop-by">Shop By</NavLink>
-        </li>
+        </li> */}
+        <div className="dropdown">
+        <a href="#" className="dropbtn">Shop By</a>
+        <div className="dropdown-content">
+          <a href="#">Tops</a>
+          <a href="#">Pants</a>
+          <a href="#">Dresses</a>
+          <a href="#">Skirts</a>
+          <a href="#">Co-ords</a>
+        </div>
+      </div>
         <li>
           <NavLink to="/about">About Us</NavLink>
         </li>

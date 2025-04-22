@@ -13,14 +13,22 @@ const products = [
   },
   {
     id: 2,
-    name: "Pink Anarkali",
+    name: "Red Flowy Blouse",
     price: 1899,
     originalPrice: 2847,
     discount: 33,
-    image: "/images/pian.jpg",
+    image: "/images/redfb.jpg",
   },
   {
     id: 3,
+    name: "Red Flowy Blouse",
+    price: 1899,
+    originalPrice: 2847,
+    discount: 33,
+    image: "/images/pjw.jpg",
+  },
+  {
+    id: 4,
     name: "Sweatants",
     price: 2366,
     originalPrice: 3380,
@@ -29,7 +37,7 @@ const products = [
     image: "/images/bogosweat.jpg",
   },
   {
-    id: 4,
+    id: 5,
     name: "Innerwear",
     price: 2580,
     originalPrice: 3686,
