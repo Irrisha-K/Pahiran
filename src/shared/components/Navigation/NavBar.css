@@ -7,17 +7,6 @@
   font-family: "Raleway", sans-serif;
   list-style: none;
 }
-/* 
-.navbar {
-  background: white;
-  padding: 10px 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: "Raleway", sans-serif;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  border-bottom: 1px solid #eee;
-} */
 
 .left-section {
   display: flex;
@@ -25,14 +14,6 @@
   gap: 20px;
   /* flex: 1; */
 }
-
-/* .nav-inner {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: space-between;
-  gap: 20px;
-} */
 
 .nav-inner {
   display: flex;
@@ -44,13 +25,6 @@
 .search-container svg {
   margin-left: 8px; /* Reduce if needed */
 }
-/* 
-.logo {
-  color: black;
-  font-weight: bold;
-  font-size: 20px;
-  white-space: nowrap;
-} */
 
 .logo {
   color: black;
@@ -64,15 +38,6 @@
   color: #555;
 }
 
-/* .search-container {
-  display: flex;
-  align-items: center;
-  background: #f4f0eb;
-  border-radius: 30px;
-  padding: 6px 12px;
-  flex: 1;
-} */
-
 .search-container {
   display: flex;
   align-items: center;
@@ -84,13 +49,6 @@
   margin: 0 20px;
 }
 
-/* .search-container input {
-  border: none;
-  background: transparent;
-  padding: 4px;
-  width: 100%;
-  font-size: 14px;
-} */
 .search-container input {
   border: none;
   background: transparent;
@@ -98,12 +56,6 @@
   width: 100%;
   font-size: 14px;
 }
-/* 
-.nav-icons {
-  color: black;
-  display: flex;
-  align-items: center;
-} */
 
 .nav-icons {
   display: flex;
@@ -164,7 +116,7 @@
   top: 100%;
   background-color: white;
   min-width: 150px;
-  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1;
 }
 
@@ -181,4 +133,61 @@
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px 16px;
+  }
+
+  .nav-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .search-container {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .nav-icons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .nav-links a {
+    padding: 6px 0;
+    width: 100%;
+  }
+
+  .dropdown-content {
+    position: static;
+    box-shadow: none;
+    width: 100%;
+  }
+}
+
+.cart-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: crimson;
+  color: white;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 50%;
 }

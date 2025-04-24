@@ -1,0 +1,30 @@
+.cart-page {
+  padding: 2rem;
+}
+
+.cart-items {
+  list-style: none;
+  padding: 0;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.cart-item img {
+  width: 100px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.cart-item-info {
+  flex-grow: 1;
+}
+
+.cart-total {
+  margin-top: 2rem;
+  font-weight: bold;
+}

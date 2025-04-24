@@ -1,12 +1,25 @@
+/* .product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem 1rem;
+  justify-items: center;
+} */
+
+/* .product-item {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+} */
+
 .product-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
   padding: 2rem 1rem;
-}
 
-.product-item {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  max-width: 1200px; /* Limit overall width */
+  margin-left: auto; /* Center horizontally */
+  margin-right: auto;
+  justify-content: center; /* Ensure items are centered within grid */
 }
