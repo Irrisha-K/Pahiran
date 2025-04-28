@@ -1,12 +1,3 @@
-/* .card {
-  position: relative;
-  margin: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  border-radius: 6px;
-  padding: 1rem;
-  overflow: hidden;
-  background: white;
-} */
 .card {
   position: relative;
   margin: 0;
@@ -19,14 +10,12 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 
-/* Hover effect */
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  background: rgba(255, 255, 255, 0.2); /* Slightly more visible on hover */
+  background: rgba(193, 1, 1, 0.2); /* Slightly more visible on hover */
 }
 
-/* Subtle glowing border effect */
 .card::before {
   content: "";
   position: absolute;
@@ -39,7 +28,6 @@
   z-index: -1;
 }
 
-/* Animation */
 @keyframes glowingBorder {
   0% {
     background-position: 0% 50%;
