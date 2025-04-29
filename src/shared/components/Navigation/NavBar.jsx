@@ -65,9 +65,12 @@ export default function Navbar() {
           <NavLink to="/shop-by">Shop By</NavLink>
         </li> */}
         <div className="dropdown">
-          <a href="#" className="dropbtn">
+          {/* <a href="/Shopby.jsx" className="dropbtn">
             Shop By
-          </a>
+          </a> */}
+          <li>
+          <NavLink to="/shop-by">Shop By</NavLink>
+        </li>
           <div className="dropdown-content">
             <a href="#">Tops</a>
             <a href="#">Pants</a>
