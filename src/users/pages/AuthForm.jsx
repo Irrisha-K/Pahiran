@@ -6,9 +6,9 @@ export default function AuthForm() {
 
   const toggleForm = () => setIsLogin(!isLogin);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
     console.log(isLogin ? "Logging in:" : "Signing up:", data);
   };

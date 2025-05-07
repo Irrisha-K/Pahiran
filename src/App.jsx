@@ -11,6 +11,7 @@ import AboutUs from "./pages/AboutUs";
 import { CartContextProvider } from "./store/CartContext";
 import CartPage from "./users/pages/CartPage";
 import CheckoutPage from "./users/pages/CheckoutPage";
+import ShopbyPage from "./Products/pages/Shopby";
 
 const routes = [
   {
@@ -26,6 +27,7 @@ const routes = [
       { path: "/cart", element: <CartPage /> },
       { path: "/about", element: <AboutUs /> },
       { path: "/checkout", element: <CheckoutPage /> },
+      { path: "/shop-by", element: <ShopbyPage /> },
     ],
   },
   // { path: "/auth", element: <AuthForm /> },

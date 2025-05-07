@@ -1,5 +1,6 @@
 import React from "react";
 import "./ProductsPage.css";
+import NewArrivalsList from "../../NewArrivals/Components/NewArrivalsList";
 
 const products = [
   {
@@ -25,5 +26,17 @@ const products = [
     name: "Checked Bow T-shirt",
     price: "Rs. 2,199",
     image: "/tops/bgstrip.jpg",
-  }
+  },
 ];
+
+const ShopbyPage = () => {
+  return (
+    <>
+      {/* <ImageSlider /> */}
+
+      <NewArrivalsList items={products} />
+    </>
+  );
+};
+
+export default ShopbyPage;
