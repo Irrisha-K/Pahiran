@@ -50,7 +50,7 @@ export default function Navbar() {
         {/* <li>
           <NavLink to="/collection">Collection</NavLink>
         </li> */}
-        <div className="dropdown">
+        {/* <div className="dropdown">
           <a href="#" className="dropbtn">
             Collection
           </a>
@@ -60,19 +60,22 @@ export default function Navbar() {
             <a href="#">Workwear Edits</a>
             <a href="#">Ethnic Elegance</a>
           </div>
-        </div>
+        </div> */}
         {/* <li>
           <NavLink to="/shop-by">Shop By</NavLink>
         </li> */}
         <div className="dropdown">
           {/* <a href="/Shopby.jsx" className="dropbtn">
-            Shop By
+            Shop By just gonna stand there and hold me close but thats alright cause i like the way it hurts
           </a> */}
           <li>
-          <NavLink to="/shop-by">Shop By</NavLink>
+          <NavLink to="/shop-by">Tops</NavLink>
         </li>
           <div className="dropdown-content">
-            <a href="#">Tops</a>
+            {/* <a href="#">Tops</a> */}
+            <li>
+          <NavLink to="/shop-by">Shop By</NavLink>
+        </li>
             <a href="#">Pants</a>
             <a href="#">Dresses</a>
             <a href="#">Skirts</a>
