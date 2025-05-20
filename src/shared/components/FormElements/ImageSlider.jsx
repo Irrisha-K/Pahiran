@@ -10,19 +10,19 @@ import slider4 from '/slider/s4.png'
 const ImageSlider = () => {
   const images = [
     {
-      url: slider3,
+      url: slider2,
       alt: "Image 1",
     },
     {
-      url: slider1,
+      url: slider4,
       alt: "Image 2",
     },
     {
-      url: slider4,
+      url: slider3,
       alt: "Image 3",
     },
     {
-      url: slider2,
+      url: slider1,
       alt: "Image 4",
     },
      
