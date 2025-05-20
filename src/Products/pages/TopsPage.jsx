@@ -29,7 +29,7 @@ const products = [
   },
 ];
 
-const ShopbyPage = () => {
+export default function TopsPage() {
   return (
     <>
       {/* <ImageSlider /> */}
@@ -37,6 +37,4 @@ const ShopbyPage = () => {
       <NewArrivalsList items={products} />
     </>
   );
-};
-
-export default ShopbyPage;
+}

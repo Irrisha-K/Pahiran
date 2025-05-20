@@ -1,0 +1,207 @@
+/* Container grid for product items */
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1080px;
+  margin: 2rem auto 4rem;
+  padding: 0 1rem;
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 1200px) {
+  .product-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .product-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .product-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Each product item card */
+.product-item {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  background: linear-gradient(135deg, #fef6f6 0%, #f9faff 100%);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  .product-item {
+    animation: fadeInUp 0.5s ease both;
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+.product-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Content wrapper inside the product */
+.product-item__content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Image container with fixed aspect ratio */
+.product-item__image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Product image styling */
+.product-item__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.product-item:hover .product-item__image img {
+  transform: scale(1.05);
+}
+
+/* Info section: product name and price */
+.product-item__info {
+  padding: 1rem 1.25rem;
+  flex-grow: 1;
+  text-align: center;
+  color: #2c2c2c;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.product-item__info h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+}
+
+.product-item__info .product-item__price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #444;
+}
+
+/* Actions container with buttons */
+.product-item__actions {
+  padding: 1rem 1.25rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  background-color: #fafafa;
+}
+
+/* Buttons styling */
+.product-item__actions button {
+  padding: 0.55rem 1.2rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  background: transparent;
+  color: #0b2e8a;
+  border: 2px solid #0b2e8a;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 0 transparent;
+}
+
+.product-item__actions button:hover {
+  background-color: #0b2e8a;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(11, 46, 138, 0.4);
+  transform: scale(1.1);
+}
+
+/* Accessibility: focus state for buttons */
+.product-item__actions button:focus {
+  outline: 2px solid #f9d71c;
+  outline-offset: 2px;
+}
+
+/* Ensure full height for the container to align stretch */
+.product-item__content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.page-btn {
+  padding: 0.5rem 1rem;
+  border: 2px solid #0b2e8a;
+  background: transparent;
+  color: #0b2e8a;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.page-btn:hover,
+.page-btn.active {
+  background: #0b2e8a;
+  color: white;
+}
+
+.filter-bar {
+  max-width: 600px;
+  margin: 2rem auto 1rem;
+  text-align: center;
+}
+
+.filter-bar input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid #ddd;
+  transition: 0.3s ease;
+}
+
+.filter-bar input:focus {
+  border-color: #0b2e8a;
+  outline: none;
+}

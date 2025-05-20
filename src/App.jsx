@@ -11,7 +11,9 @@ import AboutUs from "./pages/AboutUs";
 import { CartContextProvider } from "./store/CartContext";
 import CartPage from "./users/pages/CartPage";
 import CheckoutPage from "./users/pages/CheckoutPage";
-import ShopbyPage from "./Products/pages/Shopby";
+import PantsPage from "./Products/pages/Pants";
+import TopsPage from "./Products/pages/TopsPage";
+import SearchResultsPage from "./shared/pages/SearchResultsPage";
 
 const routes = [
   {
@@ -27,10 +29,12 @@ const routes = [
       { path: "/cart", element: <CartPage /> },
       { path: "/about", element: <AboutUs /> },
       { path: "/checkout", element: <CheckoutPage /> },
-      { path: "/shop-by", element: <ShopbyPage /> },
+      { path: "/tops", element: <TopsPage /> },
+      { path: "/pants", element: <PantsPage /> },
+      { path: "/search", element: <SearchResultsPage /> },
     ],
   },
-  // { path: "/auth", element: <AuthForm /> },
+  { path: "/auth", element: <AuthForm /> },
 ];
 const router = createBrowserRouter(routes);
 
