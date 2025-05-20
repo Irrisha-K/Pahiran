@@ -46,10 +46,11 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    "mongodb+srv://thelordshadow13:kjpDBQPFhwwaT76A@cluster0.aeql0sp.mongodb.net/places?retryWrites=true&w=majority&appName=Cluster0"
+    "mongodb+srv://irrishakayastha25:O5VBpxUljdz1SUEB@cluster0.c3ah54m.mongodb.net/products?retryWrites=true&w=majority&appName=Cluster0"
   )
   .then(() => {
     app.listen(5001);
+    console.log('Connected')
   })
   .catch((err) => {
     console.log(err);
