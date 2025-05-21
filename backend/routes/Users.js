@@ -43,7 +43,10 @@ router.post("/login", async (req, res) => {
       expiresIn: "1h",
     });
 
-    res.json({ token, role: user.role, name: user.name });
+    // res.json({ token, role: user.role, name: user.name });
+    res.json({ token, role: user.role, userId: user._id, name: user.name });
+
+    console.log("New User Role:", role);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
     console.log({ err });

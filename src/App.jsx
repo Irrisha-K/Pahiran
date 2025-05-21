@@ -18,6 +18,10 @@ import CoordPage from "./Products/pages/Coord";
 import SearchResultsPage from "./shared/pages/SearchResultsPage";
 import DressesPages from "./Products/pages/DressesPages";
 import AdminProductForm from "./users/Admin/AddProduct";
+import { AuthContext } from "./store/AuthContext";
+import { useContext } from "react";
+import AuthProvider from "./store/AuthProvider";
+import ProtectedAdminRoute from "./users/Admin/components/ProtectedAdminRoute";
 
 const routes = [
   {
@@ -39,22 +43,41 @@ const routes = [
       { path: "/skirts", element: <SkirtPage /> },
       { path: "/coord", element: <CoordPage /> },
       { path: "/search", element: <SearchResultsPage /> },
-      { path: "/add", element: <AdminProductForm /> },
+      {
+        path: "/add",
+        element: (
+          <ProtectedAdminRoute>
+            <AdminProductForm />
+          </ProtectedAdminRoute>
+        ),
+      },
     ],
   },
   { path: "/auth", element: <AuthForm /> },
 ];
 const router = createBrowserRouter(routes);
 
+// function App() {
+//   return (
+//     <>
+//       <main>
+//         <AuthProvider>
+//           <CartContextProvider>
+//             <RouterProvider router={router} />
+//           </CartContextProvider>
+//         </AuthProvider>
+//       </main>
+//     </>
+//   );
+// }
+
 function App() {
   return (
-    <>
-      <main>
-        <CartContextProvider>
-          <RouterProvider router={router} />
-        </CartContextProvider>
-      </main>
-    </>
+    <AuthProvider>
+      <CartContextProvider>
+        <RouterProvider router={router} />
+      </CartContextProvider>
+    </AuthProvider>
   );
 }
 

@@ -99,10 +99,14 @@ import React, { useContext, useState } from "react";
 import { FaSearch, FaUser, FaHeart, FaShoppingBag } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
 import CartContext from "../../../store/CartContext";
+import { AuthContext } from "../../../store/AuthContext";
 import "./NavBar.css";
+
 import SearchBar from "../UIElements/SearchBar";
 
 export default function Navbar() {
+  const auth = useContext(AuthContext);
+
   const { items } = useContext(CartContext);
   const totalCartItems = items.reduce(
     (total, item) => total + item.quantity,
@@ -161,9 +165,17 @@ export default function Navbar() {
 
       {/* 🔗 Navigation Links */}
       <ul className="nav-links">
-        <li>
-          <NavLink to="/new-arrivals">New Arrivals</NavLink>
-        </li>
+        {auth.isLoggedIn && auth.role === "admin" ? (
+          <li>
+            <NavLink to="/add">Add Products</NavLink>
+          </li>
+        ) : (
+          auth.isLoggedIn && (
+            <li>
+              <NavLink to="/new-arrivals">New Arrivals</NavLink>
+            </li>
+          )
+        )}
         <li>
           <NavLink to="/best-seller">Best Seller</NavLink>
         </li>

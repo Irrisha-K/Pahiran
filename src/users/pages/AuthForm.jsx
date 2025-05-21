@@ -64,10 +64,13 @@
 //   );
 // }
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./AuthForm.css";
+import { AuthContext } from "../../store/AuthContext";
 
 export default function AuthForm() {
+  const auth = useContext(AuthContext);
+
   const [isLogin, setIsLogin] = useState(true);
   const [errors, setErrors] = useState({});
   const [formValues, setFormValues] = useState({
@@ -122,7 +125,8 @@ export default function AuthForm() {
       if (!res.ok) throw new Error(data.message || "Something went wrong");
 
       if (isLogin) {
-        setUserType(data.role);
+        // setUserType(data.role);
+        auth.login(data.userId, data.token, data.role);
       } else {
         alert("Signup successful! Please login.");
         setIsLogin(true);
