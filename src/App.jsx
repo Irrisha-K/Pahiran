@@ -17,6 +17,7 @@ import SkirtPage from "./Products/pages/Skirts";
 import CoordPage from "./Products/pages/Coord";
 import SearchResultsPage from "./shared/pages/SearchResultsPage";
 import DressesPages from "./Products/pages/DressesPages";
+import AdminProductForm from "./users/Admin/AddProduct";
 
 const routes = [
   {
@@ -38,6 +39,7 @@ const routes = [
       { path: "/skirts", element: <SkirtPage /> },
       { path: "/coord", element: <CoordPage /> },
       { path: "/search", element: <SearchResultsPage /> },
+      { path: "/add", element: <AdminProductForm /> },
     ],
   },
   { path: "/auth", element: <AuthForm /> },
