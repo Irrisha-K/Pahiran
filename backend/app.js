@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
+require("dotenv").config();
 const express = require("express");
 const fs = require("fs");
 const path = require("path");

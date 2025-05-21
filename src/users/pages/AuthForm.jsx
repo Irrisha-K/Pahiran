@@ -109,7 +109,7 @@ export default function AuthForm() {
     if (!validate()) return;
 
     const endpoint = isLogin ? "/login" : "/signup";
-    const url = `http://localhost:5000/api/auth${endpoint}`;
+    const url = `http://localhost:5001/api/users${endpoint}`;
 
     try {
       const res = await fetch(url, {
@@ -129,6 +129,7 @@ export default function AuthForm() {
       }
     } catch (err) {
       alert(err.message);
+      console.log({ err });
     }
   };
 
