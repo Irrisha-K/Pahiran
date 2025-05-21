@@ -10,7 +10,6 @@ const coordPrices = {
   "buco.jpg": "Rs. 2,599",
   "bwco.jpg": "Rs. 2,399",
   "fleececo.jpg": "Rs. 2,299",
-  "gp.jpg": "Rs. 2,199",
   "hinco.jpg": "Rs. 2,699",
   "hookset.jpg": "Rs. 2,499",
   "pco.jpg": "Rs. 2,799",

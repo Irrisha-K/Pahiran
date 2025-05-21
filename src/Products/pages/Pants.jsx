@@ -103,7 +103,7 @@ const pantsPrices = {
   "bushort.jpg": "Rs. 1,499",
   "chp.jpg": "Rs. 2,299",
   "dbwin.jpg": "Rs. 2,199",
-  "flojosho.jpg": "Rs. 2,599",
+  "flojsho.jpg": "Rs. 2,599",
   "gdenim.jpg": "Rs. 1,899",
   "gsho.jpg": "Rs. 1,799",
   "jeans.jpg": "Rs. 1,599",
@@ -113,6 +113,8 @@ const pantsPrices = {
   "pish.jpg": "Rs. 1,899",
   "whst.jpg": "Rs. 1,499",
   "wst.jpg": "Rs. 1,599",
+  "gp.jpg": "Rs. 2,199",
+
 };
 
 const pantsProducts = Object.keys(pantsPrices).map((filename, index) => ({

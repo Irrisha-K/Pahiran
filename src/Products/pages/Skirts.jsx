@@ -23,7 +23,7 @@ const skirtPrices = {
   "rlong.jpg": "Rs. 1,699",
   "rmini.jpg": "Rs. 1,199",
   "sil.jpg": "Rs. 1,399",
-  "whbohop.jpg": "Rs. 1,599",
+  "whbopho.jpg": "Rs. 1,599",
   "ytie.jpg": "Rs. 1,499",
 };
 
