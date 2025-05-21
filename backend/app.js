@@ -6,6 +6,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const productRoutes = require("./routes/products");
+const userRoutes = require("./routes/Users");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/products/", productRoutes);
+app.use("/api/users/", userRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
@@ -50,7 +52,7 @@ mongoose
   )
   .then(() => {
     app.listen(5001);
-    console.log('Connected')
+    console.log("Connected");
   })
   .catch((err) => {
     console.log(err);
