@@ -16,6 +16,7 @@ import TopsPage from "./Products/pages/TopsPage";
 import SkirtPage from "./Products/pages/Skirts";
 import CoordPage from "./Products/pages/Coord";
 import SearchResultsPage from "./shared/pages/SearchResultsPage";
+import DressesPages from "./Products/pages/DressesPages";
 
 const routes = [
   {
@@ -33,6 +34,7 @@ const routes = [
       { path: "/checkout", element: <CheckoutPage /> },
       { path: "/tops", element: <TopsPage /> },
       { path: "/pants", element: <PantsPage /> },
+      { path: "/dresses", element: <DressesPages /> },
       { path: "/skirts", element: <SkirtPage /> },
       { path: "/coord", element: <CoordPage /> },
       { path: "/search", element: <SearchResultsPage /> },

@@ -4,20 +4,20 @@ import { useState } from "react";
 const ITEMS_PER_PAGE = 6;
 
 const dressPrices = {
-  "bcoat.jpg": "Rs. 2,299",
-  "bdre.jpg": "Rs. 1,999",
-  "bflo.jpg": "Rs. 2,199",
-  "blflo.jpg": "Rs. 2,099",
-  "blsk.jpg": "Rs. 1,899",
-  "blubtn.jpg": "Rs. 2,499",
-  "blwol.jpg": "Rs. 2,799",
-  "boho.jpg": "Rs. 2,199",
-  "budre.jpg": "Rs. 1,999",
-  "button.jpg": "Rs. 2,299",
-  "flodre.jpg": "Rs. 1,899",
-  "ord.jpg": "Rs. 2,099",
-  "pdre.jpg": "Rs. 1,999",
-  "pudre.jpg": "Rs. 2,199",
+  "Black Coat.jpg": "Rs. 2,299",
+  "Back Floral Dress.jpg": "Rs. 1,999",
+  "Black Fairy Dress.jpg": "Rs. 2,199",
+  "Black Wollen Ball-sleeve .jpg": "Rs. 2,099",
+  "Black-slit Dress.jpg": "Rs. 1,899",
+  "Blue Floral Dress.jpg": "Rs. 2,499",
+  "Blue Jeans Dress.jpg": "Rs. 2,799",
+  "Boho Maxi.jpg": "Rs. 2,199",
+  "Brown Corset Dress.jpg": "Rs. 1,999",
+  "Darkblue Button A-line Dress.jpg": "Rs. 2,299",
+  "Orange Maxi Dress.jpg": "Rs. 1,899",
+  "Pastel Blue Nightdress.jpg": "Rs. 2,099",
+  "Pastel Purple Maxi.jpg": "Rs. 1,999",
+  "Pink Floral Dress.jpg": "Rs. 2,199",
 };
 
 const dressProducts = Object.keys(dressPrices).map((filename, index) => ({
@@ -27,7 +27,7 @@ const dressProducts = Object.keys(dressPrices).map((filename, index) => ({
   image: `/dresses/${filename}`,
 }));
 
-export default function DressPage() {
+export default function DressesPages() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 
