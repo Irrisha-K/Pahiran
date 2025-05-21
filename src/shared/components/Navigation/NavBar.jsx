@@ -186,9 +186,9 @@ export default function Navbar() {
           <div className="dropdown-content">
             <NavLink to="/tops">Tops</NavLink>
             <NavLink to="/pants">Pants</NavLink>
-            <NavLink to="#">Dresses</NavLink>
-            <NavLink to="#">Skirts</NavLink>
-            <NavLink to="#">Co-ords</NavLink>
+            <NavLink to="/dress">Dresses</NavLink>
+            <NavLink to="/skirts">Skirts</NavLink>
+            <NavLink to="/coord">Co-ords</NavLink>
           </div>
         </li>
 

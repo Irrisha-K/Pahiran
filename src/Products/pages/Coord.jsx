@@ -1,37 +1,39 @@
 import { useState } from "react";
-// import "./Dress.css";
+// import "./Coord.css"; // Optional CSS import for Co-ord page styling
 
 const ITEMS_PER_PAGE = 6;
 
-const dressPrices = {
-  "bcoat.jpg": "Rs. 2,299",
-  "bdre.jpg": "Rs. 1,999",
-  "bflo.jpg": "Rs. 2,199",
-  "blflo.jpg": "Rs. 2,099",
-  "blsk.jpg": "Rs. 1,899",
-  "blubtn.jpg": "Rs. 2,499",
-  "blwol.jpg": "Rs. 2,799",
-  "boho.jpg": "Rs. 2,199",
-  "budre.jpg": "Rs. 1,999",
-  "button.jpg": "Rs. 2,299",
-  "flodre.jpg": "Rs. 1,899",
-  "ord.jpg": "Rs. 2,099",
-  "pdre.jpg": "Rs. 1,999",
-  "pudre.jpg": "Rs. 2,199",
+const coordPrices = {
+  "bco.jpg": "Rs. 2,699",
+  "bcord.jpg": "Rs. 2,499",
+  "bset.jpg": "Rs. 2,799",
+  "buco.jpg": "Rs. 2,599",
+  "bwco.jpg": "Rs. 2,399",
+  "fleececo.jpg": "Rs. 2,299",
+  "gp.jpg": "Rs. 2,199",
+  "hinco.jpg": "Rs. 2,699",
+  "hookset.jpg": "Rs. 2,499",
+  "pco.jpg": "Rs. 2,799",
+  "tpic.jpg": "Rs. 2,599",
+  "tset.jpg": "Rs. 2,399",
+  "whset.jpg": "Rs. 2,299",
+  "wolset.jpg": "Rs. 2,199",
+  "wpj.jpg": "Rs. 2,199",
+  "wstrip.jpg": "Rs. 2,199",
 };
 
-const dressProducts = Object.keys(dressPrices).map((filename, index) => ({
+const coordProducts = Object.keys(coordPrices).map((filename, index) => ({
   id: index + 1,
   name: filename.replace(".jpg", "").toUpperCase(),
-  price: dressPrices[filename],
-  image: `/dresses/${filename}`,
+  price: coordPrices[filename],
+  image: `/coords/${filename}`, // Images should be in public/coords
 }));
 
-export default function DressPage() {
+export default function CoordPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredItems = dressProducts.filter((item) =>
+  const filteredItems = coordProducts.filter((item) =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -51,7 +53,7 @@ export default function DressPage() {
       <div className="filter-bar">
         <input
           type="text"
-          placeholder="Search dresses..."
+          placeholder="Search co-ords..."
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);

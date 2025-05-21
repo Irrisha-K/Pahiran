@@ -21,7 +21,7 @@ const products = [
   },
   {
     id: 3,
-    name: "Red Flowy Blouse",
+    name: "Strawberry Night Suite",
     price: 1899,
     originalPrice: 2847,
     discount: 33,
@@ -69,9 +69,9 @@ export default function ProductCarousel() {
 
   return (
     <div className="relative w-full">
-      <button onClick={() => scroll("left")} className="carousel-btn left">
+      {/* <button onClick={() => scroll("left")} className="carousel-btn left">
         <ChevronLeft size={24} />
-      </button>
+      </button> */}
 
       <div ref={containerRef} className="carousel-track">
         {products.map((item) => (
@@ -96,9 +96,9 @@ export default function ProductCarousel() {
         ))}
       </div>
 
-      <button onClick={() => scroll("right")} className="carousel-btn right">
+      {/* <button onClick={() => scroll("right")} className="carousel-btn right">
         <ChevronRight size={24} />
-      </button>
+      </button> */}
     </div>
   );
 }

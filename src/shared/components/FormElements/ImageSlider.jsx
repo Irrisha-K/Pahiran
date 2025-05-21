@@ -2,10 +2,10 @@ import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-import slider1 from '/slider/s1.png'
-import slider2 from '/slider/s2.png'
-import slider3 from '/slider/s3.png'
-import slider4 from '/slider/s4.png'
+import slider1 from "/slider/s1.png";
+import slider2 from "/slider/s2.png";
+import slider3 from "/slider/s3.png";
+import slider4 from "/slider/s4.png";
 
 const ImageSlider = () => {
   const images = [
@@ -25,13 +25,12 @@ const ImageSlider = () => {
       url: slider1,
       alt: "Image 4",
     },
-     
   ];
 
   return (
     <Carousel
-      // showArrows={true}
-      // showThumbs={false}
+      showArrows={true}
+      showThumbs={false}
       infiniteLoop={true}
       autoPlay={true}
       interval={1500}

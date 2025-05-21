@@ -1,37 +1,44 @@
 import { useState } from "react";
-// import "./Dress.css";
+// import "./Skirts.css"; // Optional: if you have a separate CSS file for skirts
 
 const ITEMS_PER_PAGE = 6;
 
-const dressPrices = {
-  "bcoat.jpg": "Rs. 2,299",
-  "bdre.jpg": "Rs. 1,999",
-  "bflo.jpg": "Rs. 2,199",
-  "blflo.jpg": "Rs. 2,099",
-  "blsk.jpg": "Rs. 1,899",
-  "blubtn.jpg": "Rs. 2,499",
-  "blwol.jpg": "Rs. 2,799",
-  "boho.jpg": "Rs. 2,199",
-  "budre.jpg": "Rs. 1,999",
-  "button.jpg": "Rs. 2,299",
-  "flodre.jpg": "Rs. 1,899",
-  "ord.jpg": "Rs. 2,099",
-  "pdre.jpg": "Rs. 1,999",
-  "pudre.jpg": "Rs. 2,199",
+const skirtPrices = {
+  "bflo.jpg": "Rs. 1,499",
+  "brcheck.jpg": "Rs. 1,299",
+  "brjean.jpg": "Rs. 1,699",
+  "brplead.jpg": "Rs. 1,199",
+  "brwin.jpg": "Rs. 1,399",
+  "bumid.jpg": "Rs. 1,599",
+  "flob1g1.jpg": "Rs. 1,499",
+  "flowh.jpg": "Rs. 1,499",
+  "gboho.jpg": "Rs. 1,299",
+  "gmini.jpg": "Rs. 1,699",
+  "jski.jpg": "Rs. 1,199",
+  "pcheski.jpg": "Rs. 1,399",
+  "pflo.jpg": "Rs. 1,599",
+  "pij.jpg": "Rs. 1,499",
+  "polka.jpg": "Rs. 1,499",
+  "reslea.jpg": "Rs. 1,299",
+  "rlong.jpg": "Rs. 1,699",
+  "rmini.jpg": "Rs. 1,199",
+  "sil.jpg": "Rs. 1,399",
+  "whbohop.jpg": "Rs. 1,599",
+  "ytie.jpg": "Rs. 1,499",
 };
 
-const dressProducts = Object.keys(dressPrices).map((filename, index) => ({
+const skirtProducts = Object.keys(skirtPrices).map((filename, index) => ({
   id: index + 1,
   name: filename.replace(".jpg", "").toUpperCase(),
-  price: dressPrices[filename],
-  image: `/dresses/${filename}`,
+  price: skirtPrices[filename],
+  image: `/skirts/${filename}`, // Make sure these images are in public/skirts folder
 }));
 
-export default function DressPage() {
+export default function SkirtsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredItems = dressProducts.filter((item) =>
+  const filteredItems = skirtProducts.filter((item) =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -51,7 +58,7 @@ export default function DressPage() {
       <div className="filter-bar">
         <input
           type="text"
-          placeholder="Search dresses..."
+          placeholder="Search skirts..."
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
