@@ -275,3 +275,11 @@
 }
 
 /*  */
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  margin-left: 1rem;
+}

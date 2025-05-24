@@ -65,11 +65,13 @@
 // }
 
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./AuthForm.css";
 import { AuthContext } from "../../store/AuthContext";
 
 export default function AuthForm() {
   const auth = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [isLogin, setIsLogin] = useState(true);
   const [errors, setErrors] = useState({});
@@ -125,8 +127,14 @@ export default function AuthForm() {
       if (!res.ok) throw new Error(data.message || "Something went wrong");
 
       if (isLogin) {
-        // setUserType(data.role);
         auth.login(data.userId, data.token, data.role);
+
+        // ✅ Redirect based on role
+        if (data.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/new-arrivals");
+        }
       } else {
         alert("Signup successful! Please login.");
         setIsLogin(true);

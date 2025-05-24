@@ -22,6 +22,8 @@ import { AuthContext } from "./store/AuthContext";
 import { useContext } from "react";
 import AuthProvider from "./store/AuthProvider";
 import ProtectedAdminRoute from "./users/Admin/components/ProtectedAdminRoute";
+import UsersHomePage from "./users/pages/UsersHomePage";
+import AdminHomePage from "./users/pages/AdminHomePage";
 
 const routes = [
   {
@@ -43,14 +45,9 @@ const routes = [
       { path: "/skirts", element: <SkirtPage /> },
       { path: "/coord", element: <CoordPage /> },
       { path: "/search", element: <SearchResultsPage /> },
-      {
-        path: "/add",
-        element: (
-          <ProtectedAdminRoute>
-            <AdminProductForm />
-          </ProtectedAdminRoute>
-        ),
-      },
+      { path: "/add", element: <AdminProductForm /> },
+      { path: "/users", element: <UsersHomePage /> },
+      { path: "/admin", element: <AdminHomePage /> },
     ],
   },
   { path: "/auth", element: <AuthForm /> },
