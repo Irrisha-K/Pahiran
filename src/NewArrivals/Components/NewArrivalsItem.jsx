@@ -1,4 +1,4 @@
-import Card from "../../shared/components/UIElements/Card";
+import Card from "../../shared/components/UIElements/Cards";
 
 import "./NewArrivalsItem.css";
 

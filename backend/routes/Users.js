@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -50,6 +51,63 @@ router.post("/login", async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: "Server error" });
     console.log({ err });
+  }
+});
+
+router.get("/", async (req, res, next) => {
+  try {
+    const users = await User.find().select("-role"); // exclude 'role'
+    res.status(200).json(users);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// router.get("/:id", async (req, res, next) => {
+//   const userId = req.params.id;
+
+//   // Validate ObjectId
+//   if (!mongoose.Types.ObjectId.isValid(userId)) {
+//     return res.status(400).json({ error: "Invalid user ID format" });
+//   }
+
+//   try {
+//     const user = await User.findById(userId).select("-password -role");
+
+//     if (!user) {
+//       return res.status(404).json({ error: "User not found" });
+//     }
+
+//     res.status(200).json(user);
+//   } catch (error) {
+//     console.error("Error fetching user:", error);
+//     res.status(500).json({ error: "Something went wrong" });
+//   }
+// });
+
+router.get("/:id", async (req, res, next) => {
+  const userId = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ error: "Invalid user ID format" });
+  }
+
+  try {
+    const user = await User.findById(userId).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching user:", error);
+
+    if (!res.headersSent) {
+      return res.status(500).json({ error: "Internal server error" });
+    } else {
+      next(error); // ✅ now works as expected
+    }
   }
 });
 

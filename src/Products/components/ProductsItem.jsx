@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import Card from "../../shared/components/UIElements/Card";
+import Card from "../../shared/components/UIElements/Cards";
 import "./ProductsItem.css";
 import CartContext from "../../store/CartContext";
 

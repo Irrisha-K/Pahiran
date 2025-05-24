@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const productRoutes = require("./routes/products");
 const userRoutes = require("./routes/Users");
+const HttpError = require("./models/http-error");
 
 const app = express();
 
@@ -33,18 +34,38 @@ app.use((req, res, next) => {
   throw error;
 });
 
+// app.use((error, req, res, next) => {
+//   if (req.file) {
+//     fs.unlink(req.file.path, (err) => {
+//       console.log(err);
+//     });
+//   }
+
+//   if (res.headerSent) {
+//     return next(error);
+//   }
+//   res.status(error.code || 500);
+//   res.json({ message: error.message || "An unknown error occured!" });
+// });
+
 app.use((error, req, res, next) => {
   if (req.file) {
     fs.unlink(req.file.path, (err) => {
-      console.log(err);
+      if (err) console.error("File cleanup error:", err);
     });
   }
 
-  if (res.headerSent) {
+  if (res.headersSent) {
     return next(error);
   }
-  res.status(error.code || 500);
-  res.json({ message: error.message || "An unknown error occured!" });
+
+  const status = Number(error.code);
+  const validStatus =
+    !isNaN(status) && status >= 100 && status <= 599 ? status : 500;
+
+  res.status(validStatus).json({
+    message: error.message || "An unknown error occurred!",
+  });
 });
 
 mongoose
