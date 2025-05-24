@@ -1,9 +1,10 @@
-// components/ui/card.jsx
+import "./Card.css";
+// import "./Cards.css";
 
-export default function Card({ children, className = "" }) {
+export default function Card(props) {
   return (
-    <div className={`bg-white rounded-2xl overflow-hidden ${className}`}>
-      {children}
+    <div className={`card ${props.className}`} style={props.style}>
+      {props.children}
     </div>
   );
 }

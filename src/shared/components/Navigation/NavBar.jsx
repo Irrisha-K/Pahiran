@@ -84,6 +84,23 @@ export default function Navbar() {
 
       {/* 🔗 Navigation Links */}
       <ul className="nav-links">
+        <li>
+          <NavLink
+            to={
+              auth.isLoggedIn
+                ? auth.role === "admin"
+                  ? "/admin"
+                  : "/users"
+                : "/"
+            }
+          >
+            {auth.isLoggedIn
+              ? auth.role === "admin"
+                ? "Admin Page"
+                : "Home Page"
+              : "Home"}
+          </NavLink>
+        </li>
         {auth.isLoggedIn && auth.role === "admin" ? (
           <li>
             <NavLink to="/add">Add Products</NavLink>

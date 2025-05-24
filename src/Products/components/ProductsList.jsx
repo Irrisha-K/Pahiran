@@ -1,4 +1,4 @@
-import Card from "../../shared/components/UIElements/Cards";
+import Card from "../../shared/components/UIElements/Card";
 import ProductsItem from "./ProductsItem";
 
 import "./ProductsList.css";

@@ -1,15 +1,32 @@
 import { useContext } from "react";
-import Card from "../../shared/components/UIElements/Cards";
-import "./ProductsItem.css";
+import { useNavigate } from "react-router-dom";
 import CartContext from "../../store/CartContext";
+import Card from "../../shared/components/UIElements/Card";
+import { AuthContext } from "../../store/AuthContext";
+import "./ProductsItem.css";
 
 export default function ProductsItem(props) {
   const cartCtx = useContext(CartContext);
+  const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  // function handleProductToCart() {
+  //   const cleanedItem = {
+  //     ...props,
+  //     numericPrice: parseFloat(props.price.replace(/[^\d]/g, "")),
+  //   };
+  //   cartCtx.addItem(cleanedItem);
+  // }
 
   function handleProductToCart() {
+    if (!authCtx.isLoggedIn) {
+      navigate("/auth");
+      return;
+    }
+
     const cleanedItem = {
       ...props,
-      numericPrice: parseFloat(props.price.replace(/[^\d]/g, "")), // ✅ FIXED
+      numericPrice: parseFloat(props.price.replace(/[^\d]/g, "")),
     };
     cartCtx.addItem(cleanedItem);
   }
@@ -28,9 +45,17 @@ export default function ProductsItem(props) {
           </h2>
         </div>
 
-        <button className="btn--view" onClick={handleProductToCart}>
-          ADD TO CART
-        </button>
+        <div className="product-item__buttons">
+          <button
+            className="btn--view btn--details"
+            onClick={handleProductToCart}
+          >
+            VIEW DETAILS
+          </button>
+          <button className="btn--view btn--add" onClick={handleProductToCart}>
+            ADD TO CART
+          </button>
+        </div>
       </Card>
     </li>
   );

@@ -1,4 +1,4 @@
-.product-item {
+/* .product-item {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -89,7 +89,7 @@
   background-color: rgba(255, 255, 255, 0.1);
   color: #000;
   box-shadow: 0 0 8px rgba(255, 217, 0, 0.4);
-} */
+} 
 
 .btn--view {
   margin: 0;
@@ -112,6 +112,115 @@
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
     0 0 20px rgba(255, 255, 255, 0.3);
   color: #000;
+}
+
+@keyframes pulseGradientSoft {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+} */
+
+/*  */
+
+.product-item {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-item__content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 480px; /* slightly taller */
+}
+
+.product-item__image {
+  width: 100%;
+  height: 280px; /* increased height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.product-item__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.product-item__info {
+  flex-grow: 1;
+  padding: 1rem;
+  text-align: center;
+  color: #ddd;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.product-item__info h2 {
+  font-size: 1.6rem; /* bigger font */
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #f1f1f1;
+}
+
+.product-item__info span {
+  font-size: 1.2rem; /* price slightly bigger */
+  display: block;
+  margin-top: 0.3rem;
+  color: #ffd700;
+}
+
+/* Button wrapper */
+.product-item__buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* Shared button style */
+/* Base style shared by both buttons */
+.btn--view {
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease,
+    color 0.3s ease;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
+}
+
+/* Unique hover for VIEW DETAILS */
+.btn--details:hover {
+  transform: scale(1.05);
+  background: rgba(30, 144, 255, 0.2); /* DodgerBlue tint */
+  color: #1e90ff;
+  box-shadow: 0 0 10px rgba(30, 144, 255, 0.3), 0 0 20px rgba(30, 144, 255, 0.2);
+}
+
+/* Unique hover for ADD TO CART */
+.btn--add:hover {
+  transform: scale(1.05);
+  background: rgba(255, 217, 0, 0.2); /* Yellow/golden tint */
+  color: #ffd900;
+  box-shadow: 0 0 10px rgba(255, 217, 0, 0.3), 0 0 20px rgba(255, 217, 0, 0.2);
 }
 
 @keyframes pulseGradientSoft {

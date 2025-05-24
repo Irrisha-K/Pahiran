@@ -1,88 +1,6 @@
-// import "./ProductsPage.css";
-// import NewArrivalsList from "../../NewArrivals/Components/NewArrivalsList";
-// import "./Pants.css";
-
-// // const pantsImages = [
-// //   "bjeans.jpg",
-// //   "bjes.jpg",
-// //   "bjsho.jpg",
-// //   "blbo.jpg",
-// //   "bleather.jpg",
-// //   "blinesho.jpg",
-// //   "bljo.jpg",
-// //   "blmid.jpg",
-// //   "bltrack.jpg",
-// //   "bmid.jpg",
-// //   "bow.jpg",
-// //   "brsho.jpg",
-// //   "bsho.jpg",
-// //   "bushort.jpg",
-// //   "chp.jpg",
-// //   "dbwin.jpg",
-// //   "flojosho.jpg",
-// //   "gdenim.jpg",
-// //   "gsho.jpg",
-// //   "jeans.jpg",
-// //   "lij.jpg",
-// //   "orp.jpg",
-// //   "pcheck.jpg",
-// //   "pish.jpg",
-// //   "whst.jpg",
-// //   "wst.jpg",
-// // ];
-
-// const pantsPrices = {
-//   "bjeans.jpg": "Rs. 1,499",
-//   "bjes.jpg": "Rs. 1,899",
-//   "bjsho.jpg": "Rs. 1,699",
-//   "blbo.jpg": "Rs. 2,299",
-//   "bleather.jpg": "Rs. 2,799",
-//   "blinesho.jpg": "Rs. 1,999",
-//   "bljo.jpg": "Rs. 1,749",
-//   "blmid.jpg": "Rs. 2,199",
-//   "bltrack.jpg": "Rs. 1,599",
-//   "bmid.jpg": "Rs. 2,099",
-//   "bow.jpg": "Rs. 1,899",
-//   "brsho.jpg": "Rs. 1,999",
-//   "bsho.jpg": "Rs. 1,999",
-//   "bushort.jpg": "Rs. 1,499",
-//   "chp.jpg": "Rs. 2,299",
-//   "dbwin.jpg": "Rs. 2,199",
-//   "flojosho.jpg": "Rs. 2,599",
-//   "gdenim.jpg": "Rs. 1,899",
-//   "gsho.jpg": "Rs. 1,799",
-//   "jeans.jpg": "Rs. 1,599",
-//   "lij.jpg": "Rs. 1,499",
-//   "orp.jpg": "Rs. 1,999",
-//   "pcheck.jpg": "Rs. 2,099",
-//   "pish.jpg": "Rs. 1,899",
-//   "whst.jpg": "Rs. 1,499",
-//   "wst.jpg": "Rs. 1,599",
-// };
-
-// export default function PantsPage() {
-//   //   const pantsProducts = pantsPrices.map((filename, index) => ({
-//   //     id: index + 1,
-//   //     name: filename.replace(".jpg", "").toUpperCase(),
-//   //     price: pantsPrices[filename] || "Rs. 1,999",
-//   //     image: `/pants/${filename}`,
-//   //   }));
-
-//   const pantsProducts = Object.keys(pantsPrices).map((filename, index) => ({
-//     id: index + 1,
-//     name: filename.replace(".jpg", "").toUpperCase(),
-//     price: pantsPrices[filename],
-//     image: `/pants/${filename}`,
-//   }));
-
-//   return (
-//     <>
-//       <NewArrivalsList items={pantsProducts} />
-//     </>
-//   );
-// }
 import { useState } from "react";
 import "./Pants.css";
+import NewArrivalsList from "../../NewArrivals/Components/NewArrivalsList";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -114,7 +32,6 @@ const pantsPrices = {
   "whst.jpg": "Rs. 1,499",
   "wst.jpg": "Rs. 1,599",
   "gp.jpg": "Rs. 2,199",
-
 };
 
 const pantsProducts = Object.keys(pantsPrices).map((filename, index) => ({
@@ -158,7 +75,8 @@ export default function PantsPage() {
         />
       </div>
 
-      <div className="product-list">
+      <NewArrivalsList items={paginatedItems} />
+      {/* <div className="product-list">
         {paginatedItems.map((item) => (
           <div key={item.id} className="product-item">
             <div className="product-item__content">
@@ -177,7 +95,7 @@ export default function PantsPage() {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
 
       <div className="pagination">
         {Array.from({ length: totalPages }, (_, i) => (

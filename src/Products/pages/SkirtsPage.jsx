@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import "./Skirts.css"; // Optional: if you have a separate CSS file for skirts
 
 const ITEMS_PER_PAGE = 6;
 

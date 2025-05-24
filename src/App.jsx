@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import ProductsPage from "./Products/pages/ProductsPage";
-import Homepage from "./pages/Home";
 import RootLayout from "./shared/RootLayout/RootLayout";
 import ErrorPage from "./shared/RootLayout/Error";
 import BestSellersPage from "./Products/pages/BestSellersPage";
@@ -11,17 +10,14 @@ import AboutUs from "./pages/AboutUs";
 import { CartContextProvider } from "./store/CartContext";
 import CartPage from "./users/pages/CartPage";
 import CheckoutPage from "./users/pages/CheckoutPage";
-import PantsPage from "./Products/pages/Pants";
+import PantsPage from "./Products/pages/PantsPage";
 import TopsPage from "./Products/pages/TopsPage";
-import SkirtPage from "./Products/pages/Skirts";
+import SkirtPage from "./Products/pages/SkirtsPage";
 import CoordPage from "./Products/pages/Coord";
 import SearchResultsPage from "./shared/pages/SearchResultsPage";
 import DressesPages from "./Products/pages/DressesPages";
 import AdminProductForm from "./users/Admin/AddProduct";
-import { AuthContext } from "./store/AuthContext";
-import { useContext } from "react";
 import AuthProvider from "./store/AuthProvider";
-import ProtectedAdminRoute from "./users/Admin/components/ProtectedAdminRoute";
 import UsersHomePage from "./users/pages/UsersHomePage";
 import AdminHomePage from "./users/pages/AdminHomePage";
 
@@ -32,7 +28,6 @@ const routes = [
     errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <ProductsPage /> },
-      // { path: "/home", element: <Homepage /> },
       { path: "/new-arrivals", element: <NewArrivalsPage /> },
       { path: "/best-seller", element: <BestSellersPage /> },
       { path: "/auth", element: <AuthForm /> },
