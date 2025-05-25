@@ -8,6 +8,7 @@ const productSchema = new mongoose.Schema({
   image: { type: String, required: true },
   category: { type: String, required: true },
   description: { type: String }, // ✅ New field
+  quantity: { type: Number, required: true }, // ✅ New field
 });
 
 module.exports = mongoose.model("Product", productSchema);

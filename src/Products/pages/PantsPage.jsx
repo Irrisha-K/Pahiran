@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Pants.css";
 import NewArrivalsList from "../../NewArrivals/Components/NewArrivalsList";
+import ProductsList from "../components/ProductsList";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -42,6 +43,9 @@ const pantsProducts = Object.keys(pantsPrices).map((filename, index) => ({
 }));
 
 export default function PantsPage() {
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null); // ⬅️ error state
+  const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -61,6 +65,57 @@ export default function PantsPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch("http://localhost:5001/api/products/pants");
+        if (!res.ok) {
+          throw new Error("Something went wrong!");
+        }
+        const data = await res.json();
+        setProducts(data);
+      } catch (err) {
+        setError("Failed to load products. Please check your network.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="no-product-container">
+        <CardsUI className="no-product">
+          <p className="no-product-text">Loading products...</p>
+        </CardsUI>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="no-product-container">
+        <CardsUI className="no-product">
+          <p className="no-product-text">{error}</p>
+        </CardsUI>
+      </div>
+    );
+  }
+
+  if (products.length === 0) {
+    return (
+      <div className="no-product-container">
+        <CardsUI className="no-product">
+          <p className="no-product-text">
+            No Items Found! Please Try Again Later!
+          </p>
+        </CardsUI>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="filter-bar">
@@ -75,7 +130,9 @@ export default function PantsPage() {
         />
       </div>
 
-      <NewArrivalsList items={paginatedItems} />
+      {/* <NewArrivalsList items={paginatedItems} />
+       */}
+      <ProductsList items={products} />
       {/* <div className="product-list">
         {paginatedItems.map((item) => (
           <div key={item.id} className="product-item">
