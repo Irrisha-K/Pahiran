@@ -1,4 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import ProductsPage from "./Products/pages/ProductsPage";
 import RootLayout from "./shared/RootLayout/RootLayout";
@@ -20,6 +22,7 @@ import AdminProductForm from "./users/Admin/AddProduct";
 import AuthProvider from "./store/AuthProvider";
 import UsersHomePage from "./users/pages/UsersHomePage";
 import AdminHomePage from "./users/pages/AdminHomePage";
+import ProductDetailsPage from "./Products/pages/ProductDetailsPage";
 
 const routes = [
   {
@@ -43,6 +46,7 @@ const routes = [
       { path: "/add", element: <AdminProductForm /> },
       { path: "/users", element: <UsersHomePage /> },
       { path: "/admin", element: <AdminHomePage /> },
+      { path: "/product/:id", element: <ProductDetailsPage /> },
     ],
   },
   { path: "/auth", element: <AuthForm /> },
@@ -65,11 +69,18 @@ const router = createBrowserRouter(routes);
 
 function App() {
   return (
-    <AuthProvider>
-      <CartContextProvider>
-        <RouterProvider router={router} />
-      </CartContextProvider>
-    </AuthProvider>
+    <>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2000}
+        hideProgressBar
+      />
+      <AuthProvider>
+        <CartContextProvider>
+          <RouterProvider router={router} />
+        </CartContextProvider>
+      </AuthProvider>
+    </>
   );
 }
 

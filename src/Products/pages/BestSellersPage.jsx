@@ -133,6 +133,7 @@
 import { useEffect, useState } from "react";
 import NewArrivalsList from "../../NewArrivals/Components/NewArrivalsList";
 import CardsUI from "../../shared/components/UIElements/Card";
+import ProductsList from "../components/ProductsList";
 
 const BestSellersPage = () => {
   const [products, setProducts] = useState([]);
@@ -192,7 +193,8 @@ const BestSellersPage = () => {
     );
   }
 
-  return <NewArrivalsList items={products} />;
+  return <ProductsList items={products} />;
+  // return <NewArrivalsList items={products} />;
 };
 
 export default BestSellersPage;

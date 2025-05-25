@@ -13,6 +13,23 @@ router.get("/best-seller", async (req, res) => {
   }
 });
 
+// Get a single bestseller product by ID
+// Better: allows lookup by ID only, without needing category
+router.get("/:id", async (req, res) => {
+  const productId = req.params.id;
+
+  try {
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found." });
+    }
+
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: "Fetching product details failed." });
+  }
+});
+
 router.get("/pant", async (req, res) => {
   try {
     const products = await Product.find();

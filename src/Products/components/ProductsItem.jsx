@@ -1,5 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import CartContext from "../../store/CartContext";
 import Card from "../../shared/components/UIElements/Card";
 import { AuthContext } from "../../store/AuthContext";
@@ -11,6 +13,11 @@ export default function ProductsItem(props) {
   const navigate = useNavigate();
 
   // function handleProductToCart() {
+  //   if (!authCtx.isLoggedIn) {
+  //     navigate("/auth");
+  //     return;
+  //   }
+
   //   const cleanedItem = {
   //     ...props,
   //     numericPrice: parseFloat(props.price.replace(/[^\d]/g, "")),
@@ -24,12 +31,49 @@ export default function ProductsItem(props) {
       return;
     }
 
+    const numericPrice =
+      typeof props.price === "string"
+        ? parseFloat(props.price.replace(/[^\d.]/g, ""))
+        : Number(props.price);
+
     const cleanedItem = {
       ...props,
-      numericPrice: parseFloat(props.price.replace(/[^\d]/g, "")),
+      numericPrice,
     };
+
     cartCtx.addItem(cleanedItem);
+
+    toast.success(`${props.name} added to cart!`, {
+      style: {
+        backgroundColor: "#000",
+        color: "#fff",
+        fontWeight: "bold",
+        borderRadius: "10px",
+      },
+    });
   }
+
+  // const handleAddToCart = () => {
+  //   if (!authCtx.isLoggedIn) {
+  //     navigate("/auth");
+  //     return;
+  //   }
+
+  //   const item = {
+  //     ...product,
+  //     numericPrice: parseFloat(product.price),
+  //   };
+
+  //   cartCtx.addItem(item);
+  //   toast.success(`${product.name} added to cart!`, {
+  //     style: {
+  //       backgroundColor: "#000",
+  //       color: "#fff",
+  //       fontWeight: "bold",
+  //       borderRadius: "10px",
+  //     },
+  //   });
+  // };
 
   return (
     <li className="product-item">
@@ -48,10 +92,11 @@ export default function ProductsItem(props) {
         <div className="product-item__buttons">
           <button
             className="btn--view btn--details"
-            onClick={handleProductToCart}
+            onClick={() => navigate(`/product/${props.id}`)}
           >
             VIEW DETAILS
           </button>
+
           <button className="btn--view btn--add" onClick={handleProductToCart}>
             ADD TO CART
           </button>
