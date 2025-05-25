@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Pants.css";
 import NewArrivalsList from "../../NewArrivals/Components/NewArrivalsList";
 import ProductsList from "../components/ProductsList";
+import Card from "../../shared/components/UIElements/Card";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -87,9 +88,9 @@ export default function PantsPage() {
   if (isLoading) {
     return (
       <div className="no-product-container">
-        <CardsUI className="no-product">
+        <Card className="no-product">
           <p className="no-product-text">Loading products...</p>
-        </CardsUI>
+        </Card>
       </div>
     );
   }
@@ -97,9 +98,9 @@ export default function PantsPage() {
   if (error) {
     return (
       <div className="no-product-container">
-        <CardsUI className="no-product">
+        <Card className="no-product">
           <p className="no-product-text">{error}</p>
-        </CardsUI>
+        </Card>
       </div>
     );
   }
@@ -107,11 +108,11 @@ export default function PantsPage() {
   if (products.length === 0) {
     return (
       <div className="no-product-container">
-        <CardsUI className="no-product">
+        <Card className="no-product">
           <p className="no-product-text">
             No Items Found! Please Try Again Later!
           </p>
-        </CardsUI>
+        </Card>
       </div>
     );
   }
