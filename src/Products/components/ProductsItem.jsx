@@ -12,19 +12,6 @@ export default function ProductsItem(props) {
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // function handleProductToCart() {
-  //   if (!authCtx.isLoggedIn) {
-  //     navigate("/auth");
-  //     return;
-  //   }
-
-  //   const cleanedItem = {
-  //     ...props,
-  //     numericPrice: parseFloat(props.price.replace(/[^\d]/g, "")),
-  //   };
-  //   cartCtx.addItem(cleanedItem);
-  // }
-
   function handleProductToCart() {
     if (!authCtx.isLoggedIn) {
       navigate("/auth");
@@ -52,28 +39,6 @@ export default function ProductsItem(props) {
       },
     });
   }
-
-  // const handleAddToCart = () => {
-  //   if (!authCtx.isLoggedIn) {
-  //     navigate("/auth");
-  //     return;
-  //   }
-
-  //   const item = {
-  //     ...product,
-  //     numericPrice: parseFloat(product.price),
-  //   };
-
-  //   cartCtx.addItem(item);
-  //   toast.success(`${product.name} added to cart!`, {
-  //     style: {
-  //       backgroundColor: "#000",
-  //       color: "#fff",
-  //       fontWeight: "bold",
-  //       borderRadius: "10px",
-  //     },
-  //   });
-  // };
 
   return (
     <li className="product-item">

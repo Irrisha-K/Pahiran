@@ -28,5 +28,40 @@ export default function ProductsList(props) {
         />
       ))}
     </ul>
+    // <ul className="product-list">
+    //   {props.items.map((item) => (
+    //     <li key={item._id} className="product-item">
+    //       <ProductsItem
+    //         id={item._id}
+    //         name={item.name}
+    //         image={item.image}
+    //         price={item.price}
+    //         category={item.category}
+    //       />
+    //     </li>
+    //   ))}
+    // </ul>
   );
 }
+
+// import Card from "../../shared/components/UIElements/Card";
+// import ProductsItem from "./ProductsItem";
+// import "./ProductsList.css";
+
+// export default function ProductsList(props) {
+//   return (
+//     <ul className="product-list">
+//       {props.items.map((item) => (
+//         <li key={item._id} className="product-item">
+//           <ProductsItem
+//             id={item._id}
+//             name={item.name}
+//             image={item.image}
+//             price={item.price}
+//             category={item.category}
+//           />
+//         </li>
+//       ))}
+//     </ul>
+//   );
+// }

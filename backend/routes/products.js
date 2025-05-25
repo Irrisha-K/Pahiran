@@ -4,6 +4,25 @@ const productControllers = require("../controllers/Products-controllers");
 
 const router = express.Router();
 
+// GET /api/products?category=...&exclude=...
+router.get("/", async (req, res) => {
+  const { category, exclude } = req.query;
+  try {
+    let query = {};
+    if (category) {
+      query.category = category;
+    }
+    if (exclude) {
+      query._id = { $ne: exclude }; // exclude current product
+    }
+
+    const products = await Product.find(query);
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: "Fetching products failed." });
+  }
+});
+
 router.get("/pants", async (req, res) => {
   try {
     const pants = await Product.find({ category: "pants" });

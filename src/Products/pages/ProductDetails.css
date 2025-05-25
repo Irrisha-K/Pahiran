@@ -279,26 +279,85 @@
 
 .related-products {
   margin-top: 3rem;
+  width: 100%;
+  padding: 0 2rem;
 }
-.related-products-list {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+
+.related-products h2 {
+  color: #000; /* Black color for heading */
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
 }
-.related-product-item {
-  width: 150px;
-  text-align: center;
-  cursor: pointer;
+
+.related-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
 }
+
+.related-product-name {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0.5rem 0 0.25rem;
+  color: #000; /* Black product name */
+}
+
 .related-product-item img {
   width: 100%;
-  height: auto;
-  border-radius: 8px;
+  /* height: 230px; Increased image height */
+  height: 100%;
   object-fit: cover;
-  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.related-product-item p {
-  margin: 0;
+
+/* Hover effect: image zoom and shadow */
+.related-product-item:hover img {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Optional: border and scale for entire card */
+.related-product-item:hover {
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.related-product-item {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: box-shadow 0.3s;
+}
+
+.related-product-item:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.related-product-name {
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin: 0.25rem 0;
+}
+
+.related-product-price {
   font-size: 0.85rem;
   color: #444;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .related-products-grid {
+    grid-template-columns: repeat(
+      3,
+      1fr
+    ); /* Force 3 columns on larger screens */
+  }
 }
