@@ -1,97 +1,143 @@
-import React, { useEffect, useState } from "react";
-import "./ProductsPage.css";
-import NewArrivalsList from "../../NewArrivals/Components/NewArrivalsList";
-import Card from "../../shared/components/UIElements/Card";
-import ProductList from "../../Products/components/ProductsList";
+// import { useState, useEffect } from "react";
+// import Card from "../../shared/components/UIElements/Card";
+// import ProductsList from "../components/ProductsList";
+// import useDebounce from "../../shared/hooks/useDebounce";
 
-const products = [
-  {
-    id: 1,
-    name: "Black Co-ord Set",
-    price: "Rs. 1,999",
-    image: "/tops/bc.jpg",
-  },
-  {
-    id: 2,
-    name: "Assymetric  Matcha Hem T-shirt",
-    price: "Rs. 2,499",
-    image: "/tops/bcoat.jpg",
-  },
-  {
-    id: 3,
-    name: "Blue Maxi Dress",
-    price: "Rs. 2,199",
-    image: "/tops/bflo.jpg",
-  },
-  {
-    id: 4,
-    name: "Checked Bow T-shirt",
-    price: "Rs. 2,199",
-    image: "/tops/bgstrip.jpg",
-  },
-];
+import CategoryProductsPage from "../../shared/pages/CategoryProductsPage";
+
+// const ITEMS_PER_PAGE = 6;
+
+// export default function TopsPage() {
+//   const [products, setProducts] = useState([]);
+//   const [error, setError] = useState(null);
+//   const [isLoading, setIsLoading] = useState(true);
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [searchQuery, setSearchQuery] = useState("");
+//   const [totalItems, setTotalItems] = useState(0);
+//   const [priceOrder, setPriceOrder] = useState("");
+
+//   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+//   const debouncedQuery = useDebounce(searchQuery, 300);
+
+//   const handlePageChange = (newPage) => {
+//     setCurrentPage(newPage);
+//     window.scrollTo({ top: 0, behavior: "smooth" });
+//   };
+//   const isSearching = searchQuery !== debouncedQuery;
+
+//   useEffect(() => {
+//     const fetchProducts = async () => {
+//       setIsLoading(true);
+//       setError(null);
+
+//       try {
+//         const res = await fetch(
+//           `http://localhost:5001/api/products/tops?search=${debouncedQuery}&page=${currentPage}&limit=${ITEMS_PER_PAGE}&price=${priceOrder}`
+//         );
+
+//         if (!res.ok) {
+//           throw new Error("Something went wrong!");
+//         }
+
+//         const data = await res.json();
+//         setProducts(data.products);
+//         setTotalItems(data.quantity);
+//       } catch (err) {
+//         setError("Failed to load products. Please check your network.");
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     };
+
+//     fetchProducts();
+//   }, [debouncedQuery, currentPage, priceOrder]);
+
+//   if (isLoading) {
+//     return (
+//       <div className="no-product-container">
+//         <Card className="no-product">
+//           <p className="no-product-text">Loading products...</p>
+//         </Card>
+//       </div>
+//     );
+//   }
+
+//   if (error) {
+//     return (
+//       <div className="no-product-container">
+//         <Card className="no-product">
+//           <p className="no-product-text">{error}</p>
+//         </Card>
+//       </div>
+//     );
+//   }
+
+//   if (products.length === 0) {
+//     return (
+//       <div className="no-product-container">
+//         <Card className="no-product">
+//           <p className="no-product-text">
+//             No Items Found! Please Try Again Later!
+//           </p>
+//         </Card>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <>
+//       <div
+//         className="filter-bar"
+//         style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}
+//       >
+//         <select
+//           value={priceOrder}
+//           onChange={(e) => {
+//             setPriceOrder(e.target.value);
+//             setCurrentPage(1);
+//           }}
+//         >
+//           <option value="">Sort by Price</option>
+//           <option value="asc">Price: Low to High</option>
+//           <option value="desc">Price: High to Low</option>
+//         </select>
+
+//         <input
+//           type="text"
+//           placeholder="Search tops..."
+//           value={searchQuery}
+//           onChange={(e) => {
+//             setSearchQuery(e.target.value.toLowerCase());
+//             setCurrentPage(1);
+//           }}
+//         />
+//       </div>
+
+//       {isSearching && (
+//         <div className="searching-message">
+//           <p>Searching...</p>
+//         </div>
+//       )}
+
+//       <ProductsList items={products} />
+
+//       <div className="pagination">
+//         {Array.from({ length: totalPages }, (_, i) => (
+//           <button
+//             type="button"
+//             key={i}
+//             className={`page-btn ${i + 1 === currentPage ? "active" : ""}`}
+//             onClick={() => handlePageChange(i + 1)}
+//           >
+//             {i + 1}
+//           </button>
+//         ))}
+//       </div>
+//     </>
+//   );
+// }
 
 export default function TopsPage() {
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState(null); // ⬅️ error state
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch("http://localhost:5001/api/products/tops");
-        if (!res.ok) {
-          throw new Error("Something went wrong!");
-        }
-        const data = await res.json();
-        setProducts(data);
-      } catch (err) {
-        setError("Failed to load products. Please check your network.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="no-product-container">
-        <Card className="no-product">
-          <p className="no-product-text">Loading products...</p>
-        </Card>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="no-product-container">
-        <Card className="no-product">
-          <p className="no-product-text">{error}</p>
-        </Card>
-      </div>
-    );
-  }
-
-  if (products.length === 0) {
-    return (
-      <div className="no-product-container">
-        <Card className="no-product">
-          <p className="no-product-text">
-            No Items Found! Please Try Again Later!
-          </p>
-        </Card>
-      </div>
-    );
-  }
-
-  return (
-    <>
-      {/* <ImageSlider /> */}
-
-      <ProductList items={products} />
-    </>
-  );
+  return <CategoryProductsPage category="tops" placeholder="Search tops..." />;
 }

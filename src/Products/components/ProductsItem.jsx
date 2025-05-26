@@ -6,6 +6,7 @@ import CartContext from "../../store/CartContext";
 import Card from "../../shared/components/UIElements/Card";
 import { AuthContext } from "../../store/AuthContext";
 import "./ProductsItem.css";
+import Button from "../../shared/components/UIElements/Button";
 
 export default function ProductsItem(props) {
   const cartCtx = useContext(CartContext);
@@ -50,17 +51,23 @@ export default function ProductsItem(props) {
         <div className="product-item__info">
           <h2 className="product-item__title">
             {props.name} <br />
-            <span className="product-item__price">{props.price}</span>
+            <span className="product-item__price">Rs {props.price}</span>
           </h2>
         </div>
 
         <div className="product-item__buttons">
-          <button
+          {/* <button
             className="btn--view btn--details"
             onClick={() => navigate(`/product/${props.id}`)}
           >
             VIEW DETAILS
-          </button>
+          </button> */}
+          <Button
+            className="btn--view btn--details"
+            onClick={() => navigate(`/product/${props.id}`)}
+          >
+            VIEW DETAILS
+          </Button>
 
           <button className="btn--view btn--add" onClick={handleProductToCart}>
             ADD TO CART
