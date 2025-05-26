@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ProductsList from "../components/ProductsList";
+import Card from "../../shared/components/UIElements/Card";
 // import "./Coord.css"; // Optional CSS import for Co-ord page styling
 
 const ITEMS_PER_PAGE = 6;
@@ -29,6 +31,9 @@ const coordProducts = Object.keys(coordPrices).map((filename, index) => ({
 }));
 
 export default function CoordPage() {
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null); // ⬅️ error state
+  const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -47,6 +52,59 @@ export default function CoordPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  useEffect(() => {
+        const fetchProducts = async () => {
+          try {
+            const res = await fetch(
+              "http://localhost:5001/api/products/coords"
+            );
+            if (!res.ok) {
+              throw new Error("Something went wrong!");
+            }
+            const data = await res.json();
+            setProducts(data);
+          } catch (err) {
+            setError("Failed to load products. Please check your network.");
+          } finally {
+            setIsLoading(false);
+          }
+        };
+    
+        fetchProducts();
+      }, []);
+    
+      if (isLoading) {
+        return (
+          <div className="no-product-container">
+            <Card className="no-product">
+              <p className="no-product-text">Loading products...</p>
+            </Card>
+          </div>
+        );
+      }
+    
+      if (error) {
+        return (
+          <div className="no-product-container">
+            <Card className="no-product">
+              <p className="no-product-text">{error}</p>
+            </Card>
+          </div>
+        );
+      }
+    
+      if (products.length === 0) {
+        return (
+          <div className="no-product-container">
+            <Card className="no-product">
+              <p className="no-product-text">
+                No Items Found! Please Try Again Later!
+              </p>
+            </Card>
+          </div>
+        );
+      }
+
   return (
     <>
       <div className="filter-bar">
@@ -61,7 +119,7 @@ export default function CoordPage() {
         />
       </div>
 
-      <div className="product-list">
+      {/* <div className="product-list">
         {paginatedItems.map((item) => (
           <div key={item.id} className="product-item">
             <div className="product-item__content">
@@ -80,7 +138,9 @@ export default function CoordPage() {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
+
+      <ProductsList items={products}/>
 
       <div className="pagination">
         {Array.from({ length: totalPages }, (_, i) => (

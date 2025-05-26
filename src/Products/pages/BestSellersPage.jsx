@@ -144,7 +144,7 @@ const BestSellersPage = () => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5001/api/products/best-seller"
+          "http://localhost:5001/api/products/bestseller"
         );
         if (!res.ok) {
           throw new Error("Something went wrong!");

@@ -37,7 +37,61 @@ router.get("/tops", async (req, res) => {
     const tops = await Product.find({ category: "tops" });
     res.json(tops);
   } catch (err) {
-    res.status(500).json({ message: "Fetching Pants failed." });
+    res.status(500).json({ message: "Fetching Tops failed." });
+  }
+});
+
+router.get("/dresses", async (req, res) => {
+  try {
+    const dresses = await Product.find({ category: "dresses" });
+    res.json(dresses);
+  } catch (err) {
+    res.status(500).json({ message: "Fetching Dresses failed." });
+  }
+});
+
+router.get("/bestseller", async (req, res) => {
+  try {
+    const bestseller = await Product.find({ category: "bestseller" });
+    res.json(bestseller);
+  } catch (err) {
+    res.status(500).json({ message: "Fetching Best-Seller clothes failed." });
+  }
+});
+
+router.get("/home", async (req, res) => {
+  try {
+    const home = await Product.find({ category: "home" });
+    res.json(home);
+  } catch (err) {
+    res.status(500).json({ message: "Fetching Clothes failed." });
+  }
+});
+
+router.get("/skirts", async (req, res) => {
+  try {
+    const skirts = await Product.find({ category: "skirts" });
+    res.json(skirts);
+  } catch (err) {
+    res.status(500).json({ message: "Fetching Skirts failed." });
+  }
+});
+
+router.get("/coords", async (req, res) => {
+  try {
+    const coords = await Product.find({ category: "coords" });
+    res.json(coords);
+  } catch (err) {
+    res.status(500).json({ message: "Fetching Co-ords failed." });
+  }
+});
+
+router.get("/newarrival", async (req, res) => {
+  try {
+    const newarrival = await Product.find({ category: "newarrival" });
+    res.json(newarrival);
+  } catch (err) {
+    res.status(500).json({ message: "Fetching New Arrivals failed." });
   }
 });
 
@@ -57,436 +111,249 @@ router.get("/:id", async (req, res) => {
 router.post("/add", async (req, res) => {
   try {
     const sampleProducts = [
-      {
-        name: "Navy Collar Crop Top",
-        price: 1899,
-        originalPrice: 3226,
-        discount: 41,
-        image: "/tops/bc.jpg",
-        category: "tops",
-        description:
-          "This navy blue crop top features a smart collar design and a fitted cut that flatters any silhouette. Ideal for semi-casual settings and daily wear. Comfortable fabric ensures ease throughout the day.",
-        quantity: 23,
-      },
-      {
-        name: "Black Wool Coat",
-        price: 2899,
-        originalPrice: 4299,
-        discount: 33,
-        image: "/tops/bcoat.jpg",
-        category: "tops",
-        description:
-          "This black wool coat offers timeless elegance with a cozy inner lining. Great for layering in colder seasons. Structured for a polished yet comfortable look.",
-        quantity: 17,
-      },
-      {
-        name: "Blue Floral Oversized Tee",
-        price: 999,
-        originalPrice: 1499,
-        discount: 33,
-        image: "/tops/bflo.jpg",
-        category: "tops",
-        description:
-          "Stay fresh and stylish with this blue oversized tee featuring a floral print. Loose fit ensures breathability. Ideal for warm-weather days and layering over jeans.",
-        quantity: 34,
-      },
-      {
-        name: "Striped Black Blouse",
-        price: 1349,
-        originalPrice: 1999,
-        discount: 33,
-        image: "/tops/bgstrip.jpg",
-        category: "tops",
-        description:
-          "A timeless striped blouse in monochrome black. It pairs perfectly with formal and casual bottoms. Soft and breathable material makes it an everyday essential.",
-        quantity: 20,
-      },
-      {
-        name: "Leather Hoodie Jacket",
-        price: 2499,
-        originalPrice: 3899,
-        discount: 36,
-        image: "/tops/blethj.jpg",
-        category: "tops",
-        description:
-          "This leather-look hoodie jacket adds an urban edge to your look. Includes a zipper and hood for functionality. Stylish and perfect for transitional weather.",
-        quantity: 18,
-      },
-      {
-        name: "Black High Neck Cape",
-        price: 1799,
-        originalPrice: 2799,
-        discount: 36,
-        image: "/tops/blhi.jpg",
-        category: "tops",
-        description:
-          "An elegant high-neck cape in black that drapes beautifully. Great for layering over formal wear. Keeps you warm while maintaining a clean silhouette.",
-        quantity: 25,
-      },
-      {
-        name: "Button-Up Peplum Top",
-        price: 1599,
-        originalPrice: 2449,
-        discount: 35,
-        image: "/tops/bltop.jpg",
-        category: "tops",
-        description:
-          "Peplum cut top with button accents for a structured, flattering fit. Adds a touch of sophistication to casual outings. Soft fabric ensures all-day wearability.",
-        quantity: 27,
-      },
-      {
-        name: "Blue Graphic Tee",
-        price: 899,
-        originalPrice: 1399,
-        discount: 36,
-        image: "/tops/bluet.jpg",
-        category: "tops",
-        description:
-          "A casual graphic tee in faded blue, perfect for everyday wear. Unique print adds personality to any look. Pairs well with joggers or denim.",
-        quantity: 40,
-      },
-      {
-        name: "Baseball Sleeve T-Shirt",
-        price: 1099,
-        originalPrice: 1749,
-        discount: 37,
-        image: "/tops/bt.jpg",
-        category: "tops",
-        description:
-          "Retro-inspired t-shirt with contrasting baseball sleeves. Made of breathable cotton for comfort. Ideal for laid-back and sporty looks.",
-        quantity: 21,
-      },
-      {
-        name: "Blue Half-Zip Hoodie",
-        price: 1799,
-        originalPrice: 2899,
-        discount: 38,
-        image: "/tops/buhook.jpg",
-        category: "tops",
-        description:
-          "Cozy half-zip hoodie in cool navy tone. Great for layering during fall and winter. Offers a snug fit and functional zip closure.",
-        quantity: 22,
-      },
-      {
-        name: "Sky Blue Cardigan",
-        price: 1399,
-        originalPrice: 2099,
-        discount: 33,
-        image: "/tops/buswea.jpg",
-        category: "tops",
-        description:
-          "Soft and stylish, this cardigan features a pastel blue tone perfect for spring. Lightweight knit material adds layering options. Great over tanks or tees.",
-        quantity: 30,
-      },
-      {
-        name: "Teal Shoulder-Knit Sweater",
-        price: 1699,
-        originalPrice: 2599,
-        discount: 35,
-        image: "/tops/busweat.jpg",
-        category: "tops",
-        description:
-          "This open-shoulder sweater in teal green adds playful charm to cozy fashion. Chunky knit design offers warmth. Great with jeans or skirts.",
-        quantity: 26,
-      },
-      {
-        name: "Layered Shirt Vest Combo",
-        price: 1599,
-        originalPrice: 2399,
-        discount: 33,
-        image: "/tops/bwshirt.jpg",
-        category: "tops",
-        description:
-          "This chic layered top combines a crisp white shirt with a black sweater vest. Ideal for smart-casual occasions. Stylish and functional in cooler weather.",
-        quantity: 28,
-      },
-      {
-        name: "Beige Pleated Blouse",
-        price: 1449,
-        originalPrice: 2199,
-        discount: 34,
-        image: "/tops/cbl.jpg",
-        category: "tops",
-        description:
-          "Elegant beige blouse with soft pleats. Perfect for workwear or elegant evenings. Pairs beautifully with formal trousers or skirts.",
-        quantity: 20,
-      },
-      {
-        name: "Checked Overcoat",
-        price: 2699,
-        originalPrice: 4299,
-        discount: 37,
-        image: "/tops/checkcoat.jpg",
-        category: "tops",
-        description:
-          "A check-patterned overcoat that adds texture and charm to winter outfits. Medium length for extra coverage. Blends warmth with professional flair.",
-        quantity: 19,
-      },
-      {
-        name: "Cream Knit Sweater Coat",
-        price: 1799,
-        originalPrice: 2849,
-        discount: 37,
-        image: "/tops/creamswe.jpg",
-        category: "tops",
-        description:
-          "Thick and cozy, this cream sweater coat feels like a warm hug. Ideal for chilly mornings or layered winter outfits. Features soft-textured fabric.",
-        quantity: 24,
-      },
-      {
-        name: "Floral Embroidered Crop Top",
-        price: 1349,
-        originalPrice: 2099,
-        discount: 36,
-        image: "/tops/etop.jpg",
-        category: "tops",
-        description:
-          "A soft and feminine crop top with floral embroidery. Flowy hem for added charm. Ideal for spring and summer events.",
-        quantity: 15,
-      },
-      {
-        name: "Olive Formal Blazer",
-        price: 2199,
-        originalPrice: 3499,
-        discount: 37,
-        image: "/tops/forcr.jpg",
-        category: "tops",
-        description:
-          "Classic olive green blazer for smart and professional looks. Tailored fit ensures a sharp silhouette. Great for office or interviews.",
-        quantity: 14,
-      },
-      {
-        name: "Green Cable-Knit Sweater",
-        price: 1699,
-        originalPrice: 2599,
-        discount: 35,
-        image: "/tops/grhinech.jpg",
-        category: "tops",
-        description:
-          "This vibrant green sweater features a traditional cable-knit design. Cozy, durable, and eye-catching. Perfect for cold seasons.",
-        quantity: 22,
-      },
-      {
-        name: "Olive Military Jacket",
-        price: 1899,
-        originalPrice: 2999,
-        discount: 37,
-        image: "/tops/grja.jpg",
-        category: "tops",
-        description:
-          "Military-style jacket with utility pockets. Lightweight yet warm. Ideal for layering over casual outfits.",
-        quantity: 25,
-      },
-      {
-        name: "Olive Ribbed Sweater",
-        price: 1599,
-        originalPrice: 2399,
-        discount: 33,
-        image: "/tops/grsweat.jpg",
-        category: "tops",
-        description:
-          "Chunky rib-knit sweater in an earthy olive green. Relaxed fit makes it perfect for layering. Cozy and timeless for fall and winter.",
-        quantity: 21,
-      },
-      {
-        name: "Button-Up Sage Cardigan",
-        price: 1449,
-        originalPrice: 2149,
-        discount: 33,
-        image: "/tops/gsewater.jpg",
-        category: "tops",
-        description:
-          "A lightweight sage cardigan perfect for breezy days. Features classic buttons and a casual fit. Pairs well with both dresses and jeans.",
-        quantity: 24,
-      },
-      {
-        name: "Green Plaid Shirt",
-        price: 1199,
-        originalPrice: 1849,
-        discount: 35,
-        image: "/tops/gshi.jpg",
-        category: "shirts",
-        description:
-          "Classic plaid button-up shirt with a rustic green palette. Great for layering or wearing solo. A staple for any casual wardrobe.",
-        quantity: 30,
-      },
-      {
-        name: "Green Striped Tee",
-        price: 849,
-        originalPrice: 1349,
-        discount: 37,
-        image: "/tops/gstri.jpg",
-        category: "tops",
-        description:
-          "Relaxed green striped t-shirt for everyday comfort. Soft cotton fabric keeps it breathable. Ideal for laid-back weekends or under a jacket.",
-        quantity: 28,
-      },
-      {
-        name: "Green Drop Shoulder Sweater",
-        price: 1649,
-        originalPrice: 2549,
-        discount: 35,
-        image: "/tops/gswea.jpg",
-        category: "tops",
-        description:
-          "Oversized sweater with dropped shoulders in earthy tones. Provides warmth without bulk. Perfect for cozy days at home or casual outings.",
-        quantity: 22,
-      },
-      {
-        name: "Grey Half-Zip Hoodie Vest",
-        price: 1199,
-        originalPrice: 1899,
-        discount: 37,
-        image: "/tops/half.jpg",
-        category: "tops",
-        description:
-          "Versatile sleeveless hoodie vest in heather grey. Half-zip design adds edge to a minimal silhouette. Great for layering with long-sleeves.",
-        quantity: 20,
-      },
-      {
-        name: "Black Lace Tank Top",
-        price: 999,
-        originalPrice: 1599,
-        discount: 38,
-        image: "/tops/lacy.jpg",
-        category: "tops",
-        description:
-          "This elegant black tank top features delicate lace trim. Feminine and flattering, perfect for date nights or under a blazer. Stretchy and soft material.",
-        quantity: 18,
-      },
-      {
-        name: "Lavender Knit Sweater",
-        price: 1549,
-        originalPrice: 2399,
-        discount: 35,
-        image: "/tops/lavswea.jpg",
-        category: "tops",
-        description:
-          "Soft lavender knit sweater with a cozy and relaxed fit. Great for transitioning between seasons. Adds a pastel pop to your wardrobe.",
-        quantity: 26,
-      },
-      {
-        name: "Orange Loose Fit Pullover",
-        price: 1499,
-        originalPrice: 2249,
-        discount: 33,
-        image: "/tops/orcar.jpg",
-        category: "tops",
-        description:
-          "Bright orange sweater with a loose, slouchy fit. Vibrant and cozy, perfect for adding energy to cold days. Great with jeans or leggings.",
-        quantity: 23,
-      },
-      {
-        name: "Lilac Wrap Crop Blouse",
-        price: 1399,
-        originalPrice: 2149,
-        discount: 35,
-        image: "/tops/pcross.jpg",
-        category: "tops",
-        description:
-          "Chic wrap-style blouse in a soft lilac shade. Cropped cut and lightweight fabric make it perfect for spring outings. Great with high-rise bottoms.",
-        quantity: 19,
-      },
-      {
-        name: "Olive Skeleton Print Tee",
-        price: 949,
-        originalPrice: 1499,
-        discount: 37,
-        image: "/tops/pt.jpg",
-        category: "tops",
-        description:
-          "Edgy skeleton-print tee in a muted olive tone. Adds a punk twist to your casual look. Great for casual hangouts or concerts.",
-        quantity: 30,
-      },
-      {
-        name: "Red Button Cardigan",
-        price: 1599,
-        originalPrice: 2449,
-        discount: 35,
-        image: "/tops/rswea.jpg",
-        category: "tops",
-        description:
-          "Deep red cardigan with bold front buttons. A classic piece to elevate your winter wardrobe. Warm and easy to layer with any outfit.",
-        quantity: 21,
-      },
-      {
-        name: "Red Knit Cardigan with Lace Trim",
-        price: 1749,
-        originalPrice: 2649,
-        discount: 34,
-        image: "/tops/rlwaceswe.jpg",
-        category: "tops",
-        description:
-          "Unique knit cardigan with lace-trimmed neckline. Vintage aesthetic with cozy functionality. Ideal for pairing with skirts or dresses.",
-        quantity: 20,
-      },
-      {
-        name: "Black Bell Sleeve Top",
-        price: 1399,
-        originalPrice: 2149,
-        discount: 35,
-        image: "/tops/sleetop.jpg",
-        category: "tops",
-        description:
-          "Dramatic bell sleeves and a form-fitting cut define this black top. Ideal for parties and dressy evenings. Elegant, sleek, and eye-catching.",
-        quantity: 17,
-      },
-      {
-        name: "Beige Shirred Blouse",
-        price: 1449,
-        originalPrice: 2199,
-        discount: 34,
-        image: "/tops/stripsh.jpg",
-        category: "tops",
-        description:
-          "Beige blouse with soft shirring details for a romantic feel. Lightweight and flowy for warm-weather wear. Easy to dress up or down.",
-        quantity: 22,
-      },
-      {
-        name: "Brown Striped Sweater",
-        price: 1649,
-        originalPrice: 2499,
-        discount: 34,
-        image: "/tops/stripswea.jpg",
-        category: "tops",
-        description:
-          "Neutral-toned sweater with horizontal beige and brown stripes. Great for layering or wearing solo. Perfect for fall fashion lovers.",
-        quantity: 24,
-      },
-      {
-        name: "Ivory Cable Knit Sweater",
-        price: 1749,
-        originalPrice: 2649,
-        discount: 34,
-        image: "/tops/whswea.jpg",
-        category: "tops",
-        description:
-          "Classic ivory cable knit sweater with a cozy texture. Warm, elegant, and timeless. Perfectly pairs with jeans or skirts.",
-        quantity: 26,
-      },
-      {
-        name: "Yellow Textured Sweater",
-        price: 1549,
-        originalPrice: 2399,
-        discount: 35,
-        image: "/tops/yswea.jpg",
-        category: "tops",
-        description:
-          "Bright and cheerful yellow knit sweater. Adds a splash of sunshine to cold days. Soft texture and relaxed fit for maximum comfort.",
-        quantity: 25,
-      },
-      {
-        name: "Grey Zip-Up Hoodie",
-        price: 1299,
-        originalPrice: 1999,
-        discount: 35,
-        image: "/tops/zipup.jpg",
-        category: "tops",
-        description:
-          "Classic grey zip-up hoodie with a soft fleece lining. Ideal for workouts, errands, or cozy lounging. Includes hood and front pockets.",
-        quantity: 32,
-      },
-    ];
+  {
+    name: "Black Leggings",
+    price: 999,
+    originalPrice: 1499,
+    discount: 33,
+    image: "/newarrival/leggingsb.jpg",
+    category: "newarrival",
+    description: "Classic black leggings made from stretchable fabric. Perfect for workouts, lounging, or layering. Offers a snug fit for everyday comfort.",
+    quantity: 20
+  },
+  {
+    name: "Long Olive Shrug",
+    price: 1399,
+    originalPrice: 2199,
+    discount: 36,
+    image: "/newarrival/longt.jpg",
+    category: "newarrival",
+    description: "Olive green long shrug with asymmetrical hem. Lightweight and breathable. Ideal for layering over crop tops or tanks.",
+    quantity: 14
+  },
+  {
+    name: "Olive Oversized Tee",
+    price: 1099,
+    originalPrice: 1799,
+    discount: 39,
+    image: "/newarrival/oliveoversi.jpg",
+    category: "newarrival",
+    description: "Oversized olive t-shirt with a relaxed fit. Made from soft cotton for all-day comfort. Can be styled casually or for a streetwear vibe.",
+    quantity: 17
+  },
+  {
+    name: "Off-Shoulder Grey Top",
+    price: 1299,
+    originalPrice: 2099,
+    discount: 38,
+    image: "/newarrival/os.jpg",
+    category: "newarrival",
+    description: "Chic off-shoulder top in slate grey. Body-hugging silhouette with ruched details. Great for parties or a stylish night out.",
+    quantity: 12
+  },
+  {
+    name: "Pleated Blush Dress",
+    price: 1799,
+    originalPrice: 2999,
+    discount: 40,
+    image: "/newarrival/pian.jpg",
+    category: "newarrival",
+    description: "Elegant blush pink pleated dress. Features a soft flowy texture and V-neckline. Perfect for brunches and special occasions.",
+    quantity: 10
+  },
+  {
+    name: "Pink Floral Ruched Top",
+    price: 1199,
+    originalPrice: 1899,
+    discount: 37,
+    image: "/newarrival/pinkflo.jpg",
+    category: "newarrival",
+    description: "Floral cropped top in pastel pink with flared sleeves. Ruched center adds a romantic touch. Pairs well with skirts or jeans.",
+    quantity: 18
+  },
+  {
+    name: "Pink Lace Sleepwear Set",
+    price: 1499,
+    originalPrice: 2499,
+    discount: 40,
+    image: "/newarrival/pinklacepj.jpg",
+    category: "newarrival",
+    description: "Delicate lace nightwear in baby pink. Includes camisole top and shorts. Soft, breathable, and perfect for cozy evenings.",
+    quantity: 13
+  },
+  {
+    name: "Polka Pajama Set",
+    price: 1299,
+    originalPrice: 2199,
+    discount: 41,
+    image: "/newarrival/pjw.jpg",
+    category: "newarrival",
+    description: "Charming polka-dotted pajama set with buttoned shirt. Made of soft fabric for restful nights. Comfortable and lightweight.",
+    quantity: 15
+  },
+  {
+    name: "Printed Oversized T-Shirt",
+    price: 999,
+    originalPrice: 1599,
+    discount: 38,
+    image: "/newarrival/printedoversi.jpg",
+    category: "newarrival",
+    description: "Black oversized t-shirt with bold graphic print. Streetwear-ready and highly breathable. Pairs well with shorts or joggers.",
+    quantity: 21
+  },
+  {
+    name: "Red Front-Tie Blouse",
+    price: 1399,
+    originalPrice: 2299,
+    discount: 39,
+    image: "/newarrival/redfb.jpg",
+    category: "newarrival",
+    description: "Vibrant red blouse with a front-tie design. Flowy sleeves and flattering neckline. A statement piece for semi-formal outings.",
+    quantity: 11
+  },
+  {
+    name: "Red Printed Frock",
+    price: 1699,
+    originalPrice: 2799,
+    discount: 39,
+    image: "/newarrival/redfrock.jpg",
+    category: "newarrival",
+    description: "Bohemian-style red frock with traditional prints. Sleeveless and light for summer wear. Great for both casual and festive occasions.",
+    quantity: 9
+  },
+  {
+    name: "Burgundy Maxi Dress",
+    price: 1999,
+    originalPrice: 3399,
+    discount: 41,
+    image: "/newarrival/redmaxi.jpg",
+    category: "newarrival",
+    description: "Deep burgundy maxi dress with spaghetti straps. Elegant flow with comfortable wear. Suitable for date nights or events.",
+    quantity: 12
+  },
+  {
+    name: "Denim Shorts",
+    price: 999,
+    originalPrice: 1699,
+    discount: 41,
+    image: "/newarrival/shorts.jpg",
+    category: "newarrival",
+    description: "Classic dark blue denim shorts with frayed hems. Durable and trendy. A summer staple in any wardrobe.",
+    quantity: 20
+  },
+  {
+    name: "Burgundy Crop Top",
+    price: 1099,
+    originalPrice: 1799,
+    discount: 39,
+    image: "/newarrival/shtop.jpg",
+    category: "newarrival",
+    description: "Trendy crop top in wine burgundy. Sleek design with side cut details. Great for pairing with high-waisted bottoms.",
+    quantity: 14
+  },
+  {
+    name: "Black Silk Shirt",
+    price: 1499,
+    originalPrice: 2499,
+    discount: 40,
+    image: "/newarrival/sleetop.jpg",
+    category: "newarrival",
+    description: "Smooth black silk shirt with a soft drape. Versatile for formal or casual wear. Adds elegance to any outfit.",
+    quantity: 10
+  },
+  {
+    name: "Sleeveless Anarkali Kurta",
+    price: 1899,
+    originalPrice: 3199,
+    discount: 41,
+    image: "/newarrival/sleeveless anarkali.jpg",
+    category: "newarrival",
+    description: "Graceful anarkali kurta with a sleeveless cut. Perfect for festive wear. Flowy fabric with traditional prints.",
+    quantity: 8
+  },
+  {
+    name: "White Cropped Sweatshirt",
+    price: 1299,
+    originalPrice: 2099,
+    discount: 38,
+    image: "/newarrival/whcrop.jpg",
+    category: "newarrival",
+    description: "White sweatshirt cropped above the waist. Casual and sporty style. Ideal for winter layering or gym wear.",
+    quantity: 19
+  },
+  {
+    name: "White Layered Gown",
+    price: 2899,
+    originalPrice: 4799,
+    discount: 40,
+    image: "/newarrival/whid.jpg",
+    category: "newarrival",
+    description: "Elegant white gown with layered ruffles. Feminine and graceful for events. Lightweight chiffon fabric for ease of wear.",
+    quantity: 7
+  },
+  {
+    name: "White Turtleneck Sweater",
+    price: 1199,
+    originalPrice: 1999,
+    discount: 40,
+    image: "/newarrival/whineck.jpg",
+    category: "newarrival",
+    description: "Cozy ribbed turtleneck in soft white. Great as a winter essential. Pairs effortlessly with skirts, jeans, or pants.",
+    quantity: 13
+  },
+  {
+    name: "White Lounge Shorts",
+    price: 899,
+    originalPrice: 1499,
+    discount: 40,
+    image: "/newarrival/whshorts.jpg",
+    category: "newarrival",
+    description: "Comfy white shorts with elastic waistband. Great for lounging or quick errands. Made of breathable cotton fabric.",
+    quantity: 22
+  },
+  {
+    name: "White Sweatpants",
+    price: 1299,
+    originalPrice: 2199,
+    discount: 41,
+    image: "/newarrival/whsweats.jpg",
+    category: "newarrival",
+    description: "White sweatpants designed for comfort. Stretch waistband and cuffed ankles. Pairs well with crop tops or hoodies.",
+    quantity: 18
+  },
+  {
+    name: "Beige Ribbed Sweater",
+    price: 1399,
+    originalPrice: 2399,
+    discount: 41,
+    image: "/newarrival/wht.jpg",
+    category: "newarrival",
+    description: "Neutral beige ribbed sweater with full sleeves. A wardrobe essential for layering. Adds warmth and minimal style.",
+    quantity: 16
+  },
+  {
+    name: "Colorful Knit Tank",
+    price: 1199,
+    originalPrice: 1899,
+    discount: 37,
+    image: "/newarrival/wolf.jpg",
+    category: "newarrival",
+    description: "Striped multicolor knit tank top. Stretchable and cropped style. Perfect for warm weather or layered looks.",
+    quantity: 14
+  },
+  {
+    name: "Cream Wool Pants",
+    price: 1899,
+    originalPrice: 3199,
+    discount: 41,
+    image: "/newarrival/wwoolpant.jpg",
+    category: "newarrival",
+    description: "Cream-toned wool pants with wide-leg fit. Elegant and cozy for colder months. Versatile enough for work or casual wear.",
+    quantity: 12
+  }
+]
+
+;
 
     await Product.insertMany(sampleProducts);
     res.status(201).json({ message: "Products seeded" });
