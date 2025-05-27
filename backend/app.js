@@ -9,8 +9,10 @@ const mongoose = require("mongoose");
 const productRoutes = require("./routes/products");
 const userRoutes = require("./routes/Users");
 const HttpError = require("./models/http-error");
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 
 app.use(bodyParser.json());
 
@@ -26,46 +28,34 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/products/", productRoutes);
-app.use("/api/users/", userRoutes);
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173", // Allow your frontend origin
+//     methods: ["GET", "POST", "PATCH", "DELETE"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   })
+// );
+
+app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
   throw error;
 });
 
-// app.use((error, req, res, next) => {
-//   if (req.file) {
-//     fs.unlink(req.file.path, (err) => {
-//       console.log(err);
-//     });
-//   }
-
-//   if (res.headerSent) {
-//     return next(error);
-//   }
-//   res.status(error.code || 500);
-//   res.json({ message: error.message || "An unknown error occured!" });
-// });
-
 app.use((error, req, res, next) => {
   if (req.file) {
     fs.unlink(req.file.path, (err) => {
-      if (err) console.error("File cleanup error:", err);
+      console.log(err);
     });
   }
 
-  if (res.headersSent) {
+  if (res.headerSent) {
     return next(error);
   }
-
-  const status = Number(error.code);
-  const validStatus =
-    !isNaN(status) && status >= 100 && status <= 599 ? status : 500;
-
-  res.status(validStatus).json({
-    message: error.message || "An unknown error occurred!",
-  });
+  res.status(error.code || 500);
+  res.json({ message: error.message || "An unknown error occured!" });
 });
 
 mongoose

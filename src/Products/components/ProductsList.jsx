@@ -25,6 +25,7 @@ export default function ProductsList(props) {
           image={item.image}
           price={item.price}
           category={item.category}
+          quantity={item.quantity}
         />
       ))}
     </ul>

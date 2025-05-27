@@ -1,10 +1,13 @@
 const express = require("express");
+const { check, validationResult } = require("express-validator");
+
 const Product = require("../models/Products");
 const productControllers = require("../controllers/Products-controllers");
+const HttpError = require("../models/http-error");
+const fileUpload = require("../controllers/fileStorage");
 
 const router = express.Router();
 
-// GET /api/products?category=...&exclude=...
 router.get("/", async (req, res) => {
   const { category, exclude } = req.query;
   try {
@@ -13,7 +16,7 @@ router.get("/", async (req, res) => {
       query.category = category;
     }
     if (exclude) {
-      query._id = { $ne: exclude }; // exclude current product
+      query._id = { $ne: exclude };
     }
 
     const products = await Product.find(query);
@@ -38,7 +41,7 @@ router.get("/pants", async (req, res) => {
   };
 
   const sortQuery =
-    price === "asc" ? { price: 1 } : price === "desc" ? { price: -1 } : {}; // Default: no sort
+    price === "asc" ? { price: 1 } : price === "desc" ? { price: -1 } : {};
 
   try {
     const total = await Product.countDocuments(query);
@@ -210,6 +213,63 @@ router.get("/:id", async (req, res) => {
     res.json(product);
   } catch (err) {
     res.status(500).json({ message: "Fetching product failed." });
+  }
+});
+
+router.post(
+  "/addProduct",
+  fileUpload.single("image"),
+  [
+    check("name").not().isEmpty(),
+    check("price").isNumeric(),
+    check("category").not().isEmpty(),
+    check("description").not().isEmpty(),
+    check("quantity").isNumeric(),
+  ],
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return next(
+        new HttpError("Invalid inputs passed, please check your data.", 422)
+      );
+    }
+
+    const { name, price, category, description, quantity } = req.body;
+
+    const imagePath = req.file?.path.replace(/\\/g, "/");
+
+    const createdProduct = new Product({
+      name,
+      price,
+      image: imagePath,
+      category,
+      description,
+      quantity,
+    });
+
+    try {
+      await createdProduct.save();
+      res.status(201).json({ product: createdProduct });
+    } catch (err) {
+      return next(new HttpError("Creating product failed.", 500));
+    }
+  }
+);
+
+// PATCH /products/:id/decrement
+router.patch("/:id/decrement", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product || product.quantity <= 0) {
+      return res
+        .status(404)
+        .json({ message: "Product not found or out of stock" });
+    }
+    product.quantity -= 1;
+    await product.save();
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to update product quantity" });
   }
 });
 

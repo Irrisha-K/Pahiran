@@ -1,4 +1,4 @@
-/* .product-item {
+.product-item {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -56,7 +56,7 @@
   color: #aaa;
   margin-top: auto;
 }
-/* 
+
 .product-item__actions {
   display: flex;
   justify-content: center;
@@ -89,7 +89,7 @@
   background-color: rgba(255, 255, 255, 0.1);
   color: #000;
   box-shadow: 0 0 8px rgba(255, 217, 0, 0.4);
-} 
+}
 
 .btn--view {
   margin: 0;
@@ -124,9 +124,7 @@
   100% {
     background-position: 0% 50%;
   }
-} */
-
-/*  */
+}
 
 .product-item {
   height: 100%;
@@ -139,12 +137,24 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 480px; /* slightly taller */
+  min-height: 480px;
+}
+
+.product-item__info .product-item__quantity {
+  font-weight: bold;
+  color: #222; /* Dark but softer than pure black */
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  display: block;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  backdrop-filter: blur(2px);
 }
 
 .product-item__image {
   width: 100%;
-  height: 280px; /* increased height */
+  height: 280px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -169,20 +179,19 @@
 }
 
 .product-item__info h2 {
-  font-size: 1.6rem; /* bigger font */
+  font-size: 1.6rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
   color: #f1f1f1;
 }
 
 .product-item__info span {
-  font-size: 1.2rem; /* price slightly bigger */
+  font-size: 1.2rem;
   display: block;
   margin-top: 0.3rem;
   color: #ffd700;
 }
 
-/* Button wrapper */
 .product-item__buttons {
   display: flex;
   justify-content: center;
@@ -190,8 +199,6 @@
   padding: 1rem;
 }
 
-/* Shared button style */
-/* Base style shared by both buttons */
 .btn--view {
   padding: 0.6rem 1.4rem;
   border: none;
@@ -207,18 +214,16 @@
   box-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
 }
 
-/* Unique hover for VIEW DETAILS */
 .btn--details:hover {
   transform: scale(1.05);
-  background: rgba(30, 144, 255, 0.2); /* DodgerBlue tint */
+  background: rgba(30, 144, 255, 0.2);
   color: #1e90ff;
   box-shadow: 0 0 10px rgba(30, 144, 255, 0.3), 0 0 20px rgba(30, 144, 255, 0.2);
 }
 
-/* Unique hover for ADD TO CART */
 .btn--add:hover {
   transform: scale(1.05);
-  background: rgba(255, 217, 0, 0.2); /* Yellow/golden tint */
+  background: rgba(255, 217, 0, 0.2);
   color: #ffd900;
   box-shadow: 0 0 10px rgba(255, 217, 0, 0.3), 0 0 20px rgba(255, 217, 0, 0.2);
 }
