@@ -171,9 +171,12 @@
 
 import { useState } from "react";
 import "./AddProduct.css";
+import ErrorModal from "../../shared/components/UIElements/InfoModal";
+import InfoModal from "../../shared/components/UIElements/InfoModal";
 
 export default function AdminProductForm() {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -213,7 +216,7 @@ export default function AdminProductForm() {
     form.append("price", formData.price);
     form.append("category", formData.category);
     form.append("quantity", formData.quantity);
-    form.append("image", formData.imageFile); // Use File object
+    form.append("image", formData.imageFile);
 
     try {
       const res = await fetch("http://localhost:5001/api/products/addProduct", {
@@ -226,7 +229,7 @@ export default function AdminProductForm() {
         throw new Error(data.message || "Failed to add product");
       }
 
-      alert("Product added successfully!");
+      setSuccessMessage("Product added successfully!"); // Show modal
       setFormData({
         name: "",
         description: "",
@@ -239,64 +242,75 @@ export default function AdminProductForm() {
       setIsImageLoaded(false);
     } catch (err) {
       console.error(err);
-      alert("Error: " + err.message);
+      setSuccessMessage("Error: " + err.message); // Show error modal
     }
   };
 
   return (
-    <div className="admin-form-container">
-      <h2>Add Product</h2>
-      <form className="product-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Product Name"
-          required
-          value={formData.name}
-          onChange={handleChange}
-        />
-        <textarea
-          name="description"
-          placeholder="Description"
-          required
-          value={formData.description}
-          onChange={handleChange}
-        />
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          required
-          value={formData.price}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="category"
-          placeholder="Category"
-          required
-          value={formData.category}
-          onChange={handleChange}
-        />
-        <input
-          type="number"
-          name="quantity"
-          placeholder="Quantity"
-          required
-          value={formData.quantity}
-          onChange={handleChange}
-        />
-        <input
-          type="file"
-          name="image"
-          accept="image/*"
-          onChange={handleChange}
-        />
-        {formData.image && (
-          <img src={formData.image} alt="Preview" className="preview-image" />
-        )}
-        <button type="submit">Add Product</button>
-      </form>
-    </div>
+    <>
+      <InfoModal
+        message={successMessage}
+        onClear={() => setSuccessMessage(null)}
+        title={
+          successMessage?.startsWith("Error")
+            ? "An Error Occurred!"
+            : "Success!"
+        }
+      />
+      <div className="admin-form-container">
+        <h2>Add Product</h2>
+        <form className="product-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="name"
+            placeholder="Product Name"
+            required
+            value={formData.name}
+            onChange={handleChange}
+          />
+          <textarea
+            name="description"
+            placeholder="Description"
+            required
+            value={formData.description}
+            onChange={handleChange}
+          />
+          <input
+            type="number"
+            name="price"
+            placeholder="Price"
+            required
+            value={formData.price}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="category"
+            placeholder="Category"
+            required
+            value={formData.category}
+            onChange={handleChange}
+          />
+          <input
+            type="number"
+            name="quantity"
+            placeholder="Quantity"
+            required
+            value={formData.quantity}
+            onChange={handleChange}
+          />
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleChange}
+          />
+          {formData.image && (
+            <img src={formData.image} alt="Preview" className="preview-image" />
+          )}
+          <button type="submit">Add Product</button>
+        </form>
+      </div>
+    </>
   );
 }
