@@ -49,7 +49,7 @@ export default function ProductDetailsPage() {
   const handleQuantityChange = (e) => {
     const val = Math.max(
       1,
-      Math.min(parseInt(e.target.value) || 1, product.stock)
+      Math.min(parseInt(e.target.value) || 1, product.quantity)
     );
     setQuantity(val);
   };
@@ -81,8 +81,8 @@ export default function ProductDetailsPage() {
       navigate("/auth");
       return;
     }
-    if (quantity > product.stock) {
-      toast.error(`Only ${product.stock} items left in stock.`);
+    if (quantity > product.quantity) {
+      toast.error(`Only ${product.quantity} items left in stock.`);
       return;
     }
 
@@ -150,17 +150,21 @@ export default function ProductDetailsPage() {
           <p className="description">{product.description}</p>
         )}
         <p className="stock-info">Available: {product.quantity} items</p>
-        <label htmlFor="quantity">Quantity:</label>
-        <input
-          type="number"
-          id="quantity"
-          name="quantity"
-          min="1"
-          max={product.stock}
-          value={quantity}
-          onChange={handleQuantityChange}
-          style={{ width: "60px", marginBottom: "1rem" }}
-        />
+        {typeof product.quantity === "number" && (
+          <div className="quantity-input-group">
+            <label htmlFor="quantity">Quantity:</label>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              min="1"
+              max={product.quantity}
+              value={String(quantity)}
+              onChange={handleQuantityChange}
+            />
+          </div>
+        )}
+
         <button className="btn-add-to-cart" onClick={handleAddToCart}>
           Add to Cart
         </button>

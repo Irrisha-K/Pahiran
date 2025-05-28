@@ -26,11 +26,11 @@ function cartReducer(state, action) {
       const existingItem = state.items[existingCartItemIndex];
       const updatedItem = {
         ...existingItem,
-        quantity: existingItem.quantity + 1,
+        quantity: existingItem.quantity + action.item.quantity,
       };
       updatedItems[existingCartItemIndex] = updatedItem;
     } else {
-      updatedItems.push({ ...action.item, quantity: 1 });
+      updatedItems.push({ ...action.item });
     }
 
     saveCartToLocalStorage(updatedItems);

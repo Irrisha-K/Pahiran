@@ -68,16 +68,25 @@ export default function CheckoutPage() {
         }
       }
 
-      setOrderPlaced(true);
-      // localStorage.removeItem("cart");
+      // ✅ Show success toast BEFORE setting orderPlaced
+      toast.success("Order placed successfully! Redirecting to home...", {
+        style: {
+          backgroundColor: "#000",
+          color: "#fff",
+          fontWeight: "bold",
+          borderRadius: "10px",
+        },
+      });
+
       const userId = localStorage.getItem("userId");
       if (userId) {
         localStorage.removeItem(`cart-${userId}`);
         clearCart();
       }
 
+      setOrderPlaced(true); // Triggers thank you message
+
       setTimeout(() => {
-        toast.success("Order placed successfully! Redirecting to home...");
         navigate("/");
       }, 3000);
     } catch (error) {
