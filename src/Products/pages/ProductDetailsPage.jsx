@@ -10,6 +10,7 @@ export default function ProductDetailsPage() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState(null);
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
@@ -45,19 +46,54 @@ export default function ProductDetailsPage() {
     fetchProduct();
   }, [id]);
 
+  const handleQuantityChange = (e) => {
+    const val = Math.max(
+      1,
+      Math.min(parseInt(e.target.value) || 1, product.stock)
+    );
+    setQuantity(val);
+  };
+
+  // const handleAddToCart = () => {
+  //   if (!authCtx.isLoggedIn) {
+  //     navigate("/auth");
+  //     return;
+  //   }
+
+  //   const item = {
+  //     ...product,
+  //     numericPrice: parseFloat(product.price),
+  //   };
+
+  //   cartCtx.addItem(item);
+  //   toast.success(`${product.name} added to cart!`, {
+  //     style: {
+  //       backgroundColor: "#000",
+  //       color: "#fff",
+  //       fontWeight: "bold",
+  //       borderRadius: "10px",
+  //     },
+  //   });
+  // };
+
   const handleAddToCart = () => {
     if (!authCtx.isLoggedIn) {
       navigate("/auth");
+      return;
+    }
+    if (quantity > product.stock) {
+      toast.error(`Only ${product.stock} items left in stock.`);
       return;
     }
 
     const item = {
       ...product,
       numericPrice: parseFloat(product.price),
+      quantity: quantity,
     };
 
     cartCtx.addItem(item);
-    toast.success(`${product.name} added to cart!`, {
+    toast.success(`${product.name} (${quantity}) added to cart!`, {
       style: {
         backgroundColor: "#000",
         color: "#fff",
@@ -113,6 +149,18 @@ export default function ProductDetailsPage() {
         {product.description && (
           <p className="description">{product.description}</p>
         )}
+        <p className="stock-info">Available: {product.quantity} items</p>
+        <label htmlFor="quantity">Quantity:</label>
+        <input
+          type="number"
+          id="quantity"
+          name="quantity"
+          min="1"
+          max={product.stock}
+          value={quantity}
+          onChange={handleQuantityChange}
+          style={{ width: "60px", marginBottom: "1rem" }}
+        />
         <button className="btn-add-to-cart" onClick={handleAddToCart}>
           Add to Cart
         </button>

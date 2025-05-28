@@ -16,6 +16,7 @@ import SearchBar from "../UIElements/SearchBar";
 
 export default function Navbar() {
   const auth = useContext(AuthContext);
+  const { clearCart } = useContext(CartContext);
 
   const { items } = useContext(CartContext);
   const totalCartItems = items.reduce(
@@ -27,8 +28,9 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    auth.logout(); // Clear context or token
-    navigate("/"); // Redirect to home page
+    auth.logout();
+    clearCart();
+    navigate("/");
   };
 
   const handleSearch = (e) => {

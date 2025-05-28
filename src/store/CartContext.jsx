@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 
 const CartContext = createContext({
   items: [],
@@ -8,6 +8,13 @@ const CartContext = createContext({
 });
 
 function cartReducer(state, action) {
+  function saveCartToLocalStorage(items) {
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      localStorage.setItem(`cart-${userId}`, JSON.stringify(items));
+    }
+  }
+
   if (action.type === "ADD_ITEM") {
     const existingCartItemIndex = state.items.findIndex(
       (item) => item.id === action.item.id
@@ -26,6 +33,7 @@ function cartReducer(state, action) {
       updatedItems.push({ ...action.item, quantity: 1 });
     }
 
+    saveCartToLocalStorage(updatedItems);
     return { ...state, items: updatedItems };
   }
 
@@ -46,6 +54,8 @@ function cartReducer(state, action) {
       };
       updatedItems[existingCartItemIndex] = updatedItem;
     }
+
+    saveCartToLocalStorage(updatedItems);
     return { ...state, items: updatedItems };
   }
 
@@ -53,6 +63,8 @@ function cartReducer(state, action) {
     const updatedItems = state.items.map((item) =>
       item.id === action.id ? { ...item, quantity: item.quantity + 1 } : item
     );
+
+    saveCartToLocalStorage(updatedItems);
     return { ...state, items: updatedItems };
   }
 
@@ -62,22 +74,48 @@ function cartReducer(state, action) {
         ? { ...item, quantity: item.quantity - 1 }
         : item
     );
+
+    saveCartToLocalStorage(updatedItems);
     return { ...state, items: updatedItems };
   }
 
   if (action.type === "REMOVE_ALL") {
     const updatedItems = state.items.filter((item) => item.id !== action.id);
+    saveCartToLocalStorage(updatedItems);
     return { ...state, items: updatedItems };
   }
 
   if (action.type === "CLEAR_CART") {
+    saveCartToLocalStorage([]); // clear it from localStorage too
     return { ...state, items: [] };
   }
+
+  if (action.type === "LOAD_CART") {
+    return { ...state, items: action.items };
+  }
+
+  // Unknown action type
   return state;
 }
 
 export function CartContextProvider({ children }) {
-  const [cart, dispatchCartAction] = useReducer(cartReducer, { items: [] });
+  const userId = localStorage.getItem("userId");
+  const initialCart = {
+    items: JSON.parse(localStorage.getItem(`cart-${userId}`)) || [],
+  };
+
+  const [cart, dispatchCartAction] = useReducer(cartReducer, initialCart);
+
+  // const [cart, dispatchCartAction] = useReducer(cartReducer, { items: [] });
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    const storedCart = userId
+      ? JSON.parse(localStorage.getItem(`cart-${userId}`)) || []
+      : [];
+
+    dispatchCartAction({ type: "LOAD_CART", items: storedCart });
+  }, []); // runs once on mount
 
   function addItem(item) {
     dispatchCartAction({

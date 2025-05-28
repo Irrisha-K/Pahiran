@@ -313,6 +313,33 @@ router.put(
   }
 );
 
+router.patch("/:id/reduce-stock", async (req, res) => {
+  try {
+    const { quantity } = req.body; // quantity to reduce
+
+    if (!quantity || quantity <= 0) {
+      return res.status(400).json({ message: "Invalid quantity." });
+    }
+
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found." });
+    }
+
+    if (product.stock < quantity) {
+      return res.status(400).json({ message: "Not enough stock available." });
+    }
+
+    product.stock -= quantity;
+    await product.save();
+
+    res.json({ message: "Stock updated successfully.", stock: product.stock });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error." });
+  }
+});
+
 // PATCH /products/:id/decrement
 router.patch("/:id/decrement", async (req, res) => {
   try {
