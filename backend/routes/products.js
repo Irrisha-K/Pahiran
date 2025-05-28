@@ -5,6 +5,9 @@ const Product = require("../models/Products");
 const productControllers = require("../controllers/Products-controllers");
 const HttpError = require("../models/http-error");
 const fileUpload = require("../controllers/fileStorage");
+const fs = require("fs");
+const path = require("path");
+const mongoose = require("mongoose");
 
 const router = express.Router();
 
@@ -256,6 +259,60 @@ router.post(
   }
 );
 
+router.put(
+  "/updateProduct/:id",
+  fileUpload.single("image"),
+  [
+    check("name").not().isEmpty(),
+    check("price").isNumeric(),
+    check("category").not().isEmpty(),
+    check("description").not().isEmpty(),
+    check("quantity").isNumeric(),
+  ],
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return next(
+        new HttpError("Invalid inputs passed, please check your data.", 422)
+      );
+    }
+
+    const productId = req.params.id;
+    const { name, price, category, description, quantity } = req.body;
+
+    let imagePath;
+    if (req.file) {
+      imagePath = req.file.path.replace(/\\/g, "/");
+    }
+
+    try {
+      const product = await Product.findById(productId);
+      if (!product) {
+        return next(
+          new HttpError("Could not find product for the provided id.", 404)
+        );
+      }
+
+      product.name = name;
+      product.price = price;
+      product.category = category;
+      product.description = description;
+      product.quantity = quantity;
+
+      if (imagePath) {
+        product.image = imagePath;
+      }
+
+      await product.save();
+
+      res.status(200).json({ product });
+    } catch (err) {
+      console.error(err);
+      return next(new HttpError("Updating product failed.", 500));
+    }
+  }
+);
+
 // PATCH /products/:id/decrement
 router.patch("/:id/decrement", async (req, res) => {
   try {
@@ -271,6 +328,46 @@ router.patch("/:id/decrement", async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: "Failed to update product quantity" });
   }
+});
+
+router.delete("/:pid", async (req, res, next) => {
+  const productId = req.params.pid;
+
+  let product;
+  try {
+    product = await Product.findById(productId);
+  } catch (err) {
+    console.error(err);
+    return next(
+      new HttpError("Could not delete product, please try again.", 500)
+    );
+  }
+
+  if (!product) {
+    return next(new HttpError("Could not find product for this id.", 404));
+  }
+
+  const imagePath = path.join(__dirname, "..", product.image);
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await product.deleteOne({ session: sess });
+    await sess.commitTransaction();
+  } catch (err) {
+    console.error(err);
+    return next(new HttpError("Could not delete product from DB.", 500));
+  }
+
+  fs.unlink(imagePath, (err) => {
+    if (err) {
+      console.log("Failed to delete image file:", err);
+    } else {
+      console.log("Image file deleted:", imagePath);
+    }
+  });
+
+  res.status(200).json({ message: "Product deleted successfully." });
 });
 
 router.post("/add", async (req, res) => {

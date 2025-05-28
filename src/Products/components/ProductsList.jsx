@@ -1,68 +1,31 @@
-import Card from "../../shared/components/UIElements/Card";
+import { useEffect, useState } from "react";
 import ProductsItem from "./ProductsItem";
 
-import "./ProductsList.css";
-
 export default function ProductsList(props) {
-  // if (props.items.length === 0) {
-  //   return (
-  //     <div className="product-list center">
-  //       <Card className="no-product">
-  //         <p>No Places Found! Maybe Create One?</p>
-  //         <button>Share Place</button>
-  //       </Card>
-  //     </div>
-  //   );
-  // }
+  const [productList, setProductList] = useState(props.items);
+
+  useEffect(() => {
+    setProductList(props.items);
+  }, [props.items]);
+
+  const handleProductDeleted = (deletedProductId) => {
+    setProductList((prev) => prev.filter((p) => p._id !== deletedProductId));
+  };
 
   return (
     <ul className="product-list">
-      {props.items.map((item) => (
+      {productList.map((item) => (
         <ProductsItem
-          key={item._id} // ✅ Add this!
+          key={item._id}
           id={item._id}
           name={item.name}
           image={item.image}
           price={item.price}
           category={item.category}
           quantity={item.quantity}
+          onProductDeleted={handleProductDeleted}
         />
       ))}
     </ul>
-    // <ul className="product-list">
-    //   {props.items.map((item) => (
-    //     <li key={item._id} className="product-item">
-    //       <ProductsItem
-    //         id={item._id}
-    //         name={item.name}
-    //         image={item.image}
-    //         price={item.price}
-    //         category={item.category}
-    //       />
-    //     </li>
-    //   ))}
-    // </ul>
   );
 }
-
-// import Card from "../../shared/components/UIElements/Card";
-// import ProductsItem from "./ProductsItem";
-// import "./ProductsList.css";
-
-// export default function ProductsList(props) {
-//   return (
-//     <ul className="product-list">
-//       {props.items.map((item) => (
-//         <li key={item._id} className="product-item">
-//           <ProductsItem
-//             id={item._id}
-//             name={item.name}
-//             image={item.image}
-//             price={item.price}
-//             category={item.category}
-//           />
-//         </li>
-//       ))}
-//     </ul>
-//   );
-// }

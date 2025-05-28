@@ -112,10 +112,25 @@ export default function Navbar() {
             </li>
           )
         )}
-        <li>
+        {auth.isLoggedIn && auth.role === "admin" ? (
+          <li>
+            <NavLink to="/update/:pid">Update Products</NavLink>
+          </li>
+        ) : (
+          //       {products.map((product) => (
+          //   <li key={product._id}>
+          //     <NavLink to={`/update/${product._id}`}>{product.name}</NavLink>
+          //   </li>
+          // ))}
+          auth.isLoggedIn && (
+            <li>
+              <NavLink to="/best-seller">Best Seller</NavLink>
+            </li>
+          )
+        )}
+        {/* <li>
           <NavLink to="/best-seller">Best Seller</NavLink>
-        </li>
-
+        </li> */}
         {/* <div className="dropdown">
           <li>Shop By</li>
           <div className="dropdown-content">
@@ -128,7 +143,6 @@ export default function Navbar() {
             <a href="#">Co-ords</a>
           </div>
         </div> */}
-
         <li className="dropdown">
           <span className="dropbtn">Shop By</span>
           <div className="dropdown-content">
@@ -139,7 +153,6 @@ export default function Navbar() {
             <NavLink to="/coord">Co-ords</NavLink>
           </div>
         </li>
-
         <li>
           <NavLink to="/about">About Us</NavLink>
         </li>

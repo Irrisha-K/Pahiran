@@ -23,6 +23,7 @@ import AuthProvider from "./store/AuthProvider";
 import UsersHomePage from "./users/pages/UsersHomePage";
 import AdminHomePage from "./users/pages/AdminHomePage";
 import ProductDetailsPage from "./Products/pages/ProductDetailsPage";
+import AdminUpdateProduct from "./users/Admin/AdminUpdateProduct";
 
 const routes = [
   {
@@ -47,6 +48,8 @@ const routes = [
       { path: "/users", element: <UsersHomePage /> },
       { path: "/admin", element: <AdminHomePage /> },
       { path: "/product/:id", element: <ProductDetailsPage /> },
+      { path: "/admin/update/:id", element: <AdminUpdateProduct /> },
+      // <Route path="/admin/update/:id" element={<AdminUpdateProduct />} />
     ],
   },
   { path: "/auth", element: <AuthForm /> },

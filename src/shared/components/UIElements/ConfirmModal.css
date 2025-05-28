@@ -1,0 +1,97 @@
+/* ConfirmModal.css */
+
+.confirm-modal__backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  /* Fade-in animation */
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+.confirm-modal__content {
+  background: #050303;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+  /* Fade-in animation for content */
+  animation: scaleIn 0.3s ease-in-out forwards;
+}
+
+.confirm-modal__content h2 {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.confirm-modal__content p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.confirm-modal__actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1.5rem;
+}
+
+.btn--cancel,
+.btn--confirm {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn--cancel {
+  background-color: #999;
+  color: #fff;
+}
+
+.btn--cancel:hover {
+  background-color: #777;
+}
+
+.btn--confirm {
+  background-color: #d9534f;
+  color: #fff;
+}
+
+.btn--confirm:hover {
+  background-color: #c9302c;
+}
+
+/* Keyframes for fade-in and scale-in animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
