@@ -259,50 +259,6 @@ router.post(
   }
 );
 
-router.post("/send-otp", async (req, res) => {
-  const { email } = req.body;
-  if (!email) return res.status(400).json({ message: "Email is required" });
-
-  const otp = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit OTP
-  otpStore.set(email, otp);
-
-  const transporter = nodemailer.createTransport({
-    service: "Gmail",
-    auth: {
-      user: "your_email@gmail.com",
-      pass: "your_app_password",
-    },
-  });
-
-  const mailOptions = {
-    from: "your_email@gmail.com",
-    to: email,
-    subject: "Your OTP for Email Verification",
-    text: `Your OTP is ${otp}. It is valid for 5 minutes.`,
-  };
-
-  try {
-    await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: "OTP sent" });
-
-    // Optional: expire OTP in 5 minutes
-    setTimeout(() => otpStore.delete(email), 5 * 60 * 1000);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Failed to send OTP" });
-  }
-});
-
-router.post("/verify-otp", (req, res) => {
-  const { email, otp } = req.body;
-  if (otpStore.get(email) === otp) {
-    otpStore.delete(email); // remove after success
-    return res.status(200).json({ message: "OTP verified" });
-  } else {
-    return res.status(400).json({ message: "Invalid OTP" });
-  }
-});
-
 router.put(
   "/updateProduct/:id",
   fileUpload.single("image"),

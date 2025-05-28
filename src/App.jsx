@@ -79,6 +79,7 @@ function App() {
         position="bottom-right"
         autoClose={2000}
         hideProgressBar
+        theme="colored"
       />
       <AuthProvider>
         <CartContextProvider>

@@ -1,57 +1,73 @@
+/* Main wrapper */
 .user-page-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f3f4f6;
+  background: linear-gradient(to right, #fdfbfb, #ebedee);
   padding: 20px;
 }
 
+/* Card layout */
 .user-card {
   background: #ffffff;
-  padding: 32px;
-  border-radius: 20px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  padding: 36px 32px;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 450px;
+  max-width: 480px;
   text-align: center;
   animation: fadeIn 0.5s ease;
+  transition: transform 0.3s;
 }
 
+.user-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Title */
 .user-title {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: bold;
-  color: #333;
-  margin-bottom: 24px;
+  color: #2c3e50;
+  margin-bottom: 28px;
 }
 
+/* Info section */
 .user-info {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
   align-items: flex-start;
-  padding: 0 10px;
+  padding: 0 12px;
+  font-size: 16px;
 }
 
 .user-item {
   display: flex;
   align-items: center;
-  font-size: 16px;
   color: #555;
+  transition: color 0.2s ease;
+}
+
+.user-item:hover {
+  color: #111;
 }
 
 .user-icon {
   margin-right: 10px;
-  color: #777;
+  color: #888;
   font-size: 18px;
 }
 
+/* Role label */
 .user-role {
-  margin-top: 24px;
+  margin-top: 28px;
   font-size: 14px;
   color: #888;
 }
 
+/* Loading & error messages */
 .user-loading,
 .user-error {
   text-align: center;
@@ -60,10 +76,75 @@
   color: #666;
 }
 
+/* Edit form styling */
+.user-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 0 12px;
+}
+
+.user-edit-form input {
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-edit-form input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  outline: none;
+}
+
+/* Buttons */
+button {
+  padding: 10px 18px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.2s;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Primary action */
+.user-info button,
+.user-edit-form button[type="submit"] {
+  background-color: #3498db;
+  color: #fff;
+  margin-top: 12px;
+}
+
+.user-info button:hover,
+.user-edit-form button[type="submit"]:hover {
+  background-color: #2980b9;
+}
+
+/* Cancel button */
+.user-edit-form button[type="button"] {
+  background-color: #bdc3c7;
+  color: #2c3e50;
+}
+
+.user-edit-form button[type="button"]:hover {
+  background-color: #95a5a6;
+}
+
+/* Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;

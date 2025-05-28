@@ -14,17 +14,37 @@ router.get("/", async (req, res, next) => {
   try {
     const { email, name } = req.query;
 
-    // Build dynamic filter
     const filter = {};
     if (email) filter.email = email;
-    if (name) filter.name = new RegExp(name, "i"); // case-insensitive match
+    if (name) filter.name = new RegExp(name, "i");
 
-    // Fetch users with selected filters, excluding 'password' and 'role'
     const users = await User.find(filter).select("-password -role");
 
     res.status(200).json(users);
   } catch (error) {
     console.error("Error fetching users:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  const userId = req.params.id;
+  const { name, email, number } = req.body;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { name, email, number },
+      { new: true }
+    ).select("-password");
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    console.error("Update failed:", err);
     res.status(500).json({ message: "Server error" });
   }
 });

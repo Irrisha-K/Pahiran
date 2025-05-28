@@ -1,4 +1,4 @@
-.admin-update-container {
+/* .admin-update-container {
   max-width: 500px;
   margin: 40px auto;
   padding: 20px;
@@ -61,4 +61,126 @@
   padding: 20px;
   border-radius: 6px;
   text-align: center;
+} */
+
+/*  */
+
+.admin-update-container {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem 2.5rem;
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.admin-update-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: #2c3e50;
+}
+
+.admin-update-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.admin-update-form input,
+.admin-update-form textarea {
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.admin-update-form input:focus,
+.admin-update-form textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+  outline: none;
+}
+
+.admin-update-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.admin-update-form input[type="file"] {
+  padding: 0.5rem 0;
+  border: none;
+}
+
+.preview-image {
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: cover;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-top: -0.5rem;
+}
+
+.admin-update-form button {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 0.85rem 1.2rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.admin-update-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Modal Styling */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.modal-content p {
+  margin-bottom: 1.25rem;
+  font-weight: bold;
+}
+
+.modal-content button {
+  background-color: #28a745;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #218838;
 }

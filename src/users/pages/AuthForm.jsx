@@ -1,12 +1,14 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AuthForm.css";
+import { toast } from "react-toastify";
+
 import { AuthContext } from "../../store/AuthContext";
 
 export default function AuthForm() {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
-  const [step, setStep] = useState("form"); // "form" | "otp"
+  const [step, setStep] = useState("form");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -17,13 +19,13 @@ export default function AuthForm() {
     email: "",
     password: "",
   });
-  const [userType, setUserType] = useState(null); // null | "admin" | "user"
+  const [userType, setUserType] = useState(null);
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
     setErrors({});
     setFormValues({ name: "", email: "", password: "" });
-    setUserType(null);
+    toast.info(isLogin ? "Switching to Sign Up" : "Switching to Login");
   };
 
   const validate = () => {
@@ -58,7 +60,6 @@ export default function AuthForm() {
     }
 
     const url = `http://localhost:5001/api/users/login`;
-
     try {
       const res = await fetch(url, {
         method: "POST",
@@ -70,11 +71,10 @@ export default function AuthForm() {
       if (!res.ok) throw new Error(data.message || "Something went wrong");
 
       auth.login(data.userId, data.token, data.role);
+      toast.success("Login successful!");
       navigate(data.role === "admin" ? "/admin" : "/users");
     } catch (err) {
-      alert(err.message);
-    } finally {
-      setLoading(false);
+      toast.error(err.message || "Login failed.");
     }
   };
 
@@ -88,10 +88,11 @@ export default function AuthForm() {
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
-      alert("OTP sent to your email.");
+
+      toast.info("OTP sent to your email.");
       setStep("otp");
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message || "Failed to send OTP.");
     }
   };
 
@@ -106,7 +107,6 @@ export default function AuthForm() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
 
-      // ✅ Now perform signup (manually, since OTP verified)
       const signupRes = await fetch("http://localhost:5001/api/users/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -116,11 +116,11 @@ export default function AuthForm() {
       const signupData = await signupRes.json();
       if (!signupRes.ok) throw new Error(signupData.message);
 
-      alert("Signup successful! Please login.");
+      toast.success("Signup successful! Please login.");
       setIsLogin(true);
       setStep("form");
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message || "OTP verification failed.");
     }
   };
 
@@ -132,35 +132,6 @@ export default function AuthForm() {
     setUserType(null);
     setFormValues({ name: "", email: "", password: "" });
   };
-
-  // Render different dashboards based on userType
-  if (userType === "admin") {
-    return (
-      <div className="auth-wrapper">
-        <div className="dashboard">
-          <h2>Welcome, Admin</h2>
-          <p>You have access to admin controls.</p>
-          <button onClick={logout} className="auth-button">
-            Logout
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (userType === "user") {
-    return (
-      <div className="auth-wrapper">
-        <div className="dashboard">
-          <h2>Welcome, User</h2>
-          <p>You are logged in as a regular user.</p>
-          <button onClick={logout} className="auth-button">
-            Logout
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="auth-wrapper">

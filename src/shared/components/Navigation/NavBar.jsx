@@ -1,5 +1,11 @@
 import React, { useContext, useState } from "react";
-import { FaSearch, FaUser, FaHeart, FaShoppingBag } from "react-icons/fa";
+import {
+  FaSearch,
+  FaUser,
+  FaHeart,
+  FaShoppingBag,
+  FaUserCircle,
+} from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
 import CartContext from "../../../store/CartContext";
 import { AuthContext } from "../../../store/AuthContext";
@@ -76,9 +82,12 @@ export default function Navbar() {
             </NavLink>
           )}
 
-          <NavLink to="/wishlist">
-            <FaHeart />
-          </NavLink>
+          {auth.isLoggedIn && (
+            <NavLink to="/users">
+              <FaUserCircle />
+            </NavLink>
+          )}
+
           <NavLink to="/cart" className="cart-icon">
             <FaShoppingBag />
             {totalCartItems > 0 && (
@@ -121,7 +130,7 @@ export default function Navbar() {
 
         {(!auth.isLoggedIn || auth.role === "user") && (
           <li>
-            <NavLink to="/new-arrivals">Best Seller</NavLink>
+            <NavLink to="/best-seller">Best Seller</NavLink>
           </li>
         )}
         {auth.isLoggedIn && auth.role === "admin" && (

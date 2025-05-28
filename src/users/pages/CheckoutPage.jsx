@@ -47,6 +47,7 @@
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import "./CheckoutPage.css";
 
 export default function CheckoutPage() {
@@ -78,13 +79,15 @@ export default function CheckoutPage() {
 
   const handlePlaceOrder = () => {
     if (!formData.name || !formData.address || !formData.phone) {
-      alert("Please fill all delivery details.");
+      toast.error("Please fill all delivery details.");
       return;
     }
 
     setOrderPlaced(true);
 
+    // Simulate a delay before redirecting
     setTimeout(() => {
+      toast.success("Order placed successfully! Redirecting to home...");
       navigate("/");
     }, 3000);
   };
