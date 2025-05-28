@@ -5,7 +5,29 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 
+const nodemailer = require("nodemailer");
+const otpStore = new Map();
+
 const JWT_SECRET = process.env.JWT_SECRET;
+
+router.get("/", async (req, res, next) => {
+  try {
+    const { email, name } = req.query;
+
+    // Build dynamic filter
+    const filter = {};
+    if (email) filter.email = email;
+    if (name) filter.name = new RegExp(name, "i"); // case-insensitive match
+
+    // Fetch users with selected filters, excluding 'password' and 'role'
+    const users = await User.find(filter).select("-password -role");
+
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 // Sign Up
 router.post("/signup", async (req, res) => {
@@ -47,20 +69,78 @@ router.post("/login", async (req, res) => {
     // res.json({ token, role: user.role, name: user.name });
     res.json({ token, role: user.role, userId: user._id, name: user.name });
 
-    console.log("New User Role:", role);
+    console.log("New User Role:", user.role);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
     console.log({ err });
   }
 });
 
-router.get("/", async (req, res, next) => {
+router.post("/send-otp", async (req, res) => {
+  const { email } = req.body;
+  if (!email) return res.status(400).json({ message: "Email is required" });
+
+  const otp = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit OTP
+  otpStore.set(email, otp);
+
+  const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: "irrishakayastha@gmail.com",
+      // pass: "liwj nsii czpx cybs", // Use App Password here
+      pass: "liwjnsiiczpxcybs", // Use App Password here
+    },
+  });
+
+  const mailOptions = {
+    from: "your_email@gmail.com",
+    to: email,
+    subject: "Your OTP for Email Verification",
+    text: `Your OTP is ${otp}. It is valid for 5 minutes.`,
+  };
+
   try {
-    const users = await User.find().select("-role"); // exclude 'role'
-    res.status(200).json(users);
-  } catch (error) {
-    next(error);
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: "OTP sent" });
+
+    // Optional: expire OTP in 5 minutes
+    setTimeout(() => otpStore.delete(email), 5 * 60 * 1000);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to send OTP" });
   }
+});
+
+// router.post("/verify-otp", (req, res) => {
+//   const { email, otp } = req.body;
+//   if (otpStore.get(email) === otp) {
+//     otpStore.delete(email); // remove after success
+//     return res.status(200).json({ message: "OTP verified" });
+//   } else {
+//     return res.status(400).json({ message: "Invalid OTP" });
+//   }
+// });
+
+router.post("/verify-otp", (req, res) => {
+  const { email, otp } = req.body;
+
+  if (!email || !otp) {
+    return res.status(400).json({ message: "Email and OTP are required" });
+  }
+
+  const storedOtp = otpStore.get(email);
+
+  if (!storedOtp) {
+    return res.status(400).json({ message: "OTP has expired or was not sent" });
+  }
+
+  if (storedOtp !== otp) {
+    return res.status(400).json({ message: "Invalid OTP" });
+  }
+
+  // OTP is valid
+  otpStore.delete(email); // Clean up after verification
+  return res.status(200).json({ message: "OTP verified" });
 });
 
 // router.get("/:id", async (req, res, next) => {

@@ -3,6 +3,7 @@ import { FaSearch, FaUser, FaHeart, FaShoppingBag } from "react-icons/fa";
 import { NavLink, useNavigate } from "react-router-dom";
 import CartContext from "../../../store/CartContext";
 import { AuthContext } from "../../../store/AuthContext";
+
 import "./NavBar.css";
 
 import SearchBar from "../UIElements/SearchBar";
@@ -18,6 +19,11 @@ export default function Navbar() {
 
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    auth.logout(); // Clear context or token
+    navigate("/"); // Redirect to home page
+  };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -60,7 +66,7 @@ export default function Navbar() {
               {/* <NavLink to="/profile">
                 <FaUser />
               </NavLink> */}
-              <button onClick={auth.logout} className="logout-btn">
+              <button onClick={handleLogout} className="logout-btn">
                 Log Out
               </button>
             </>
@@ -101,18 +107,33 @@ export default function Navbar() {
               : "Home"}
           </NavLink>
         </li>
-        {auth.isLoggedIn && auth.role === "admin" ? (
+
+        {(!auth.isLoggedIn || auth.role === "user") && (
+          <li>
+            <NavLink to="/new-arrivals">New Arrivals</NavLink>
+          </li>
+        )}
+        {auth.isLoggedIn && auth.role === "admin" && (
           <li>
             <NavLink to="/add">Add Products</NavLink>
           </li>
-        ) : (
-          auth.isLoggedIn && (
-            <li>
-              <NavLink to="/new-arrivals">New Arrivals</NavLink>
-            </li>
-          )
         )}
-        {auth.isLoggedIn && auth.role === "admin" ? (
+
+        {(!auth.isLoggedIn || auth.role === "user") && (
+          <li>
+            <NavLink to="/new-arrivals">Best Seller</NavLink>
+          </li>
+        )}
+        {auth.isLoggedIn && auth.role === "admin" && (
+          <li>
+            <NavLink to="/user-list">View All Users</NavLink>
+          </li>
+        )}
+
+        {/* <li>
+          <NavLink to="/best-seller">Best Seller</NavLink>
+        </li> */}
+        {/* {auth.isLoggedIn && auth.role === "admin" ? (
           <li>
             <NavLink to="/update/:pid">Update Products</NavLink>
           </li>
@@ -127,7 +148,7 @@ export default function Navbar() {
               <NavLink to="/best-seller">Best Seller</NavLink>
             </li>
           )
-        )}
+        )} */}
         {/* <li>
           <NavLink to="/best-seller">Best Seller</NavLink>
         </li> */}

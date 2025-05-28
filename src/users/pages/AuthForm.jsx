@@ -6,6 +6,9 @@ import { AuthContext } from "../../store/AuthContext";
 export default function AuthForm() {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
+  const [step, setStep] = useState("form"); // "form" | "otp"
+  const [otp, setOtp] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [isLogin, setIsLogin] = useState(true);
   const [errors, setErrors] = useState({});
@@ -42,13 +45,19 @@ export default function AuthForm() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!validate()) return;
 
-    const endpoint = isLogin ? "/login" : "/signup";
-    const url = `http://localhost:5001/api/users${endpoint}`;
+    setLoading(true);
+
+    if (!isLogin) {
+      await sendOtp();
+      setLoading(false);
+      return;
+    }
+
+    const url = `http://localhost:5001/api/users/login`;
 
     try {
       const res = await fetch(url, {
@@ -60,22 +69,58 @@ export default function AuthForm() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Something went wrong");
 
-      if (isLogin) {
-        auth.login(data.userId, data.token, data.role);
-
-        // ✅ Redirect based on role
-        if (data.role === "admin") {
-          navigate("/admin");
-        } else {
-          navigate("/users");
-        }
-      } else {
-        alert("Signup successful! Please login.");
-        setIsLogin(true);
-      }
+      auth.login(data.userId, data.token, data.role);
+      navigate(data.role === "admin" ? "/admin" : "/users");
     } catch (err) {
       alert(err.message);
-      console.log({ err });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const sendOtp = async () => {
+    try {
+      const res = await fetch("http://localhost:5001/api/users/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: formValues.email }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+      alert("OTP sent to your email.");
+      setStep("otp");
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const verifyOtp = async () => {
+    try {
+      const res = await fetch("http://localhost:5001/api/users/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: formValues.email, otp }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+
+      // ✅ Now perform signup (manually, since OTP verified)
+      const signupRes = await fetch("http://localhost:5001/api/users/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formValues),
+      });
+
+      const signupData = await signupRes.json();
+      if (!signupRes.ok) throw new Error(signupData.message);
+
+      alert("Signup successful! Please login.");
+      setIsLogin(true);
+      setStep("form");
+    } catch (err) {
+      alert(err.message);
     }
   };
 
@@ -122,51 +167,77 @@ export default function AuthForm() {
       <div className="auth-container">
         <div className="auth-card">
           <h2 className="auth-title">{isLogin ? "Login" : "Sign Up"}</h2>
-          <form onSubmit={handleSubmit} className="auth-form">
-            {!isLogin && (
+          {step === "form" ? (
+            <form onSubmit={handleSubmit} className="auth-form">
+              {!isLogin && (
+                <div className="auth-field">
+                  <label htmlFor="name">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formValues.name}
+                    onChange={handleChange}
+                    placeholder="Your name"
+                    required
+                  />
+                  {errors.name && (
+                    <small className="error">{errors.name}</small>
+                  )}
+                </div>
+              )}
               <div className="auth-field">
-                <label htmlFor="name">Name</label>
+                <label htmlFor="email">Email</label>
                 <input
-                  type="text"
-                  name="name"
-                  value={formValues.name}
+                  type="email"
+                  name="email"
+                  value={formValues.email}
                   onChange={handleChange}
-                  placeholder="Your name"
+                  placeholder="you@example.com"
                   required
                 />
-                {errors.name && <small className="error">{errors.name}</small>}
+                {errors.email && (
+                  <small className="error">{errors.email}</small>
+                )}
               </div>
-            )}
-            <div className="auth-field">
-              <label htmlFor="email">Email</label>
+              <div className="auth-field">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formValues.password}
+                  onChange={handleChange}
+                  placeholder="••••••••"
+                  required
+                />
+                {errors.password && (
+                  <small className="error">{errors.password}</small>
+                )}
+              </div>
+              <button type="submit" className="auth-button" disabled={loading}>
+                {loading
+                  ? isLogin
+                    ? "Logging in..."
+                    : "Signing up..."
+                  : isLogin
+                  ? "Login"
+                  : "Sign Up"}
+              </button>
+            </form>
+          ) : (
+            <div className="otp-section">
+              <h3>Enter OTP sent to your email</h3>
               <input
-                type="email"
-                name="email"
-                value={formValues.email}
-                onChange={handleChange}
-                placeholder="you@example.com"
-                required
+                type="text"
+                className="otp-input"
+                placeholder="Enter 6-digit OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
               />
-              {errors.email && <small className="error">{errors.email}</small>}
+              <button className="verify-otp-button" onClick={verifyOtp}>
+                Verify OTP
+              </button>
             </div>
-            <div className="auth-field">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                value={formValues.password}
-                onChange={handleChange}
-                placeholder="••••••••"
-                required
-              />
-              {errors.password && (
-                <small className="error">{errors.password}</small>
-              )}
-            </div>
-            <button type="submit" className="auth-button">
-              {isLogin ? "Login" : "Sign Up"}
-            </button>
-          </form>
+          )}
           <p className="auth-toggle">
             {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
             <button onClick={toggleForm}>

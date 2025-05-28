@@ -384,10 +384,10 @@ export default function ProductsItem(props) {
           <div className="product-item__image">
             <img src={props.image} alt={props.name} />
 
-            <img
+            {/* <img
               src={`http://localhost:5001/${props.image}`}
               alt={props.name}
-            />
+            /> */}
           </div>
 
           <div className="product-item__info">

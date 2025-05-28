@@ -1,0 +1,86 @@
+.users-page {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.users-page h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #1f2937;
+  text-align: center;
+}
+
+.users-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.users-form input {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  width: 220px;
+  transition: all 0.3s ease;
+}
+
+.users-form input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+  background-color: #fff;
+}
+
+.users-form button {
+  background-color: #4f46e5;
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.users-form button:hover {
+  background-color: #4338ca;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  color: black;
+  font-weight: bolder;
+  font-size: larger;
+}
+
+.users-table th,
+.users-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.users-table th {
+  background-color: #f3f4f6;
+  color: #111827;
+  font-weight: 600;
+}
+
+.users-table tr:hover {
+  background-color: #f9fafb;
+}
+
+.loading,
+.no-users {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #6b7280;
+  margin-top: 2rem;
+}

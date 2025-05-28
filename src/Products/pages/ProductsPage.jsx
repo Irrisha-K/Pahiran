@@ -63,7 +63,7 @@ const ProductsPage = () => {
   return (
     <>
       <ImageSlider />
-      <ProductCarousel />
+      {/* <ProductCarousel /> */}
       <ProductsList items={products} />
     </>
   );

@@ -24,6 +24,7 @@ import UsersHomePage from "./users/pages/UsersHomePage";
 import AdminHomePage from "./users/pages/AdminHomePage";
 import ProductDetailsPage from "./Products/pages/ProductDetailsPage";
 import AdminUpdateProduct from "./users/Admin/AdminUpdateProduct";
+import AllUsersPage from "./users/pages/AllUsersPage";
 
 const routes = [
   {
@@ -49,6 +50,7 @@ const routes = [
       { path: "/admin", element: <AdminHomePage /> },
       { path: "/product/:id", element: <ProductDetailsPage /> },
       { path: "/admin/update/:id", element: <AdminUpdateProduct /> },
+      { path: "/user-list", element: <AllUsersPage /> },
       // <Route path="/admin/update/:id" element={<AdminUpdateProduct />} />
     ],
   },
