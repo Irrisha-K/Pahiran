@@ -120,8 +120,8 @@ router.post("/send-otp", async (req, res) => {
     service: "Gmail",
     auth: {
       user: "irrishakayastha@gmail.com",
-      // pass: "liwj nsii czpx cybs", // Use App Password here
-      pass: "liwjnsiiczpxcybs", // Use App Password here
+      // pass: "liwj nsii czpx cybs",
+      pass: "liwjnsiiczpxcybs",
     },
   });
 
@@ -136,7 +136,6 @@ router.post("/send-otp", async (req, res) => {
     await transporter.sendMail(mailOptions);
     res.status(200).json({ message: "OTP sent" });
 
-    // Optional: expire OTP in 5 minutes
     setTimeout(() => otpStore.delete(email), 5 * 60 * 1000);
   } catch (err) {
     console.error(err);
@@ -161,8 +160,7 @@ router.post("/verify-otp", (req, res) => {
     return res.status(400).json({ message: "Invalid OTP" });
   }
 
-  // OTP is valid
-  otpStore.delete(email); // Clean up after verification
+  otpStore.delete(email);
   return res.status(200).json({ message: "OTP verified" });
 });
 
@@ -187,7 +185,7 @@ router.get("/:id", async (req, res, next) => {
     if (!res.headersSent) {
       return res.status(500).json({ error: "Internal server error" });
     } else {
-      next(error); // ✅ now works as expected
+      next(error);
     }
   }
 });

@@ -1,8 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const handlePurchase = require("../controllers/purchaseController");
-const getPurchases = require("../controllers/purchaseController");
-const getUserPurchases = require("../controllers/purchaseController");
+// const handlePurchase = require("../controllers/purchaseController");
+// const getPurchases = require("../controllers/purchaseController");
+// const getUserPurchases = require("../controllers/purchaseController");
+const {
+  handlePurchase,
+  getPurchases,
+  getUserPurchases,
+} = require("../controllers/purchaseController");
+
 const authenticate = require("../middleware/auth");
 
 router.get("/orders/me", authenticate, getUserPurchases);

@@ -70,12 +70,14 @@ const getPurchases = async (req, res) => {
 
 const getUserPurchases = async (req, res) => {
   try {
-    const userId = req.user.id; // user ID from the decoded JWT
+    console.log("Decoded user:", req.user);
+    const userId = req.user.id;
 
     const orders = await Order.find({ "user.id": userId }).sort({
       createdAt: -1,
     });
 
+    console.log({ orders });
     return res.status(200).json({ orders });
   } catch (err) {
     console.error("Error fetching user's orders:", err);
@@ -83,6 +85,8 @@ const getUserPurchases = async (req, res) => {
   }
 };
 
-module.exports = handlePurchase;
-module.exports = getPurchases;
-module.exports = getUserPurchases;
+module.exports = {
+  handlePurchase,
+  getPurchases,
+  getUserPurchases,
+};

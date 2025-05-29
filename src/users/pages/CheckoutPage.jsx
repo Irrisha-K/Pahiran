@@ -13,7 +13,8 @@ export default function CheckoutPage() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { items } = location.state || { items: [] };
+  const items = location.state?.items ?? [];
+
   const [mergedItems, setMergedItems] = useState(mergeItems(items));
 
   const [orderPlaced, setOrderPlaced] = useState(false);
@@ -22,6 +23,31 @@ export default function CheckoutPage() {
     address: "",
     phone: "",
   });
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userId = localStorage.getItem("userId");
+      if (!userId) return;
+
+      try {
+        const res = await fetch(`http://localhost:5001/api/users/${userId}`);
+        if (!res.ok) throw new Error("Failed to fetch user data");
+
+        const userData = await res.json();
+
+        setFormData((prev) => ({
+          ...prev,
+          name: userData.name || "",
+          phone: userData.number || "",
+        }));
+      } catch (err) {
+        console.error("Error fetching user data:", err.message);
+        toast.error("Could not auto-fill user details.");
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handlePaymentChange = (e) => {
     const method = e.target.value;
@@ -36,9 +62,9 @@ export default function CheckoutPage() {
       });
     }
 
-    if (method === "Khalti") {
-      window.open("https://khalti.com/", "_blank");
-    }
+    // if (method === "Khalti") {
+    //   window.open("https://khalti.com/", "_blank");
+    // }
   };
 
   const cartTotal = mergedItems.reduce(
@@ -56,6 +82,35 @@ export default function CheckoutPage() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const handleKhaltiPayment = () => {
+    if (!formData.name || !formData.address || !formData.phone) {
+      toast.error("Please fill all delivery details before proceeding.");
+      return;
+    }
+
+    const orderData = {
+      items: mergedItems.map(({ id, quantity, name }) => ({
+        id,
+        quantity,
+        name,
+      })),
+      user: {
+        id: localStorage.getItem("userId"),
+        name: formData.name,
+        phone: formData.phone,
+        email: localStorage.getItem("email") || "",
+      },
+      paymentMethod: "Khalti",
+    };
+
+    navigate("/khalti-payment", {
+      state: {
+        amount: cartTotal,
+        orderData,
+      },
+    });
+  };
+
   const handlePlaceOrder = async () => {
     if (!formData.name || !formData.address || !formData.phone) {
       toast.error("Please fill all delivery details.");
@@ -67,6 +122,33 @@ export default function CheckoutPage() {
       return;
     }
 
+    if (paymentMethod === "Khalti") {
+      const orderData = {
+        items: mergedItems.map(({ id, quantity, name }) => ({
+          id,
+          quantity,
+          name,
+        })),
+        user: {
+          id: localStorage.getItem("userId"),
+          name: formData.name,
+          phone: formData.phone,
+          email: localStorage.getItem("email") || "",
+        },
+        paymentMethod: "Khalti",
+      };
+
+      navigate("/khalti-payment", {
+        state: {
+          amount: cartTotal,
+          orderData,
+        },
+      });
+
+      return; // stop further processing here
+    }
+
+    // COD flow (continue as before)
     setIsPlacingOrder(true);
 
     try {
@@ -85,7 +167,6 @@ export default function CheckoutPage() {
             phone: formData.phone,
             email: localStorage.getItem("email") || "",
           },
-
           paymentMethod,
         }),
       });
@@ -162,7 +243,9 @@ export default function CheckoutPage() {
   //   );
   // };
 
-  const handleQuantityChange = (id, delta) => {
+  const handleQuantityChange = (id, delta = 0) => {
+    if (typeof delta !== "number") return;
+
     setMergedItems((prev) =>
       prev.map((item) => {
         if (item.id === id) {
@@ -202,14 +285,14 @@ export default function CheckoutPage() {
                   <h3>Name: {item.name}</h3>
                   <p>Rs: {item.price}</p>
                   <div className="quantity-control">
-                    <button onClick={() => handleQuantityChange(item.id, -1)}>
+                    {/* <button onClick={() => handleQuantityChange(item.id, -1)}>
                       -
-                    </button>
+                    </button> */}
                     Quantity:
                     <span>{item.quantity}</span>
-                    <button onClick={() => handleQuantityChange(item.id, 1)}>
+                    {/* <button onClick={() => handleQuantityChange(item.id, 1)}>
                       +
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </li>
@@ -227,6 +310,7 @@ export default function CheckoutPage() {
               required
             />
             <textarea
+              type="text"
               name="address"
               placeholder="Delivery Address"
               value={formData.address}
@@ -234,8 +318,9 @@ export default function CheckoutPage() {
               required
             />
             <input
-              type="tel"
+              type="number"
               name="phone"
+              placeholder="Phone Number"
               pattern="[0-9]{10}"
               title="Enter a 10-digit number"
               value={formData.phone}
@@ -285,7 +370,11 @@ export default function CheckoutPage() {
               onClick={handlePlaceOrder}
               disabled={isPlacingOrder}
             >
-              {isPlacingOrder ? "Placing Order..." : "Place Order"}
+              {paymentMethod === "Khalti" && !location.state?.khaltiPaid
+                ? "Proceed to Pay"
+                : isPlacingOrder
+                ? "Placing Order..."
+                : "Place Order"}
             </button>
           </div>
         </>

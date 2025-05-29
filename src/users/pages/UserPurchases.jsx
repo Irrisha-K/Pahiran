@@ -131,6 +131,9 @@ const UserPurchases = () => {
           orders.map((order, index) => (
             <div className="order-card" key={order._id || index}>
               <p>
+                <strong>Name:</strong> {order.user.name}
+              </p>
+              <p>
                 <strong>Order ID:</strong> {order._id}
               </p>
               <p>
@@ -141,8 +144,21 @@ const UserPurchases = () => {
                 <strong>Status:</strong> {order.status || "N/A"}
               </p>
               <p>
-                <strong>Total:</strong> ${order.total}
+                <strong>Payment Method:</strong> {order.paymentMethod}
               </p>
+              <p>
+                <strong>Total:</strong> Rs {order.total}
+              </p>
+              <div>
+                <p className="items-label">Items:</p>
+                <ul>
+                  {order.items.map((item, idx) => (
+                    <li key={idx}>
+                      Item Name: {item.name} <span>x {item.quantity}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))
         )}

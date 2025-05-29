@@ -29,6 +29,7 @@ import AllUsersPage from "./users/pages/AllUsersPage";
 import ProtectedRoute from "./users/pages/ProtectedRoute";
 import AuthRedirect from "./users/pages/AuthRedirect";
 import UserPurchases from "./users/pages/UserPurchases";
+import KhaltiPaymentPage from "./users/pages/KhaltiPaymentPage";
 
 // const routes = [
 //   {
@@ -82,6 +83,7 @@ const routes = [
       { path: "/cart", element: <CartPage /> },
       { path: "/about", element: <AboutUs /> },
       { path: "/checkout", element: <CheckoutPage /> },
+      { path: "/khalti-payment", element: <KhaltiPaymentPage /> },
       { path: "/tops", element: <TopsPage /> },
       { path: "/pants", element: <PantsPage /> },
       { path: "/dresses", element: <DressesPages /> },
