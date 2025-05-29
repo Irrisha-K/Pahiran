@@ -26,6 +26,41 @@ import ProductDetailsPage from "./Products/pages/ProductDetailsPage";
 import AdminUpdateProduct from "./users/Admin/AdminUpdateProduct";
 import AllUsersPage from "./users/pages/AllUsersPage";
 
+import ProtectedRoute from "./users/pages/ProtectedRoute";
+import AuthRedirect from "./users/pages/AuthRedirect";
+
+// const routes = [
+//   {
+//     path: "/",
+//     element: <RootLayout />,
+//     errorElement: <ErrorPage />,
+//     children: [
+//       { path: "/", element: <ProductsPage /> },
+//       { path: "/new-arrivals", element: <NewArrivalsPage /> },
+//       { path: "/best-seller", element: <BestSellersPage /> },
+//       { path: "/auth", element: <AuthForm /> },
+//       { path: "/cart", element: <CartPage /> },
+//       { path: "/about", element: <AboutUs /> },
+//       { path: "/checkout", element: <CheckoutPage /> },
+
+//       { path: "/tops", element: <TopsPage /> },
+//       { path: "/pants", element: <PantsPage /> },
+//       { path: "/dresses", element: <DressesPages /> },
+//       { path: "/skirts", element: <SkirtPage /> },
+//       { path: "/coord", element: <CoordPage /> },
+//       { path: "/search", element: <SearchResultsPage /> },
+//       { path: "/add", element: <AdminProductForm /> },
+//       { path: "/users", element: <UsersHomePage /> },
+//       { path: "/admin", element: <AdminHomePage /> },
+//       { path: "/product/:id", element: <ProductDetailsPage /> },
+//       { path: "/admin/update/:id", element: <AdminUpdateProduct /> },
+//       { path: "/user-list", element: <AllUsersPage /> },
+//       // <Route path="/admin/update/:id" element={<AdminUpdateProduct />} />
+//     ],
+//   },
+//   { path: "/auth", element: <AuthForm /> },
+// ];
+
 const routes = [
   {
     path: "/",
@@ -35,28 +70,61 @@ const routes = [
       { path: "/", element: <ProductsPage /> },
       { path: "/new-arrivals", element: <NewArrivalsPage /> },
       { path: "/best-seller", element: <BestSellersPage /> },
-      { path: "/auth", element: <AuthForm /> },
+      {
+        path: "/auth",
+        element: (
+          <AuthRedirect>
+            <AuthForm />
+          </AuthRedirect>
+        ),
+      },
       { path: "/cart", element: <CartPage /> },
       { path: "/about", element: <AboutUs /> },
       { path: "/checkout", element: <CheckoutPage /> },
-
       { path: "/tops", element: <TopsPage /> },
       { path: "/pants", element: <PantsPage /> },
       { path: "/dresses", element: <DressesPages /> },
       { path: "/skirts", element: <SkirtPage /> },
       { path: "/coord", element: <CoordPage /> },
       { path: "/search", element: <SearchResultsPage /> },
-      { path: "/add", element: <AdminProductForm /> },
-      { path: "/users", element: <UsersHomePage /> },
-      { path: "/admin", element: <AdminHomePage /> },
+      {
+        path: "/add",
+        element: (
+          <ProtectedRoute roles={["admin"]}>
+            <AdminProductForm />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/admin",
+        element: (
+          <ProtectedRoute roles={["admin"]}>
+            <AdminHomePage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/admin/update/:id",
+        element: (
+          <ProtectedRoute roles={["admin"]}>
+            <AdminUpdateProduct />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/user-list",
+        element: (
+          <ProtectedRoute roles={["admin"]}>
+            <AllUsersPage />
+          </ProtectedRoute>
+        ),
+      },
+      { path: "/myDetails", element: <UsersHomePage /> },
       { path: "/product/:id", element: <ProductDetailsPage /> },
-      { path: "/admin/update/:id", element: <AdminUpdateProduct /> },
-      { path: "/user-list", element: <AllUsersPage /> },
-      // <Route path="/admin/update/:id" element={<AdminUpdateProduct />} />
     ],
   },
-  { path: "/auth", element: <AuthForm /> },
 ];
+
 const router = createBrowserRouter(routes);
 
 // function App() {

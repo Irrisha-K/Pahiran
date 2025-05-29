@@ -85,7 +85,7 @@ export default function Navbar() {
           )}
 
           {auth.isLoggedIn && (
-            <NavLink to="/users">
+            <NavLink to="/myDetails">
               <FaUserCircle />
             </NavLink>
           )}
@@ -104,11 +104,7 @@ export default function Navbar() {
         <li>
           <NavLink
             to={
-              auth.isLoggedIn
-                ? auth.role === "admin"
-                  ? "/admin"
-                  : "/users"
-                : "/"
+              auth.isLoggedIn ? (auth.role === "admin" ? "/admin" : "/") : "/"
             }
           >
             {auth.isLoggedIn

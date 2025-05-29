@@ -151,3 +151,16 @@
   font-weight: 600;
   font-size: 16px;
 }
+
+.payment-methods {
+  margin: 20px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.payment-methods label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+}

@@ -8,6 +8,7 @@ import CartContext from "../../store/CartContext";
 
 export default function CheckoutPage() {
   const { clearCart } = useContext(CartContext);
+  const [paymentMethod, setPaymentMethod] = useState("COD"); // default to COD
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -20,6 +21,24 @@ export default function CheckoutPage() {
     address: "",
     phone: "",
   });
+
+  const handlePaymentChange = (e) => {
+    const method = e.target.value;
+    setPaymentMethod(method);
+
+    if (method === "eSewa") {
+      toast.info("eSewa is coming soon!", {
+        style: {
+          backgroundColor: "#222",
+          color: "#fff",
+        },
+      });
+    }
+
+    if (method === "Khalti") {
+      window.open("https://khalti.com/", "_blank");
+    }
+  };
 
   const cartTotal = mergedItems.reduce(
     (total, item) => total + item.quantity * item.numericPrice,
@@ -39,6 +58,11 @@ export default function CheckoutPage() {
   const handlePlaceOrder = async () => {
     if (!formData.name || !formData.address || !formData.phone) {
       toast.error("Please fill all delivery details.");
+      return;
+    }
+
+    if (paymentMethod !== "COD") {
+      toast.info("Please use Cash on Delivery for now.");
       return;
     }
 
@@ -201,6 +225,39 @@ export default function CheckoutPage() {
               required
             />
           </form>
+          <div className="payment-methods">
+            <h3>Payment Method</h3>
+            <label>
+              <input
+                type="radio"
+                name="payment"
+                value="COD"
+                checked={paymentMethod === "COD"}
+                onChange={handlePaymentChange}
+              />
+              Cash on Delivery
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="payment"
+                value="Khalti"
+                checked={paymentMethod === "Khalti"}
+                onChange={handlePaymentChange}
+              />
+              Pay with Khalti
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="payment"
+                value="eSewa"
+                checked={paymentMethod === "eSewa"}
+                onChange={handlePaymentChange}
+              />
+              Pay with eSewa (Coming Soon)
+            </label>
+          </div>
 
           <div className="checkout-summary">
             <p className="checkout-total">Total: {formattedTotal}</p>
