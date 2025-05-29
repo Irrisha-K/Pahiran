@@ -1,0 +1,80 @@
+.user-purchases-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 2rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.user-purchases-container h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #333;
+}
+
+.input-section {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.input-section input {
+  flex: 1;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.input-section button {
+  padding: 0.75rem 1.5rem;
+  background-color: #007bfc;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.input-section button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.input-section button:hover:not(:disabled) {
+  background-color: #005bb5;
+}
+
+.orders-list {
+  margin-top: 1.5rem;
+}
+
+.order-card {
+  border: 2px solid #007bfc;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 6px;
+  background-color: #f1f8ff;
+}
+
+.order-card p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.error {
+  color: red;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+}

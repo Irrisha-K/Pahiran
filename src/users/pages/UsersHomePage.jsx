@@ -4,12 +4,15 @@ import { FaEnvelope, FaUser, FaPhone } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 import "./UsersHomePage.css";
+import { useNavigate } from "react-router-dom";
 
 export default function UsersHomePage() {
   const { userId, token } = useContext(AuthContext);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const navigate = useNavigate();
+
   const [formValues, setFormValues] = useState({
     name: "",
     email: "",
@@ -76,6 +79,10 @@ export default function UsersHomePage() {
   if (error) return <div className="user-error">{error}</div>;
   if (!user) return <div className="user-loading">Loading user details...</div>;
 
+  function goToHistory() {
+    navigate("/mypurchasehistory");
+  }
+
   return (
     <div className="user-page-wrapper">
       <div className="user-card">
@@ -132,6 +139,7 @@ export default function UsersHomePage() {
               <span>Phone: {user.number || "Not Provided"}</span>
             </div>
             <button onClick={() => setIsEditing(true)}>Update Profile</button>
+            <button onClick={goToHistory}>My Purchase History</button>
           </div>
         )}
 

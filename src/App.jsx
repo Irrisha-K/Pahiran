@@ -28,6 +28,7 @@ import AllUsersPage from "./users/pages/AllUsersPage";
 
 import ProtectedRoute from "./users/pages/ProtectedRoute";
 import AuthRedirect from "./users/pages/AuthRedirect";
+import UserPurchases from "./users/pages/UserPurchases";
 
 // const routes = [
 //   {
@@ -87,6 +88,7 @@ const routes = [
       { path: "/skirts", element: <SkirtPage /> },
       { path: "/coord", element: <CoordPage /> },
       { path: "/search", element: <SearchResultsPage /> },
+      { path: "/mypurchasehistory", element: <UserPurchases /> },
       {
         path: "/add",
         element: (

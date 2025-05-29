@@ -9,6 +9,7 @@ import CartContext from "../../store/CartContext";
 export default function CheckoutPage() {
   const { clearCart } = useContext(CartContext);
   const [paymentMethod, setPaymentMethod] = useState("COD"); // default to COD
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -61,60 +62,47 @@ export default function CheckoutPage() {
       return;
     }
 
-    if (paymentMethod !== "COD") {
-      toast.info("Please use Cash on Delivery for now.");
-      return;
-    }
-
     if (items.length === 0) {
       toast.error("No items in cart.");
       return;
     }
 
+    setIsPlacingOrder(true);
+
     try {
-      for (const item of items) {
-        const response = await fetch(
-          `http://localhost:5001/api/products/${item.id}/reduce-stock`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ quantity: item.quantity }),
-          }
-        );
+      const response = await fetch("http://localhost:5001/api/purchase/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: mergedItems.map(({ id, quantity, name }) => ({
+            id,
+            quantity,
+            name,
+          })),
+          user: {
+            id: localStorage.getItem("userId"),
+            name: formData.name,
+            phone: formData.phone,
+            email: localStorage.getItem("email") || "",
+          },
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(
-            errorData.message || `Failed to update stock for ${item.name}`
-          );
-        }
-      }
-
-      // ✅ Show success toast BEFORE setting orderPlaced
-      toast.success("Order placed successfully! Redirecting to home...", {
-        style: {
-          backgroundColor: "#000",
-          color: "#fff",
-          fontWeight: "bold",
-          borderRadius: "10px",
-        },
+          paymentMethod,
+        }),
       });
 
-      const userId = localStorage.getItem("userId");
-      if (userId) {
-        localStorage.removeItem(`cart-${userId}`);
-        clearCart();
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Order failed");
       }
 
-      setOrderPlaced(true); // Triggers thank you message
-
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
+      toast.success("Order placed successfully!");
+      localStorage.removeItem(`cart-${localStorage.getItem("userId")}`);
+      clearCart();
+      setOrderPlaced(true);
+      setTimeout(() => navigate("/"), 3000);
     } catch (error) {
-      toast.error(error.message || "Order failed due to stock issues.");
+      toast.error(error.message);
+      setIsPlacingOrder(false);
     }
   };
 
@@ -130,28 +118,57 @@ export default function CheckoutPage() {
 
   const isStockAvailable = items.every((item) => item.quantity <= item.stock);
 
+  // function mergeItems(items) {
+  //   const map = new Map();
+  //   items.forEach((item) => {
+  //     if (map.has(item.name)) {
+  //       const existing = map.get(item.name);
+  //       map.set(item.name, {
+  //         ...existing,
+  //         quantity: existing.quantity + item.quantity,
+  //       });
+  //     } else {
+  //       map.set(item.name, { ...item });
+  //     }
+  //   });
+  //   return Array.from(map.values());
+  // }
+
   function mergeItems(items) {
     const map = new Map();
     items.forEach((item) => {
-      if (map.has(item.name)) {
-        const existing = map.get(item.name);
-        map.set(item.name, {
+      if (map.has(item.id)) {
+        const existing = map.get(item.id);
+        map.set(item.id, {
           ...existing,
           quantity: existing.quantity + item.quantity,
         });
       } else {
-        map.set(item.name, { ...item });
+        map.set(item.id, { ...item });
       }
     });
     return Array.from(map.values());
   }
 
-  const handleQuantityChange = (name, delta) => {
+  // const handleQuantityChange = (id, delta) => {
+  //   setMergedItems((prev) =>
+  //     prev.map((item) => {
+  //       if (item.id === id) {
+  //         const newQty = item.quantity + delta;
+  //         return { ...item, quantity: newQty > 0 ? newQty : 1 };
+  //       }
+  //       return item;
+  //     })
+  //   );
+  // };
+
+  const handleQuantityChange = (id, delta) => {
     setMergedItems((prev) =>
       prev.map((item) => {
-        if (item.name === name) {
+        if (item.id === id) {
           const newQty = item.quantity + delta;
-          return { ...item, quantity: newQty > 0 ? newQty : 1 };
+          const limitedQty = Math.min(item.stock, Math.max(1, newQty));
+          return { ...item, quantity: limitedQty };
         }
         return item;
       })
@@ -185,12 +202,12 @@ export default function CheckoutPage() {
                   <h3>Name: {item.name}</h3>
                   <p>Rs: {item.price}</p>
                   <div className="quantity-control">
-                    <button onClick={() => handleQuantityChange(item.name, -1)}>
+                    <button onClick={() => handleQuantityChange(item.id, -1)}>
                       -
                     </button>
                     Quantity:
                     <span>{item.quantity}</span>
-                    <button onClick={() => handleQuantityChange(item.name, 1)}>
+                    <button onClick={() => handleQuantityChange(item.id, 1)}>
                       +
                     </button>
                   </div>
@@ -219,7 +236,8 @@ export default function CheckoutPage() {
             <input
               type="tel"
               name="phone"
-              placeholder="Phone Number"
+              pattern="[0-9]{10}"
+              title="Enter a 10-digit number"
               value={formData.phone}
               onChange={handleChange}
               required
@@ -261,12 +279,13 @@ export default function CheckoutPage() {
 
           <div className="checkout-summary">
             <p className="checkout-total">Total: {formattedTotal}</p>
+
             <button
               className="checkout-button"
               onClick={handlePlaceOrder}
-              // disabled={!isStockAvailable}
+              disabled={isPlacingOrder}
             >
-              Place Order
+              {isPlacingOrder ? "Placing Order..." : "Place Order"}
             </button>
           </div>
         </>
