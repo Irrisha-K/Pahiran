@@ -90,12 +90,15 @@ export default function Navbar() {
             </NavLink>
           )}
 
-          <NavLink to="/cart" className="cart-icon">
-            <FaShoppingBag />
-            {totalCartItems > 0 && (
-              <span className="cart-badge">{totalCartItems}</span>
-            )}
-          </NavLink>
+          {/* {auth.isLoggedIn && } */}
+          {auth.role === "user" ? (
+            <NavLink to="/cart" className="cart-icon">
+              <FaShoppingBag />
+              {totalCartItems > 0 && (
+                <span className="cart-badge">{totalCartItems}</span>
+              )}
+            </NavLink>
+          ) : null}
         </div>
       </div>
 

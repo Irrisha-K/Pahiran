@@ -73,6 +73,14 @@ export default function AdminHomePage() {
             <FaUsers />
             View Users
           </Button>
+          <Button
+            variant="outline"
+            className="flex items-center gap-2"
+            onClick={() => navigate("/userpurchasehistory")}
+          >
+            <FaUsers />
+            View User Purchase History
+          </Button>
         </div>
       </div>
     </div>

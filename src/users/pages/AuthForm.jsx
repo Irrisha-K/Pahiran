@@ -47,6 +47,7 @@ export default function AuthForm() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!validate()) return;
@@ -75,6 +76,7 @@ export default function AuthForm() {
       navigate(data.role === "admin" ? "/admin" : "/users");
     } catch (err) {
       toast.error(err.message || "Login failed.");
+      setLoading(false);
     }
   };
 

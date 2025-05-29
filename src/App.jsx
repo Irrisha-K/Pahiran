@@ -30,6 +30,7 @@ import ProtectedRoute from "./users/pages/ProtectedRoute";
 import AuthRedirect from "./users/pages/AuthRedirect";
 import UserPurchases from "./users/pages/UserPurchases";
 import KhaltiPaymentPage from "./users/pages/KhaltiPaymentPage";
+import Adminviewpurchase from "./users/pages/Adminviewpurchase";
 
 // const routes = [
 //   {
@@ -91,6 +92,7 @@ const routes = [
       { path: "/coord", element: <CoordPage /> },
       { path: "/search", element: <SearchResultsPage /> },
       { path: "/mypurchasehistory", element: <UserPurchases /> },
+      { path: "/userpurchasehistory", element: <Adminviewpurchase /> },
       {
         path: "/add",
         element: (

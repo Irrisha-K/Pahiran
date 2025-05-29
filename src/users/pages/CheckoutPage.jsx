@@ -330,7 +330,7 @@ export default function CheckoutPage() {
           </form>
           <div className="payment-methods">
             <h3>Payment Method</h3>
-            <label>
+            {/* <label>
               <input
                 type="radio"
                 name="payment"
@@ -339,7 +339,7 @@ export default function CheckoutPage() {
                 onChange={handlePaymentChange}
               />
               Cash on Delivery
-            </label>
+            </label> */}
             <label>
               <input
                 type="radio"
