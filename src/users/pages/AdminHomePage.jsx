@@ -1,16 +1,32 @@
-import {
-  FaUsers,
-  FaBoxOpen,
-  FaMoneyBillWave,
-  FaPlusCircle,
-  FaUserShield,
-} from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { FaUsers, FaBoxOpen, FaPlusCircle } from "react-icons/fa";
 import Card from "../../shared/components/UIElements/Card";
 import Button from "../../shared/components/UIElements/Button";
 import CardContent from "../../shared/components/UIElements/CardContent";
 import styles from "./AdminHomePage.module.css";
+import { useEffect, useState } from "react";
 
 export default function AdminHomePage() {
+  const navigate = useNavigate();
+  const [userCount, setUserCount] = useState(0);
+  const [productCount, setProductCount] = useState(0);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch("http://localhost:5001/api/users/stats");
+        const data = await res.json();
+        setUserCount(data.totalUsers);
+        setProductCount(data.totalProducts);
+        // You can also use data.totalAdmins if needed later
+      } catch (err) {
+        console.error("Failed to fetch stats", err);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Admin Dashboard</h1>
@@ -22,7 +38,7 @@ export default function AdminHomePage() {
             <FaUsers className="text-blue-600 text-3xl" />
             <div>
               <p className={styles.cardTitle}>Total Users</p>
-              <p className={styles.cardValue}>1,245</p>
+              <p className={styles.cardValue}>{userCount}</p>
             </div>
           </CardContent>
         </Card>
@@ -32,27 +48,7 @@ export default function AdminHomePage() {
             <FaBoxOpen className="text-purple-600 text-3xl" />
             <div>
               <p className={styles.cardTitle}>Products</p>
-              <p className={styles.cardValue}>157</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className={styles.card}>
-          <CardContent className={styles.cardContent}>
-            <FaMoneyBillWave className="text-green-600 text-3xl" />
-            <div>
-              <p className={styles.cardTitle}>Revenue</p>
-              <p className={styles.cardValue}>₹1.5M</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className={styles.card}>
-          <CardContent className={styles.cardContent}>
-            <FaUserShield className="text-red-600 text-3xl" />
-            <div>
-              <p className={styles.cardTitle}>Admins</p>
-              <p className={styles.cardValue}>3</p>
+              <p className={styles.cardValue}>{productCount}</p>
             </div>
           </CardContent>
         </Card>
@@ -64,7 +60,7 @@ export default function AdminHomePage() {
         <div className={styles.actionsButtons}>
           <Button
             className="flex items-center gap-2 text-white bg-blue-600 hover:bg-blue-700"
-            onClick={() => (window.location.href = "/add")}
+            onClick={() => navigate("/add")}
           >
             <FaPlusCircle />
             Add Product
@@ -72,7 +68,7 @@ export default function AdminHomePage() {
           <Button
             variant="outline"
             className="flex items-center gap-2"
-            onClick={() => (window.location.href = "/users")}
+            onClick={() => navigate("/user-list")}
           >
             <FaUsers />
             View Users

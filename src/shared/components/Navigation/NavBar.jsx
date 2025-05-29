@@ -16,9 +16,8 @@ import SearchBar from "../UIElements/SearchBar";
 
 export default function Navbar() {
   const auth = useContext(AuthContext);
-  const { clearCart } = useContext(CartContext);
+  const { clearCart, items } = useContext(CartContext);
 
-  const { items } = useContext(CartContext);
   const totalCartItems = items.reduce(
     (total, item) => total + item.quantity,
     0
@@ -36,6 +35,7 @@ export default function Navbar() {
   const handleSearch = (e) => {
     e.preventDefault();
     if (query.trim()) {
+      // navigate(`/search?query=${encodeURIComponent(query.trim())}`);
       navigate(`/search?query=${encodeURIComponent(query.trim())}`);
     }
   };

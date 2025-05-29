@@ -31,7 +31,9 @@ export default function CategoryProductsPage({ category, placeholder }) {
       setError(null);
       try {
         const res = await fetch(
-          `http://localhost:5001/api/products/${category}?search=${debouncedQuery}&page=${currentPage}&limit=${ITEMS_PER_PAGE}&price=${priceOrder}`
+          `http://localhost:5001/api/products/category/${category}?search=${debouncedQuery}&page=${currentPage}&limit=${ITEMS_PER_PAGE}&price=${priceOrder}`
+
+          // `http://localhost:5001/api/products/${category}?search=${debouncedQuery}&page=${currentPage}&limit=${ITEMS_PER_PAGE}&price=${priceOrder}`
         );
         if (!res.ok) throw new Error("Something went wrong!");
         const data = await res.json();

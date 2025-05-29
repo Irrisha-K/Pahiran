@@ -114,10 +114,10 @@ export default function ProductDetailsPage() {
           &larr; Back
         </button>
 
-        <nav className="breadcrumb">
+        {/* <nav className="breadcrumb">
           <Link to="/">Home</Link> / <Link to="/products">Products</Link> /{" "}
           <span>{product.name}</span>
-        </nav>
+        </nav> */}
       </div>
 
       {/* Product Image */}
@@ -149,7 +149,12 @@ export default function ProductDetailsPage() {
         {product.description && (
           <p className="description">{product.description}</p>
         )}
-        <p className="stock-info">Available: {product.quantity} items</p>
+        {/* <p className="stock-info">Available: {product.quantity} items</p> */}
+        <p className="stock-info">
+          Available:{" "}
+          {product.quantity - quantity >= 0 ? product.quantity - quantity : 0}{" "}
+          items
+        </p>
         {typeof product.quantity === "number" && (
           <div className="quantity-input-group">
             <label htmlFor="quantity">Quantity:</label>

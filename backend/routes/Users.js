@@ -4,11 +4,24 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+const Product = require("../models/Products");
 
 const nodemailer = require("nodemailer");
 const otpStore = new Map();
 
 const JWT_SECRET = process.env.JWT_SECRET;
+
+router.get("/stats", async (req, res) => {
+  try {
+    const totalProducts = await Product.countDocuments();
+    const totalUsers = await User.countDocuments(); // Assuming you have a User model
+    const totalAdmins = await User.countDocuments({ role: "admin" });
+
+    res.json({ totalProducts, totalUsers, totalAdmins });
+  } catch (err) {
+    res.status(500).json({ message: "Fetching stats failed." });
+  }
+});
 
 router.get("/", async (req, res, next) => {
   try {
@@ -131,16 +144,6 @@ router.post("/send-otp", async (req, res) => {
   }
 });
 
-// router.post("/verify-otp", (req, res) => {
-//   const { email, otp } = req.body;
-//   if (otpStore.get(email) === otp) {
-//     otpStore.delete(email); // remove after success
-//     return res.status(200).json({ message: "OTP verified" });
-//   } else {
-//     return res.status(400).json({ message: "Invalid OTP" });
-//   }
-// });
-
 router.post("/verify-otp", (req, res) => {
   const { email, otp } = req.body;
 
@@ -162,28 +165,6 @@ router.post("/verify-otp", (req, res) => {
   otpStore.delete(email); // Clean up after verification
   return res.status(200).json({ message: "OTP verified" });
 });
-
-// router.get("/:id", async (req, res, next) => {
-//   const userId = req.params.id;
-
-//   // Validate ObjectId
-//   if (!mongoose.Types.ObjectId.isValid(userId)) {
-//     return res.status(400).json({ error: "Invalid user ID format" });
-//   }
-
-//   try {
-//     const user = await User.findById(userId).select("-password -role");
-
-//     if (!user) {
-//       return res.status(404).json({ error: "User not found" });
-//     }
-
-//     res.status(200).json(user);
-//   } catch (error) {
-//     console.error("Error fetching user:", error);
-//     res.status(500).json({ error: "Something went wrong" });
-//   }
-// });
 
 router.get("/:id", async (req, res, next) => {
   const userId = req.params.id;
