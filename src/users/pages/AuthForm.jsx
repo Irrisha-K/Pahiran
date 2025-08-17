@@ -28,16 +28,70 @@ export default function AuthForm() {
     toast.info(isLogin ? "Switching to Sign Up" : "Switching to Login");
   };
 
+  // const validate = () => {
+  //   const newErrors = {};
+  //   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  //   if (!formValues.email || !emailPattern.test(formValues.email)) {
+  //     newErrors.email = "Please enter a valid email address.";
+  //   }
+
+  //   if (!formValues.password || formValues.password.length < 6) {
+  //     newErrors.password = "Password must be at least 6 characters long.";
+  //   }
+
+  //   if (!isLogin && !formValues.name.trim()) {
+  //     newErrors.name = "Name is required.";
+  //   }
+
+  //   setErrors(newErrors);
+  //   return Object.keys(newErrors).length === 0;
+  // };
+
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   if (!validate()) return;
+
+  //   setLoading(true);
+
+  //   if (!isLogin) {
+  //     await sendOtp();
+  //     setLoading(false);
+  //     return;
+  //   }
+
+  //   const url = `http://localhost:5001/api/users/login`;
+  //   try {
+  //     const res = await fetch(url, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(formValues),
+  //     });
+
+  //     const data = await res.json();
+  //     if (!res.ok) throw new Error(data.message || "Something went wrong");
+
+  //     auth.login(data.userId, data.token, data.role);
+  //     toast.success("Login successful!");
+  //     navigate(data.role === "admin" ? "/admin" : "/users");
+  //   } catch (err) {
+  //     toast.error(err.message || "Login failed.");
+  //     setLoading(false);
+  //   }
+  // };
+
   const validate = () => {
     const newErrors = {};
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$&*]).{6,}$/;
 
     if (!formValues.email || !emailPattern.test(formValues.email)) {
       newErrors.email = "Please enter a valid email address.";
     }
 
-    if (!formValues.password || formValues.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters long.";
+    if (!formValues.password || !passwordRegex.test(formValues.password)) {
+      newErrors.password =
+        "Password must contain at least 6 characters, one uppercase letter, and one special character (!@#$&*)";
     }
 
     if (!isLogin && !formValues.name.trim()) {
@@ -55,11 +109,31 @@ export default function AuthForm() {
     setLoading(true);
 
     if (!isLogin) {
-      await sendOtp();
-      setLoading(false);
+      try {
+        // ✅ First check if user already exists
+        const checkRes = await fetch(
+          "http://localhost:5001/api/users/check-user",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: formValues.email }),
+          }
+        );
+
+        const checkData = await checkRes.json();
+        if (!checkRes.ok) throw new Error(checkData.message);
+
+        // ✅ If user does not exist → proceed to send OTP
+        await sendOtp();
+      } catch (err) {
+        toast.error(err.message || "Signup failed.");
+      } finally {
+        setLoading(false);
+      }
       return;
     }
 
+    // 🔑 Login flow
     const url = `http://localhost:5001/api/users/login`;
     try {
       const res = await fetch(url, {
@@ -76,6 +150,7 @@ export default function AuthForm() {
       navigate(data.role === "admin" ? "/admin" : "/users");
     } catch (err) {
       toast.error(err.message || "Login failed.");
+    } finally {
       setLoading(false);
     }
   };
@@ -98,6 +173,74 @@ export default function AuthForm() {
     }
   };
 
+  // const verifyOtp = async () => {
+  //   try {
+  //     const res = await fetch("http://localhost:5001/api/users/verify-otp", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ email: formValues.email, otp }),
+  //     });
+
+  //     const data = await res.json();
+  //     if (!res.ok) throw new Error(data.message);
+
+  //     const signupRes = await fetch("http://localhost:5001/api/users/signup", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(formValues),
+  //     });
+
+  //     const signupData = await signupRes.json();
+  //     if (!signupRes.ok) throw new Error(signupData.message);
+
+  //     toast.success("Signup successful! Please login.");
+  //     setIsLogin(true);
+  //     setStep("form");
+  //   } catch (err) {
+  //     if (err.message.includes("Please login instead")) {
+  //       toast.error(err.message);
+  //       setIsLogin(true); // Switch to login form
+  //       setStep("form");
+  //     } else {
+  //       toast.error(err.message || "OTP verification failed.");
+  //     }
+  //   }
+  // };
+
+  // const verifyOtp = async () => {
+  //   try {
+  //     const res = await fetch("http://localhost:5001/api/users/verify-otp", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ email: formValues.email, otp }),
+  //     });
+
+  //     const data = await res.json();
+  //     if (!res.ok) throw new Error(data.message);
+
+  //     const signupRes = await fetch("http://localhost:5001/api/users/signup", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(formValues),
+  //     });
+
+  //     const signupData = await signupRes.json();
+  //     if (!signupRes.ok) throw new Error(signupData.message);
+
+  //     toast.success("Signup successful! Please login.");
+  //     setIsLogin(true);
+  //     setStep("form");
+  //   } catch (err) {
+  //     if (err.message.includes("Please login instead")) {
+  //       toast.error(err.message);
+  //       setIsLogin(true); // Switch to login form
+  //       setStep("form");
+  //     } else {
+  //       toast.error(err.message || "OTP verification failed.");
+  //     }
+  //   }
+  // };
+
   const verifyOtp = async () => {
     try {
       const res = await fetch("http://localhost:5001/api/users/verify-otp", {
@@ -116,7 +259,24 @@ export default function AuthForm() {
       });
 
       const signupData = await signupRes.json();
-      if (!signupRes.ok) throw new Error(signupData.message);
+
+      if (!signupRes.ok) {
+        if (signupData.existingUser) {
+          toast.error("User already exists. Please login instead.");
+          setIsLogin(true);
+          setStep("form");
+          return;
+        }
+        if (signupData.passwordError) {
+          setErrors({
+            ...errors,
+            password: signupData.message,
+          });
+          setStep("form");
+          return;
+        }
+        throw new Error(signupData.message);
+      }
 
       toast.success("Signup successful! Please login.");
       setIsLogin(true);
@@ -185,6 +345,12 @@ export default function AuthForm() {
                 {errors.password && (
                   <small className="error">{errors.password}</small>
                 )}
+                {/* {errors.password && !isLogin && (
+                  <small className="password-hint">
+                    Password must contain at least 6 characters, one uppercase
+                    letter, and one special character (!@#$&*)
+                  </small>
+                )} */}
               </div>
               <button type="submit" className="auth-button" disabled={loading}>
                 {loading

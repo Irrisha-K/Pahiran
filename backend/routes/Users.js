@@ -63,16 +63,93 @@ router.put("/:id", async (req, res) => {
 });
 
 // Sign Up
+
+// router.post("/signup", async (req, res) => {
+//   const { name, email, password } = req.body;
+
+//   try {
+//     const userExists = await User.findOne({ email });
+//     if (userExists)
+//       return res.status(400).json({ message: "Email already exists" });
+
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const role = email === "admin@example.com" ? "admin" : "user"; // optional logic
+
+//     const newUser = new User({ name, email, password: hashedPassword, role });
+//     await newUser.save();
+
+//     res.status(201).json({ message: "User created successfully" });
+//   } catch (err) {
+//     res.status(500).json({ message: "Server error" });
+//   }
+// });
+
+router.post("/check-user", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      return res
+        .status(400)
+        .json({ message: "User already exists. Please login instead." });
+    }
+    return res.status(200).json({ message: "Email is available" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// router.post("/signup", async (req, res) => {
+//   const { name, email, password } = req.body;
+
+//   try {
+//     const userExists = await User.findOne({ email });
+//     if (userExists) {
+//       return res.status(400).json({
+//         message: "User already exists. Please login instead.",
+//       });
+//     }
+
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const role = email === "admin@example.com" ? "admin" : "user";
+
+//     const newUser = new User({ name, email, password: hashedPassword, role });
+//     await newUser.save();
+
+//     res.status(201).json({ message: "User created successfully" });
+//   } catch (err) {
+//     res.status(500).json({ message: "Server error" });
+//   }
+// });
+
+// Login
+
 router.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
+    // Check if user exists
     const userExists = await User.findOne({ email });
-    if (userExists)
-      return res.status(400).json({ message: "Email already exists" });
+    if (userExists) {
+      return res.status(409).json({
+        message: "User already exists. Please login instead.",
+        existingUser: true,
+      });
+    }
+
+    // Password validation
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$&*]).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        message:
+          "Password must contain at least 6 characters, one uppercase letter, and one special character (!@#$&*)",
+        passwordError: true,
+      });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const role = email === "admin@example.com" ? "admin" : "user"; // optional logic
+    const role = email === "admin@example.com" ? "admin" : "user";
 
     const newUser = new User({ name, email, password: hashedPassword, role });
     await newUser.save();
@@ -83,7 +160,6 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// Login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 

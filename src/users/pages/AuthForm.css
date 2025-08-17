@@ -193,3 +193,17 @@
 .verify-otp-button:hover {
   background-color: #4338ca;
 }
+
+.password-hint {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.error {
+  color: #ff4444;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  display: block;
+}
