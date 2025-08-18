@@ -62,8 +62,6 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// Sign Up
-
 // router.post("/signup", async (req, res) => {
 //   const { name, email, password } = req.body;
 
@@ -138,7 +136,6 @@ router.post("/signup", async (req, res) => {
       });
     }
 
-    // Password validation
     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$&*]).{6,}$/;
     if (!passwordRegex.test(password)) {
       return res.status(400).json({
@@ -160,28 +157,63 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+// router.post("/login", async (req, res) => {
+//   const { email, password } = req.body;
+
+//   try {
+//     const user = await User.findOne({ email });
+//     if (!user) return res.status(401).json({ message: "Invalid credentials" });
+
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch)
+//       return res.status(401).json({ message: "Invalid credentials" });
+
+//     const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, {
+//       expiresIn: "1h",
+//     });
+
+//     // res.json({ token, role: user.role, name: user.name });
+//     res.json({ token, role: user.role, userId: user._id, name: user.name });
+
+//     console.log("New User Role:", user.role);
+//   } catch (err) {
+//     res.status(500).json({ message: "Server error" });
+//     console.log({ err });
+//   }
+// });
+
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(401).json({ message: "Invalid credentials" });
+    if (!user) {
+      return res.status(401).json({
+        message: "Invalid credentials",
+        invalidCredentials: true,
+      });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
-      return res.status(401).json({ message: "Invalid credentials" });
+    if (!isMatch) {
+      return res.status(401).json({
+        message: "Invalid credentials",
+        invalidCredentials: true,
+      });
+    }
 
     const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, {
       expiresIn: "1h",
     });
 
-    // res.json({ token, role: user.role, name: user.name });
-    res.json({ token, role: user.role, userId: user._id, name: user.name });
-
-    console.log("New User Role:", user.role);
+    res.json({
+      token,
+      role: user.role,
+      userId: user._id,
+      name: user.name,
+    });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
-    console.log({ err });
   }
 });
 
