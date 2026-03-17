@@ -144,7 +144,7 @@ export default function UsersHomePage() {
         )}
 
         <p className="user-role">
-          Logged in as <strong>{user.role}</strong>
+          Logged in as <strong>{user.name}</strong>
         </p>
       </div>
     </div>
