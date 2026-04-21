@@ -87,6 +87,26 @@ router.get("/newarrival", async (req, res) => {
   }
 });
 
+router.get("/search", async (req, res) => {
+  const { query } = req.query;
+
+  // Guard: return empty array if no query
+  if (!query || !query.trim()) return res.json([]);
+
+  try {
+    const products = await Product.find({
+      $or: [
+        { name: { $regex: query.trim(), $options: "i" } },
+        { category: { $regex: query.trim(), $options: "i" } },
+        { description: { $regex: query.trim(), $options: "i" } },
+      ],
+    });
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 router.get("/:id", async (req, res) => {
   const productId = req.params.id;
   try {
@@ -114,7 +134,7 @@ router.post(
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return next(
-        new HttpError("Invalid inputs passed, please check your data.", 422)
+        new HttpError("Invalid inputs passed, please check your data.", 422),
       );
     }
 
@@ -137,7 +157,7 @@ router.post(
     } catch (err) {
       return next(new HttpError("Creating product failed.", 500));
     }
-  }
+  },
 );
 
 router.put(
@@ -154,7 +174,7 @@ router.put(
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return next(
-        new HttpError("Invalid inputs passed, please check your data.", 422)
+        new HttpError("Invalid inputs passed, please check your data.", 422),
       );
     }
 
@@ -170,7 +190,7 @@ router.put(
       const product = await Product.findById(productId);
       if (!product) {
         return next(
-          new HttpError("Could not find product for the provided id.", 404)
+          new HttpError("Could not find product for the provided id.", 404),
         );
       }
 
@@ -191,7 +211,7 @@ router.put(
       console.error(err);
       return next(new HttpError("Updating product failed.", 500));
     }
-  }
+  },
 );
 
 // PATCH /products/:id/decrement
@@ -220,7 +240,7 @@ router.delete("/:pid", async (req, res, next) => {
   } catch (err) {
     console.error(err);
     return next(
-      new HttpError("Could not delete product, please try again.", 500)
+      new HttpError("Could not delete product, please try again.", 500),
     );
   }
 

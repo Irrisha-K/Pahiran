@@ -69,13 +69,13 @@ export default function CheckoutPage() {
 
   const cartTotal = mergedItems.reduce(
     (total, item) => total + item.quantity * item.numericPrice,
-    0
+    0,
   );
 
   const formattedTotal =
     "Rs. " +
     new Intl.NumberFormat("en-IN", { minimumFractionDigits: 2 }).format(
-      cartTotal
+      cartTotal,
     );
 
   const handleChange = (e) => {
@@ -254,9 +254,133 @@ export default function CheckoutPage() {
           return { ...item, quantity: limitedQty };
         }
         return item;
-      })
+      }),
     );
   };
+
+  // return (
+  //   <div className="checkout-page">
+  //     <h2>Checkout</h2>
+  //     {items.length === 0 ? (
+  //       <p className="empty">No items to checkout.</p>
+  //     ) : (
+  //       <>
+  //         {/* <ul className="checkout-items">
+  //           {items.map((item) => (
+  //             <li key={item.id} className="checkout-item">
+  //               <img src={item.image} alt={item.name} />
+  //               <div className="checkout-info">
+  //                 <h3>{item.name}</h3>
+  //                 <p>{item.price}</p>
+  //                 <p>Quantity: {item.quantity}</p>
+  //               </div>
+  //             </li>
+  //           ))}
+  //         </ul> */}
+  //         <ul className="checkout-items">
+  //           {mergedItems.map((item) => (
+  //             <li key={item.id} className="checkout-item">
+  //               <img src={item.image} alt={item.name} />
+  //               <div className="checkout-info">
+  //                 <h3>Name: {item.name}</h3>
+  //                 <p>Rs: {item.price}</p>
+  //                 <div className="quantity-control">
+  //                   {/* <button onClick={() => handleQuantityChange(item.id, -1)}>
+  //                     -
+  //                   </button> */}
+  //                   Quantity:
+  //                   <span>{item.quantity}</span>
+  //                   {/* <button onClick={() => handleQuantityChange(item.id, 1)}>
+  //                     +
+  //                   </button> */}
+  //                 </div>
+  //               </div>
+  //             </li>
+  //           ))}
+  //         </ul>
+
+  //         <form className="delivery-form">
+  //           <h3>Delivery Details</h3>
+  //           <input
+  //             type="text"
+  //             name="name"
+  //             placeholder="Full Name"
+  //             value={formData.name}
+  //             onChange={handleChange}
+  //             required
+  //           />
+  //           <textarea
+  //             type="text"
+  //             name="address"
+  //             placeholder="Delivery Address"
+  //             value={formData.address}
+  //             onChange={handleChange}
+  //             required
+  //           />
+  //           <input
+  //             type="number"
+  //             name="phone"
+  //             placeholder="Phone Number"
+  //             pattern="[0-9]{10}"
+  //             title="Enter a 10-digit number"
+  //             value={formData.phone}
+  //             onChange={handleChange}
+  //             required
+  //           />
+  //         </form>
+  //         <div className="payment-methods">
+  //           <h3>Payment Method</h3>
+  //           {/* <label>
+  //             <input
+  //               type="radio"
+  //               name="payment"
+  //               value="COD"
+  //               checked={paymentMethod === "COD"}
+  //               onChange={handlePaymentChange}
+  //             />
+  //             Cash on Delivery
+  //           </label> */}
+  //           <label>
+  //             <input
+  //               type="radio"
+  //               name="payment"
+  //               value="Khalti"
+  //               checked={paymentMethod === "Khalti"}
+  //               onChange={handlePaymentChange}
+  //             />
+  //             Pay with Khalti
+  //           </label>
+  //           <label>
+  //             <input
+  //               type="radio"
+  //               name="payment"
+  //               value="eSewa"
+  //               checked={paymentMethod === "eSewa"}
+  //               onChange={handlePaymentChange}
+  //             />
+  //             Pay with eSewa (Coming Soon)
+  //           </label>
+  //         </div>
+
+  //         <div className="checkout-summary">
+  //           <p className="checkout-total">Total: {formattedTotal}</p>
+
+  //           <button
+  //             className="checkout-button"
+  //             onClick={handlePlaceOrder}
+  //             disabled={isPlacingOrder}
+  //           >
+  //             {paymentMethod === "Khalti" && !location.state?.khaltiPaid
+  //               ? "Proceed to Pay"
+  //               : isPlacingOrder
+  //               ? "Placing Order..."
+  //               : "Place Order"}
+  //           </button>
+  //         </div>
+  //       </>
+  //     )}
+  //   </div>
+  // );
 
   return (
     <div className="checkout-page">
@@ -264,120 +388,135 @@ export default function CheckoutPage() {
       {items.length === 0 ? (
         <p className="empty">No items to checkout.</p>
       ) : (
-        <>
-          {/* <ul className="checkout-items">
-            {items.map((item) => (
-              <li key={item.id} className="checkout-item">
-                <img src={item.image} alt={item.name} />
-                <div className="checkout-info">
-                  <h3>{item.name}</h3>
-                  <p>{item.price}</p>
-                  <p>Quantity: {item.quantity}</p>
-                </div>
-              </li>
-            ))}
-          </ul> */}
-          <ul className="checkout-items">
-            {mergedItems.map((item) => (
-              <li key={item.id} className="checkout-item">
-                <img src={item.image} alt={item.name} />
-                <div className="checkout-info">
-                  <h3>Name: {item.name}</h3>
-                  <p>Rs: {item.price}</p>
-                  <div className="quantity-control">
-                    {/* <button onClick={() => handleQuantityChange(item.id, -1)}>
-                      -
-                    </button> */}
-                    Quantity:
-                    <span>{item.quantity}</span>
-                    {/* <button onClick={() => handleQuantityChange(item.id, 1)}>
-                      +
-                    </button> */}
+        <div className="checkout-card">
+          {/* Items */}
+          <div className="checkout-section">
+            <p className="section-title">Your Items</p>
+            <ul className="checkout-items">
+              {mergedItems.map((item) => (
+                <li key={item.id} className="checkout-item">
+                  <img src={item.image} alt={item.name} />
+                  <div className="checkout-info">
+                    <h3>{item.name}</h3>
+                    <p>{item.price}</p>
+                    <span className="quantity-badge">Qty: {item.quantity}</span>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-
-          <form className="delivery-form">
-            <h3>Delivery Details</h3>
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-            <textarea
-              type="text"
-              name="address"
-              placeholder="Delivery Address"
-              value={formData.address}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="number"
-              name="phone"
-              placeholder="Phone Number"
-              pattern="[0-9]{10}"
-              title="Enter a 10-digit number"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-            />
-          </form>
-          <div className="payment-methods">
-            <h3>Payment Method</h3>
-            {/* <label>
-              <input
-                type="radio"
-                name="payment"
-                value="COD"
-                checked={paymentMethod === "COD"}
-                onChange={handlePaymentChange}
-              />
-              Cash on Delivery
-            </label> */}
-            <label>
-              <input
-                type="radio"
-                name="payment"
-                value="Khalti"
-                checked={paymentMethod === "Khalti"}
-                onChange={handlePaymentChange}
-              />
-              Pay with Khalti
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="payment"
-                value="eSewa"
-                checked={paymentMethod === "eSewa"}
-                onChange={handlePaymentChange}
-              />
-              Pay with eSewa (Coming Soon)
-            </label>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="checkout-summary">
-            <p className="checkout-total">Total: {formattedTotal}</p>
-
-            <button
-              className="checkout-button"
-              onClick={handlePlaceOrder}
-              disabled={isPlacingOrder}
+          {/* Delivery */}
+          <div className="checkout-section">
+            <p className="section-title">Delivery Details</p>
+            <form
+              className="delivery-form"
+              onSubmit={(e) => e.preventDefault()}
             >
-              {paymentMethod === "Khalti" && !location.state?.khaltiPaid
-                ? "Proceed to Pay"
-                : isPlacingOrder
+              <div className="form-field">
+                <label>Full Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="John Doe"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-field">
+                <label>Delivery Address</label>
+                <textarea
+                  name="address"
+                  placeholder="Street, City, Area..."
+                  value={formData.address}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="form-field">
+                <label>Phone Number</label>
+                <input
+                  type="number"
+                  name="phone"
+                  placeholder="98XXXXXXXX"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </form>
+          </div>
+
+          {/* Payment */}
+          <div className="checkout-section">
+            <p className="section-title">Payment Method</p>
+            <div className="payment-options">
+              <label
+                className={`payment-option ${paymentMethod === "Khalti" ? "selected" : ""}`}
+              >
+                <input
+                  type="radio"
+                  name="payment"
+                  value="Khalti"
+                  checked={paymentMethod === "Khalti"}
+                  onChange={handlePaymentChange}
+                />
+                <div className="payment-option-label">
+                  <span>Pay with Khalti</span>
+                  <small>Secure digital wallet</small>
+                </div>
+              </label>
+              <label
+                className={`payment-option ${paymentMethod === "eSewa" ? "selected" : ""}`}
+              >
+                <input
+                  type="radio"
+                  name="payment"
+                  value="eSewa"
+                  checked={paymentMethod === "eSewa"}
+                  onChange={handlePaymentChange}
+                />
+                <div className="payment-option-label">
+                  <span>Pay with eSewa</span>
+                  <small>Coming soon</small>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          {/* Order Summary */}
+          <div className="checkout-section">
+            <p className="section-title">Order Summary</p>
+            <div className="order-summary">
+              <div className="summary-row">
+                <span>Items ({mergedItems.length})</span>
+                <span>{formattedTotal}</span>
+              </div>
+              <div className="summary-row">
+                <span>Delivery</span>
+                <span style={{ color: "#4caf50" }}>Free</span>
+              </div>
+              <div className="summary-row total">
+                <span>Total</span>
+                <span>{formattedTotal}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Place Order */}
+          <button
+            className="checkout-button"
+            onClick={handlePlaceOrder}
+            disabled={isPlacingOrder}
+          >
+            {paymentMethod === "Khalti" && !location.state?.khaltiPaid
+              ? "Proceed to Pay"
+              : isPlacingOrder
                 ? "Placing Order..."
                 : "Place Order"}
-            </button>
-          </div>
-        </>
+          </button>
+        </div>
       )}
     </div>
   );

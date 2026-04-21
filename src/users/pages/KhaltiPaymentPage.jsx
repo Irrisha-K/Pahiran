@@ -1,5 +1,3 @@
-// src/components/KhaltiPaymentPage.jsx
-
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useContext } from "react";
 import { toast } from "react-toastify";
@@ -21,12 +19,9 @@ export default function KhaltiPaymentPage() {
 
   const handlePayment = async () => {
     setIsPaying(true);
-
     try {
-      // Simulate payment success
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // Place order via API
       const response = await fetch("http://localhost:5001/api/purchase/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -38,47 +33,101 @@ export default function KhaltiPaymentPage() {
         throw new Error(err.message || "Order failed");
       }
 
-      toast.success("Payment and order placed successfully!");
-
-      // Clear localStorage and context cart
+      toast.success("Payment successful! Order placed.");
       const userId = localStorage.getItem("userId");
       localStorage.removeItem(`cart-${userId}`);
       clearCart();
-
-      navigate("/"); // Go to homepage
+      navigate("/");
     } catch (error) {
       toast.error(error.message);
       setIsPaying(false);
     }
   };
 
+  const formattedAmount = new Intl.NumberFormat("en-IN").format(amount || 0);
+
   return (
-    <div className="khalti-payment-page">
-      <h2>Mock Khalti Payment</h2>
-      <p>Enter your Khalti credentials to proceed.</p>
-      <form className="khalti-form" onSubmit={(e) => e.preventDefault()}>
-        <input
-          type="tel"
-          placeholder="Khalti Phone Number"
-          value={khaltiPhone}
-          onChange={(e) => setKhaltiPhone(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Khalti Password"
-          value={khaltiPassword}
-          onChange={(e) => setKhaltiPassword(e.target.value)}
-          required
-        />
-        <button
-          type="submit"
-          onClick={handlePayment}
-          disabled={!isFormValid || isPaying}
-        >
-          {isPaying ? "Processing..." : `Pay Now - Rs. ${amount}`}
-        </button>
-      </form>
+    <div className="khalti-page">
+      <div className="khalti-card">
+        {/* Brand header */}
+        <div className="khalti-brand">
+          <div className="khalti-logo">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#534AB7"
+              strokeWidth="2.2"
+            >
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+          </div>
+          <div>
+            <p className="brand-name">Khalti Payment</p>
+            <p className="brand-sub">Secure digital wallet</p>
+          </div>
+        </div>
+
+        {/* Amount */}
+        <div className="khalti-amount">
+          <span className="amount-label">Amount due</span>
+          <span className="amount-value">Rs. {formattedAmount}</span>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={(e) => e.preventDefault()}>
+          <div className="khalti-field">
+            <label>Khalti phone number</label>
+            <input
+              type="tel"
+              placeholder="98XXXXXXXX"
+              value={khaltiPhone}
+              onChange={(e) => setKhaltiPhone(e.target.value)}
+              maxLength={10}
+              required
+            />
+          </div>
+
+          <div className="khalti-field">
+            <label>Khalti MPIN</label>
+            <input
+              type="password"
+              placeholder="Enter your MPIN"
+              value={khaltiPassword}
+              onChange={(e) => setKhaltiPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <button
+            className={`khalti-btn ${isPaying ? "loading" : ""}`}
+            onClick={handlePayment}
+            disabled={!isFormValid || isPaying}
+          >
+            {isPaying ? (
+              <span className="btn-inner">
+                <span className="spinner" />
+                Processing...
+              </span>
+            ) : (
+              `Pay Rs. ${formattedAmount}`
+            )}
+          </button>
+        </form>
+
+        {/* Footer */}
+        <div className="khalti-footer">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <rect x="3" y="11" width="18" height="11" rx="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          Secured by Khalti
+        </div>
+      </div>
     </div>
   );
 }

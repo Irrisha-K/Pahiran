@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import {
   FaSearch,
   FaUser,
@@ -20,10 +20,13 @@ export default function Navbar() {
 
   const totalCartItems = items.reduce(
     (total, item) => total + item.quantity,
-    0
+    0,
   );
 
   const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const debounceTimer = useRef(null);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -32,12 +35,46 @@ export default function Navbar() {
     navigate("/");
   };
 
+  useEffect(() => {
+    if (!query.trim()) {
+      setSuggestions([]);
+      setShowDropdown(false);
+      return;
+    }
+
+    // Clear previous timer
+    clearTimeout(debounceTimer.current);
+
+    // Set new timer
+    debounceTimer.current = setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `http://localhost:5001/api/products/search?query=${encodeURIComponent(query.trim())}`,
+        );
+        const data = await res.json();
+        const results = Array.isArray(data) ? data : (data.products ?? []);
+        setSuggestions(results.slice(0, 8));
+        setShowDropdown(results.length > 0);
+      } catch (err) {
+        console.error("Search error:", err);
+      }
+    }, 200);
+
+    return () => clearTimeout(debounceTimer.current);
+  }, [query]);
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (query.trim()) {
-      // navigate(`/search?query=${encodeURIComponent(query.trim())}`);
+      setShowDropdown(false);
       navigate(`/search?query=${encodeURIComponent(query.trim())}`);
     }
+  };
+
+  const handleSuggestionClick = (productId) => {
+    setShowDropdown(false);
+    setQuery("");
+    navigate(`/product/${productId}`);
   };
 
   return (
@@ -48,32 +85,56 @@ export default function Navbar() {
         </NavLink>
 
         {/* 🔍 Global Search Bar */}
-        <form className="search-container" onSubmit={handleSearch}>
-          <input
-            type="text"
-            placeholder="Search for clothes..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <button type="submit" style={{ background: "none", border: "none" }}>
-            <FaSearch />
-          </button>
-        </form>
-        {/* <div className="search-container">
-          <SearchBar />
-        </div> */}
+        <div className="search-wrapper">
+          <form className="search-container" onSubmit={handleSearch}>
+            <input
+              type="text"
+              placeholder="Search for clothes..."
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                // setShowDropdown(false);
+              }}
+              onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+              onFocus={() => suggestions.length > 0 && setShowDropdown(true)}
+            />
+            <button
+              type="submit"
+              style={{ background: "none", border: "none" }}
+            >
+              <FaSearch />
+            </button>
+          </form>
+
+          {/* Dropdown suggestions */}
+          {showDropdown && suggestions.length > 0 && (
+            <div className="search-dropdown">
+              {suggestions.map((product) => (
+                <div
+                  key={product._id}
+                  className="search-suggestion"
+                  onMouseDown={() => handleSuggestionClick(product._id)}
+                >
+                  <img src={product.image} alt={product.name} />
+                  <div className="suggestion-info">
+                    <span className="suggestion-name">{product.name}</span>
+                    <span className="suggestion-price">
+                      Rs. {product.price}
+                    </span>
+                  </div>
+                </div>
+              ))}
+              <div className="suggestion-view-all" onMouseDown={handleSearch}>
+                View all results for "{query}"
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* 👤 Icons */}
         <div className="nav-icons">
-          {/*           
-          <NavLink to="/auth">
-            <FaUser />
-          </NavLink> */}
           {auth.isLoggedIn ? (
             <>
-              {/* <NavLink to="/profile">
-                <FaUser />
-              </NavLink> */}
               <button onClick={handleLogout} className="logout-btn">
                 Log Out
               </button>
@@ -126,6 +187,12 @@ export default function Navbar() {
         {auth.isLoggedIn && auth.role === "admin" && (
           <li>
             <NavLink to="/add">Add Products</NavLink>
+          </li>
+        )}
+
+        {auth.isLoggedIn && auth.role === "admin" && (
+          <li>
+            <NavLink to="/orders">All Orders</NavLink>
           </li>
         )}
 

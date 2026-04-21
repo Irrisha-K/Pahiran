@@ -27,7 +27,7 @@ export default function AdminUpdateProduct() {
     const fetchProduct = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5001/api/products/${productId}`
+          `http://localhost:5001/api/products/${productId}`,
         );
         const data = await res.json();
         if (res.ok) {
@@ -116,7 +116,7 @@ export default function AdminUpdateProduct() {
         {
           method: "PUT",
           body: form,
-        }
+        },
       );
       const data = await res.json();
       if (!res.ok) {
@@ -144,65 +144,94 @@ export default function AdminUpdateProduct() {
     <div className="admin-update-container">
       <h2>Update Product</h2>
       <form className="admin-update-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Product Name"
-          required
-          value={formData.name}
-          onChange={handleChange}
-        />
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          required
-          value={formData.price}
-          onChange={handleChange}
-        />
-        <input
-          type="number"
-          name="originalPrice"
-          placeholder="Original Price"
-          value={formData.originalPrice}
-          onChange={handleChange}
-        />
-        <input
-          type="number"
-          name="discount"
-          placeholder="Discount (%)"
-          value={formData.discount}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="category"
-          placeholder="Category"
-          required
-          value={formData.category}
-          onChange={handleChange}
-        />
-        <textarea
-          name="description"
-          placeholder="Description"
-          required
-          value={formData.description}
-          onChange={handleChange}
-        />
-        <input
-          type="number"
-          name="quantity"
-          placeholder="Quantity"
-          required
-          value={formData.quantity}
-          onChange={handleChange}
-        />
-        <input
-          type="file"
-          name="image"
-          accept="image/*"
-          onChange={handleChange}
-        />
+        <div className="form-group">
+          <label>Product Name</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Product Name"
+            required
+            value={formData.name}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label>Price</label>
+          <input
+            type="number"
+            name="price"
+            placeholder="Price"
+            required
+            value={formData.price}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label>Original Price</label>
+          <input
+            type="number"
+            name="originalPrice"
+            placeholder="Original Price"
+            value={formData.originalPrice}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Discount (%)</label>
+          <input
+            type="number"
+            name="discount"
+            placeholder="Discount (%)"
+            value={formData.discount}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Category</label>
+          <input
+            type="text"
+            name="category"
+            placeholder="Category"
+            required
+            value={formData.category}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Description</label>
+          <textarea
+            name="description"
+            placeholder="Description"
+            required
+            value={formData.description}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Quantity</label>
+          <input
+            type="number"
+            name="quantity"
+            placeholder="Quantity"
+            required
+            value={formData.quantity}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Product Image</label>
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleChange}
+          />
+        </div>
         {formData.image && (
           <img src={formData.image} alt="Preview" className="preview-image" />
         )}

@@ -1,0 +1,146 @@
+.orders-page {
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.orders-page h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.orders-status {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #888;
+  margin-top: 3rem;
+}
+
+.orders-status.error {
+  color: #e74c3c;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.order-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.order-number {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.order-date {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.order-payment {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.order-payment.khalti {
+  background-color: #5c2d91;
+  color: #fff;
+}
+
+.order-payment.cod {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.order-user {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.order-user p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.order-user p span {
+  font-weight: 600;
+  color: #333;
+  margin-right: 6px;
+}
+
+.order-items-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #999;
+  margin: 0 0 0.5rem 0;
+}
+
+.order-items ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.order-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.order-item-row:last-child {
+  border-bottom: none;
+}
+
+.item-name {
+  color: #333;
+  font-weight: 500;
+}
+
+.item-qty {
+  color: #888;
+  font-size: 0.85rem;
+}

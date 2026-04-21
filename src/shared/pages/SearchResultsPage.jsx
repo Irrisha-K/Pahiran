@@ -1,77 +1,77 @@
-import { useLocation } from "react-router-dom";
-import { useMemo } from "react";
-import allProducts from "./AllProducts"; // a combined list of all product data
-
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import "./SearchResultsPage.css";
 
 export default function SearchResultsPage() {
-  const query = useQuery().get("query") || "";
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("query") || "";
 
-  const filteredItems = useMemo(() => {
-    return allProducts.filter((item) =>
-      item.name.toLowerCase().includes(query.toLowerCase())
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!query.trim()) return;
+
+    const fetchResults = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch(
+          `http://localhost:5001/api/products/search?query=${encodeURIComponent(query)}`,
+        );
+        if (!res.ok) throw new Error("Failed to fetch results");
+        const data = await res.json();
+        setResults(Array.isArray(data) ? data : (data.products ?? []));
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchResults();
+  }, [query]); // reruns whenever query changes
+
+  if (loading)
+    return (
+      <div className="search-page">
+        <p className="search-status">Searching...</p>
+      </div>
     );
-  }, [query]);
+  if (error)
+    return (
+      <div className="search-page">
+        <p className="search-status error">{error}</p>
+      </div>
+    );
 
   return (
-    <div>
-      <h2>Search Results for: "{query}"</h2>
-      {filteredItems.length === 0 ? (
-        <p>No results found.</p>
+    <div className="search-page">
+      <h2>
+        Results for "<span>{query}</span>"
+      </h2>
+
+      {results.length === 0 ? (
+        <p className="search-status">No products found for "{query}".</p>
       ) : (
-        <div className="product-list">
-          {filteredItems.map((item) => (
-            <div key={item.id} className="product-item">
-              <img src={item.image} alt={item.name} />
-              <div>
-                <h3>{item.name}</h3>
-                <p>{item.price}</p>
+        <div className="search-grid">
+          {results.map((product) => (
+            <NavLink
+              to={`/product/${product._id}`}
+              key={product._id}
+              className="search-card"
+            >
+              <img src={product.image} alt={product.name} />
+              <div className="search-card-info">
+                <h3>{product.name}</h3>
+                <p className="search-price">Rs. {product.price}</p>
               </div>
-            </div>
+            </NavLink>
           ))}
         </div>
       )}
     </div>
   );
 }
-
-// import { useLocation } from "react-router-dom";
-// import { useMemo } from "react";
-// import allProducts from "./AllProducts";
-
-// function useQuery() {
-//   return new URLSearchParams(useLocation().search);
-// }
-
-// export default function SearchResultsPage() {
-//   const query = useQuery().get("query") || "";
-
-//   const filteredItems = useMemo(() => {
-//     return allProducts.filter((item) =>
-//       item.name.toLowerCase().includes(query.toLowerCase())
-//     );
-//   }, [query]);
-
-//   return (
-//     <div>
-//       <h2>Search Results for: "{query}"</h2>
-//       {filteredItems.length === 0 ? (
-//         <p>No results found.</p>
-//       ) : (
-//         <div className="product-list">
-//           {filteredItems.map((item) => (
-//             <div key={item.id} className="product-item">
-//               <img src={`/assets/images/${item.image}`} alt={item.name} />
-//               <div>
-//                 <h3>{item.name}</h3>
-//                 <p>{item.price}</p>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       )}
-//     </div>
-//   );
-// }

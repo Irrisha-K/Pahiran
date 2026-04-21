@@ -31,6 +31,7 @@ import AuthRedirect from "./users/pages/AuthRedirect";
 import UserPurchases from "./users/pages/UserPurchases";
 import KhaltiPaymentPage from "./users/pages/KhaltiPaymentPage";
 import Adminviewpurchase from "./users/pages/Adminviewpurchase";
+import AdminOrdersPage from "./users/pages/AdminOrdersPage";
 
 // const routes = [
 //   {
@@ -117,6 +118,7 @@ const routes = [
           </ProtectedRoute>
         ),
       },
+
       {
         path: "/user-list",
         element: (
@@ -125,6 +127,15 @@ const routes = [
           </ProtectedRoute>
         ),
       },
+      {
+        path: "/orders",
+        element: (
+          <ProtectedRoute roles={["admin"]}>
+            <AdminOrdersPage />
+          </ProtectedRoute>
+        ),
+      },
+
       { path: "/myDetails", element: <UsersHomePage /> },
       { path: "/product/:id", element: <ProductDetailsPage /> },
     ],

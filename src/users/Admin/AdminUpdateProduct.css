@@ -65,6 +65,19 @@
 
 /*  */
 
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #4a5568;
+  letter-spacing: 0.01em;
+}
+
 .admin-update-container {
   max-width: 800px;
   margin: 3rem auto;
@@ -94,7 +107,9 @@
   border-radius: 10px;
   border: 1px solid #ccc;
   font-size: 1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .admin-update-form input:focus,
