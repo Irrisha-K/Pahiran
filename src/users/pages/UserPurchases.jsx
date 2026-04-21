@@ -95,6 +95,9 @@ const UserPurchases = () => {
                 <div className="order-header">
                   <div className="order-meta">
                     <span className="order-number">Order #{index + 1}</span>
+                    <span className="order-id">
+                      ID: {order._id?.slice(-10).toUpperCase()}
+                    </span>
                     <span className="order-date">
                       {formatDate(order.createdAt)}
                     </span>
@@ -112,6 +115,31 @@ const UserPurchases = () => {
                       {cancelled
                         ? "❌ Cancelled"
                         : `${stageObj?.icon} ${stageObj?.label}`}
+                    </span>
+                  </div>
+                </div>
+
+                {/* ── Products summary (always visible) ── */}
+                <div className="order-products-preview">
+                  {order.items?.map((item, idx) => (
+                    <div key={idx} className="order-product-row">
+                      <span className="order-product-name">{item.name}</span>
+                      <div className="order-product-right">
+                        <span className="order-product-qty">
+                          x{item.quantity}
+                        </span>
+                        {item.price && (
+                          <span className="order-product-price">
+                            Rs {Number(item.price).toLocaleString("en-IN")}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                  <div className="order-product-total">
+                    <span>Total</span>
+                    <span>
+                      Rs {Number(order.total).toLocaleString("en-IN")}
                     </span>
                   </div>
                 </div>
@@ -172,28 +200,20 @@ const UserPurchases = () => {
                 {/* ── Expandable details ── */}
                 {isExpanded && (
                   <div className="order-details-body">
-                    <div className="order-total-row">
-                      <span className="order-total-label">Order Total</span>
-                      <span className="order-total-value">
-                        Rs {Number(order.total).toLocaleString("en-IN")}
-                      </span>
-                    </div>
-
-                    <div className="order-items">
-                      <p className="order-items-title">Items Ordered</p>
-                      <ul>
-                        {order.items?.map((item, idx) => (
-                          <li key={idx} className="order-item-row">
-                            <span className="item-name">{item.name}</span>
-                            <span className="item-qty">x{item.quantity}</span>
-                            {item.price && (
-                              <span className="item-price">
-                                Rs {Number(item.price).toLocaleString("en-IN")}
-                              </span>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
+                    <div className="order-user">
+                      <p>
+                        <span>Payment</span>
+                        {order.paymentMethod || "N/A"}
+                      </p>
+                      <p>
+                        <span>Items</span>
+                        {order.items?.length || 0} item
+                        {order.items?.length !== 1 ? "s" : ""}
+                      </p>
+                      <p className="order-full-id">
+                        <span>Full ID</span>
+                        {order._id}
+                      </p>
                     </div>
                   </div>
                 )}
