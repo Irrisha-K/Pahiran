@@ -28,6 +28,18 @@ const orderSchema = new mongoose.Schema({
   total: { type: Number, required: true },
   paymentMethod: { type: String, required: true, default: "COD" },
   createdAt: { type: Date, default: Date.now },
+  status: {
+    type: String,
+    enum: [
+      "pending",
+      "processing",
+      "shipped",
+      "out_for_delivery",
+      "delivered",
+      "cancelled",
+    ],
+    default: "pending",
+  },
 });
 
 module.exports = mongoose.model("Order", orderSchema);

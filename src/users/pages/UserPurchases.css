@@ -1,103 +1,409 @@
-.order-card {
-  background: #1c1917 !important;
-  border: 1px solid rgba(255, 255, 255, 0.07) !important;
-  border-radius: 18px;
-  overflow: hidden;
-  transition:
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
-  animation: cardFadeUp 0.4s ease backwards;
+/* ─── Base page (mirrors AdminOrdersPage) ─────────────────────────────────── */
+.orders-page {
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.order-card__header {
+.orders-page h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.orders-status {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #888;
+  margin-top: 3rem;
+}
+.orders-status.error {
+  color: #e74c3c;
+}
+
+.orders-list {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ─── Card ────────────────────────────────────────────────────────────────── */
+@keyframes cardUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.order-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: cardUp 0.4s ease backwards;
+  transition:
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+.order-card:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+  border-color: #ccc;
+}
+.order-card--cancelled {
+  opacity: 0.75;
+  background: #fefefe;
+}
+
+/* ─── Header row ──────────────────────────────────────────────────────────── */
+.order-header {
+  display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   gap: 0.75rem;
-  padding: 1.1rem 1.4rem 0.9rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  background: #1c1917 !important;
 }
-
-.order-card__body {
-  padding: 1rem 1.4rem;
+.order-meta {
   display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.order-number {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+.order-date {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.order-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   flex-wrap: wrap;
-  gap: 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  background: #161412 !important;
+  justify-content: flex-end;
 }
 
-.order-card__items {
-  padding: 1rem 1.4rem 1.3rem;
-  background: #1c1917 !important;
+/* ─── Payment badge (reused from admin) ───────────────────────────────────── */
+.order-payment {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.order-payment.khalti {
+  background-color: #5c2d91;
+  color: #fff;
+}
+.order-payment.cod {
+  background-color: #e8f5e9;
+  color: #2e7d32;
 }
 
-.order-item {
+/* ─── Status badge (reused from admin, same aop- classes) ─────────────────── */
+.aop-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.aop-badge--pending {
+  background: rgba(107, 114, 128, 0.12);
+  color: #6b7280;
+  border-color: rgba(107, 114, 128, 0.3);
+}
+.aop-badge--processing {
+  background: rgba(124, 108, 212, 0.12);
+  color: #7c6cd4;
+  border-color: rgba(124, 108, 212, 0.3);
+}
+.aop-badge--shipped {
+  background: rgba(46, 144, 229, 0.12);
+  color: #2e90e5;
+  border-color: rgba(46, 144, 229, 0.3);
+}
+.aop-badge--out_for_delivery {
+  background: rgba(229, 144, 46, 0.12);
+  color: #b45309;
+  border-color: rgba(229, 144, 46, 0.3);
+}
+.aop-badge--delivered {
+  background: rgba(34, 197, 94, 0.12);
+  color: #15803d;
+  border-color: rgba(34, 197, 94, 0.3);
+}
+.aop-badge--cancelled {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* ─── Shipping timeline ───────────────────────────────────────────────────── */
+.up-timeline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1rem 0.5rem 0.5rem;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  gap: 0;
+}
+.up-timeline::-webkit-scrollbar {
+  display: none;
+}
+
+.up-tl-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+  min-width: 64px;
+}
+
+/* connector line */
+.up-tl-line {
+  position: absolute;
+  top: 14px;
+  right: 50%;
+  width: 100%;
+  height: 2px;
+  background: #e5e7eb;
+  z-index: 0;
+  transform: translateX(-50%);
+}
+.up-tl-step:first-child .up-tl-line {
+  display: none;
+}
+
+.up-tl-line__fill {
+  height: 100%;
+  background: #2e90e5;
+  transition: width 0.6s ease;
+  border-radius: 2px;
+}
+
+/* node */
+.up-tl-node {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  border: 2px solid #d1d5db;
+  display: grid;
+  place-items: center;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+  font-size: 0.75rem;
+}
+.up-tl-node--done {
+  background: #eff6ff;
+  border-color: #2e90e5;
+}
+.up-tl-node--active {
+  background: #2e90e5;
+  border-color: #2e90e5;
+  box-shadow: 0 0 0 4px rgba(46, 144, 229, 0.18);
+}
+.up-tl-node__icon {
+  font-size: 0.75rem;
+  line-height: 1;
+}
+.up-tl-node__num {
+  font-size: 0.6rem;
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+/* pulse ring */
+.up-tl-node__pulse {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 2px solid #2e90e5;
+  animation: tlpulse 1.8s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes tlpulse {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.65);
+  }
+}
+
+/* labels */
+.up-tl-label {
+  margin-top: 0.4rem;
+  font-size: 0.58rem;
+  color: #9ca3af;
+  text-align: center;
+  white-space: nowrap;
+  transition: color 0.3s;
+  font-weight: 500;
+}
+.up-tl-label--done {
+  color: #6b7280;
+}
+.up-tl-label--active {
+  color: #2e90e5;
+  font-weight: 700;
+}
+
+/* ─── Expand toggle ───────────────────────────────────────────────────────── */
+.order-toggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255, 255, 255, 0.04) !important;
-  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  width: 100%;
+  background: none;
+  border: none;
+  border-top: 1px solid #f0f0f0;
+  padding: 0.6rem 0;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s;
+  margin-top: -0.25rem;
+}
+.order-toggle:hover {
+  color: #2c3e50;
+}
+
+.order-toggle__chevron {
+  font-size: 1.1rem;
+  display: inline-block;
+  transition: transform 0.25s;
+  line-height: 1;
+}
+.order-toggle__chevron--open {
+  transform: rotate(90deg);
+}
+
+/* ─── Expanded details ────────────────────────────────────────────────────── */
+@keyframes detailsFade {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.order-details-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  animation: detailsFade 0.22s ease;
+}
+
+/* Total row */
+.order-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
   border-radius: 8px;
-  padding: 0.55rem 0.85rem;
-  transition: background 0.2s;
+  padding: 0.65rem 1rem;
 }
-
-.order-card__name {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #f0ece5 !important;
-  margin: 0;
-}
-
-.order-card__id {
-  font-size: 0.68rem;
-  color: rgba(255, 255, 255, 0.4) !important;
-  letter-spacing: 0.06em;
+.order-total-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #555;
   text-transform: uppercase;
-  margin: 0 0 0.2rem;
+  letter-spacing: 0.05em;
+}
+.order-total-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2c3e50;
 }
 
-.order-card__date {
-  font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.35) !important;
-  margin: 0.15rem 0 0;
-}
-
-.order-meta__label {
-  font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.4) !important;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-}
-
-.order-meta__value {
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: #d0ccc5 !important;
-}
-
-.order-items-label {
-  font-size: 0.68rem;
-  color: rgba(255, 255, 255, 0.4) !important;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  margin: 0 0 0.7rem;
-}
-
-.order-item__name {
-  font-size: 0.85rem;
-  color: #c8c3bb !important;
-  font-weight: 400;
-}
-
-.order-item__qty {
+/* Items list */
+.order-items-title {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5) !important;
-  background: rgba(255, 255, 255, 0.08) !important;
-  padding: 2px 8px;
-  border-radius: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #999;
+  margin: 0 0 0.5rem;
+}
+.order-items ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.order-item-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.order-item-row:last-child {
+  border-bottom: none;
+}
+
+.item-name {
+  flex: 1;
+  color: #333;
   font-weight: 500;
+}
+.item-qty {
+  color: #888;
+  font-size: 0.85rem;
+}
+.item-price {
+  color: #2e7d32;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-left: auto;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 520px) {
+  .orders-page {
+    padding: 1rem;
+  }
+  .up-tl-label {
+    font-size: 0.5rem;
+  }
+  .up-timeline {
+    padding: 0.85rem 0.25rem 0.4rem;
+  }
+  .order-header-right {
+    gap: 0.4rem;
+  }
 }

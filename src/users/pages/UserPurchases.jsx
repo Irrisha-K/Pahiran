@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from "react";
 import "./UserPurchases.css";
 
-const STATUS_MAP = {
-  delivered: { label: "Delivered", cls: "delivered" },
-  processing: { label: "Processing", cls: "processing" },
-  cancelled: { label: "Cancelled", cls: "cancelled" },
-  pending: { label: "Pending", cls: "pending" },
-};
+const STAGES = [
+  { key: "pending", icon: "⏳", label: "Order Placed" },
+  { key: "processing", icon: "⚙️", label: "Processing" },
+  { key: "shipped", icon: "🚚", label: "Shipped" },
+  { key: "out_for_delivery", icon: "📦", label: "Out for Delivery" },
+  { key: "delivered", icon: "✅", label: "Delivered" },
+];
 
-function getStatus(raw = "") {
-  const key = raw.toLowerCase();
-  return STATUS_MAP[key] || { label: raw || "Unknown", cls: "pending" };
+const STAGE_ORDER = STAGES.map((s) => s.key);
+
+function getStageIndex(status = "") {
+  const key = status.toLowerCase().replace(/ /g, "_");
+  if (key === "cancelled") return -1;
+  const idx = STAGE_ORDER.indexOf(key);
+  return idx === -1 ? 0 : idx;
 }
 
 function formatDate(dateStr) {
-  return new Date(dateStr).toLocaleDateString("en-IN", {
+  return new Date(dateStr).toLocaleDateString("en-US", {
     day: "numeric",
     month: "short",
     year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
   });
 }
 
@@ -27,6 +30,7 @@ const UserPurchases = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [expanded, setExpanded] = useState({});
 
   const fetchOrders = async () => {
     setLoading(true);
@@ -57,106 +61,147 @@ const UserPurchases = () => {
     fetchOrders();
   }, []);
 
+  const toggle = (id) => setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
+
+  const isCancelled = (s) => s?.toLowerCase() === "cancelled";
+
   return (
-    <div className="user-purchases-container">
-      {/* ── Header ── */}
-      <div className="purchases-header">
-        <h2>Purchase History</h2>
-        <p>All your orders in one place</p>
-      </div>
+    <div className="orders-page">
+      <h2>Purchase History</h2>
 
-      {/* ── Loading ── */}
-      {loading && (
-        <div className="purchases-loading">
-          <div className="purchases-loading-dots">
-            <span />
-            <span />
-            <span />
-          </div>
-          <p>Fetching your orders…</p>
-        </div>
-      )}
-
-      {/* ── Error ── */}
-      {error && <div className="purchases-error">⚠ {error}</div>}
-
-      {/* ── Empty ── */}
+      {loading && <p className="orders-status">Fetching your orders…</p>}
+      {error && <p className="orders-status error">{error}</p>}
       {!loading && !error && orders.length === 0 && (
-        <div className="purchases-empty">
-          <span className="purchases-empty-icon">🛍</span>
-          <p>No orders found yet.</p>
-        </div>
+        <p className="orders-status">No orders found yet.</p>
       )}
 
-      {/* ── Orders ── */}
-      <div className="orders-list">
-        {orders.map((order, index) => {
-          const { label, cls } = getStatus(order.status);
+      {!loading && orders.length > 0 && (
+        <div className="orders-list">
+          {orders.map((order, index) => {
+            const cancelled = isCancelled(order.status);
+            const stageIdx = getStageIndex(order.status);
+            const rawStatus =
+              order.status?.toLowerCase().replace(/ /g, "_") || "pending";
+            const stageObj = STAGES[stageIdx];
+            const isExpanded = expanded[order._id || index];
 
-          return (
-            <div className="order-card" key={order._id || index}>
-              {/* Coloured top stripe */}
+            return (
               <div
-                className={`order-card__topbar order-card__topbar--${cls}`}
-              />
+                key={order._id || index}
+                className={`order-card ${cancelled ? "order-card--cancelled" : ""}`}
+                style={{ animationDelay: `${index * 60}ms` }}
+              >
+                {/* ── Header ── */}
+                <div className="order-header">
+                  <div className="order-meta">
+                    <span className="order-number">Order #{index + 1}</span>
+                    <span className="order-date">
+                      {formatDate(order.createdAt)}
+                    </span>
+                  </div>
 
-              {/* Header row */}
-              <div className="order-card__header">
-                <div>
-                  <p className="order-card__id">
-                    Order #{order._id?.slice(-8).toUpperCase()}
-                  </p>
-                  <p className="order-card__name">
-                    {order.user?.name || "Customer"}
-                  </p>
-                  <p className="order-card__date">
-                    {formatDate(order.createdAt)}
-                  </p>
+                  <div className="order-header-right">
+                    <span
+                      className={`order-payment ${order.paymentMethod === "Khalti" ? "khalti" : "cod"}`}
+                    >
+                      {order.paymentMethod || "N/A"}
+                    </span>
+                    <span
+                      className={`aop-badge aop-badge--${cancelled ? "cancelled" : rawStatus}`}
+                    >
+                      {cancelled
+                        ? "❌ Cancelled"
+                        : `${stageObj?.icon} ${stageObj?.label}`}
+                    </span>
+                  </div>
                 </div>
-                <div className={`order-status order-status--${cls}`}>
-                  <span className="order-status__dot" />
-                  {label}
-                </div>
-              </div>
 
-              {/* Meta row */}
-              <div className="order-card__body">
-                <div className="order-meta">
-                  <span className="order-meta__label">Payment</span>
-                  <span className="order-meta__value">
-                    {order.paymentMethod || "N/A"}
-                  </span>
-                </div>
-                <div className="order-meta">
-                  <span className="order-meta__label">Items</span>
-                  <span className="order-meta__value">
-                    {order.items?.length || 0}
-                  </span>
-                </div>
-                <div className="order-meta">
-                  <span className="order-meta__label">Total</span>
-                  <span className="order-meta__value order-meta__value--amber">
-                    Rs {Number(order.total).toLocaleString("en-IN")}
-                  </span>
-                </div>
-              </div>
+                {/* ── Shipping timeline ── */}
+                {!cancelled && (
+                  <div className="up-timeline">
+                    {STAGES.map((stage, i) => {
+                      const done = i <= stageIdx;
+                      const active = i === stageIdx;
+                      const pct = i < stageIdx ? 100 : i === stageIdx ? 50 : 0;
+                      return (
+                        <div className="up-tl-step" key={stage.key}>
+                          {i > 0 && (
+                            <div className="up-tl-line">
+                              <div
+                                className="up-tl-line__fill"
+                                style={{ width: `${pct}%` }}
+                              />
+                            </div>
+                          )}
+                          <div
+                            className={`up-tl-node ${done ? "up-tl-node--done" : ""} ${active ? "up-tl-node--active" : ""}`}
+                          >
+                            {done ? (
+                              <span className="up-tl-node__icon">
+                                {stage.icon}
+                              </span>
+                            ) : (
+                              <span className="up-tl-node__num">{i + 1}</span>
+                            )}
+                            {active && <span className="up-tl-node__pulse" />}
+                          </div>
+                          <span
+                            className={`up-tl-label ${active ? "up-tl-label--active" : ""} ${done && !active ? "up-tl-label--done" : ""}`}
+                          >
+                            {stage.label}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
 
-              {/* Items list */}
-              <div className="order-card__items">
-                <p className="order-items-label">Items ordered</p>
-                <ul className="order-items-list">
-                  {order.items?.map((item, idx) => (
-                    <li key={idx} className="order-item">
-                      <span className="order-item__name">{item.name}</span>
-                      <span className="order-item__qty">× {item.quantity}</span>
-                    </li>
-                  ))}
-                </ul>
+                {/* ── Expand toggle ── */}
+                <button
+                  className="order-toggle"
+                  onClick={() => toggle(order._id || index)}
+                >
+                  <span>Order details</span>
+                  <span
+                    className={`order-toggle__chevron ${isExpanded ? "order-toggle__chevron--open" : ""}`}
+                  >
+                    ›
+                  </span>
+                </button>
+
+                {/* ── Expandable details ── */}
+                {isExpanded && (
+                  <div className="order-details-body">
+                    <div className="order-total-row">
+                      <span className="order-total-label">Order Total</span>
+                      <span className="order-total-value">
+                        Rs {Number(order.total).toLocaleString("en-IN")}
+                      </span>
+                    </div>
+
+                    <div className="order-items">
+                      <p className="order-items-title">Items Ordered</p>
+                      <ul>
+                        {order.items?.map((item, idx) => (
+                          <li key={idx} className="order-item-row">
+                            <span className="item-name">{item.name}</span>
+                            <span className="item-qty">x{item.quantity}</span>
+                            {item.price && (
+                              <span className="item-price">
+                                Rs {Number(item.price).toLocaleString("en-IN")}
+                              </span>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
