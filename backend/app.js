@@ -12,6 +12,8 @@ const userRoutes = require("./routes/Users");
 const HttpError = require("./models/http-error");
 const cors = require("cors");
 const purchaseRoutes = require("./routes/purchase");
+const khaltiRoutes = require("./routes/khalti");
+require("./utils/refundScheduler");
 
 const app = express();
 app.use(cors());
@@ -24,7 +26,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization",
   );
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
   next();
@@ -42,6 +44,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 
 app.use("/api/purchase", purchaseRoutes);
+app.use("/api/khalti", khaltiRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
@@ -64,7 +67,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    "mongodb+srv://irrishakayastha25:O5VBpxUljdz1SUEB@cluster0.c3ah54m.mongodb.net/products?retryWrites=true&w=majority&appName=Cluster0"
+    "mongodb+srv://irrishakayastha25:O5VBpxUljdz1SUEB@cluster0.c3ah54m.mongodb.net/products?retryWrites=true&w=majority&appName=Cluster0",
   )
   .then(() => {
     app.listen(5001);

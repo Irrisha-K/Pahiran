@@ -1,3 +1,4 @@
+// models/Products.js
 const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
@@ -7,8 +8,12 @@ const productSchema = new mongoose.Schema({
   discount: { type: Number },
   image: { type: String, required: true },
   category: { type: String, required: true },
-  description: { type: String, required: true }, // ✅ New field
-  quantity: { type: Number, required: true }, // ✅ New field
+  description: { type: String, required: true },
+  quantity: { type: Number, required: true },
+
+  // ✅ ADDED — soft delete flag
+  // false = removed from store, but order history still intact
+  isActive: { type: Boolean, default: true },
 });
 
 module.exports = mongoose.model("Product", productSchema);

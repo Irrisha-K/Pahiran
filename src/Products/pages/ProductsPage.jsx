@@ -13,12 +13,17 @@ const ProductsPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5001/api/products/home");
+        // const res = await fetch("http://localhost:5001/api/products/home");
+        const res = await fetch(
+          "http://localhost:5001/api/products/home?t=" + Date.now(),
+        );
         if (!res.ok) {
           throw new Error("Something went wrong!");
         }
         const data = await res.json();
-        setProducts(data);
+        // setProducts(data);
+        console.log("Home products response:", data);
+        setProducts(Array.isArray(data) ? data : data.products || []);
       } catch (err) {
         setError("Failed to load products. Please check your network.");
       } finally {

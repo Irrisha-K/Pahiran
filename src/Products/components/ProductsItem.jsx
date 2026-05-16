@@ -72,10 +72,6 @@ export default function ProductsItem(props) {
       quantity: 1,
     });
 
-    setIsLoading(true);
-    await decrementProductQuantity();
-    setIsLoading(false);
-
     toast.success(`${props.name} added to cart!`, {
       style: {
         backgroundColor: "#1c1917",
@@ -104,7 +100,11 @@ export default function ProductsItem(props) {
         {/* Plain div — NOT the Card component, which has overflow:hidden */}
         <div className="product-item__card">
           <div className="product-item__image">
-            <img src={props.image} alt={props.name} />
+            {/* <img src={props.image} alt={props.name} /> */}
+            <img
+              src={`http://localhost:5001/${props.image}`}
+              alt={props.name}
+            />
             {isOutOfStock && (
               <span className="product-item__oos-badge">Out of stock</span>
             )}
@@ -112,7 +112,7 @@ export default function ProductsItem(props) {
 
           <div className="product-item__info">
             <h2 className="product-item__title">{props.name}</h2>
-            <span className="product-item__price">Rs {props.price}</span>
+            <span className="product-item__price">NRS {props.price}</span>
             <span
               className={`product-item__quantity${isOutOfStock ? " out-of-stock" : ""}`}
             >

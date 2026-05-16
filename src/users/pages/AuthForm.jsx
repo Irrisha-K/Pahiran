@@ -230,7 +230,7 @@ export default function AuthForm() {
                   name="password"
                   value={formValues.password}
                   onChange={handleChange}
-                  placeholder="••••••••"
+                  placeholder="******"
                   required
                 />
                 {errors.password && (

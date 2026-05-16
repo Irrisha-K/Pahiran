@@ -180,7 +180,7 @@ export default function CheckoutPage() {
       localStorage.removeItem(`cart-${localStorage.getItem("userId")}`);
       clearCart();
       setOrderPlaced(true);
-      setTimeout(() => navigate("/"), 3000);
+      setTimeout(() => navigate("/mypurchasehistory"), 3000);
     } catch (error) {
       toast.error(error.message);
       setIsPlacingOrder(false);
@@ -257,130 +257,6 @@ export default function CheckoutPage() {
       }),
     );
   };
-
-  // return (
-  //   <div className="checkout-page">
-  //     <h2>Checkout</h2>
-  //     {items.length === 0 ? (
-  //       <p className="empty">No items to checkout.</p>
-  //     ) : (
-  //       <>
-  //         {/* <ul className="checkout-items">
-  //           {items.map((item) => (
-  //             <li key={item.id} className="checkout-item">
-  //               <img src={item.image} alt={item.name} />
-  //               <div className="checkout-info">
-  //                 <h3>{item.name}</h3>
-  //                 <p>{item.price}</p>
-  //                 <p>Quantity: {item.quantity}</p>
-  //               </div>
-  //             </li>
-  //           ))}
-  //         </ul> */}
-  //         <ul className="checkout-items">
-  //           {mergedItems.map((item) => (
-  //             <li key={item.id} className="checkout-item">
-  //               <img src={item.image} alt={item.name} />
-  //               <div className="checkout-info">
-  //                 <h3>Name: {item.name}</h3>
-  //                 <p>Rs: {item.price}</p>
-  //                 <div className="quantity-control">
-  //                   {/* <button onClick={() => handleQuantityChange(item.id, -1)}>
-  //                     -
-  //                   </button> */}
-  //                   Quantity:
-  //                   <span>{item.quantity}</span>
-  //                   {/* <button onClick={() => handleQuantityChange(item.id, 1)}>
-  //                     +
-  //                   </button> */}
-  //                 </div>
-  //               </div>
-  //             </li>
-  //           ))}
-  //         </ul>
-
-  //         <form className="delivery-form">
-  //           <h3>Delivery Details</h3>
-  //           <input
-  //             type="text"
-  //             name="name"
-  //             placeholder="Full Name"
-  //             value={formData.name}
-  //             onChange={handleChange}
-  //             required
-  //           />
-  //           <textarea
-  //             type="text"
-  //             name="address"
-  //             placeholder="Delivery Address"
-  //             value={formData.address}
-  //             onChange={handleChange}
-  //             required
-  //           />
-  //           <input
-  //             type="number"
-  //             name="phone"
-  //             placeholder="Phone Number"
-  //             pattern="[0-9]{10}"
-  //             title="Enter a 10-digit number"
-  //             value={formData.phone}
-  //             onChange={handleChange}
-  //             required
-  //           />
-  //         </form>
-  //         <div className="payment-methods">
-  //           <h3>Payment Method</h3>
-  //           {/* <label>
-  //             <input
-  //               type="radio"
-  //               name="payment"
-  //               value="COD"
-  //               checked={paymentMethod === "COD"}
-  //               onChange={handlePaymentChange}
-  //             />
-  //             Cash on Delivery
-  //           </label> */}
-  //           <label>
-  //             <input
-  //               type="radio"
-  //               name="payment"
-  //               value="Khalti"
-  //               checked={paymentMethod === "Khalti"}
-  //               onChange={handlePaymentChange}
-  //             />
-  //             Pay with Khalti
-  //           </label>
-  //           <label>
-  //             <input
-  //               type="radio"
-  //               name="payment"
-  //               value="eSewa"
-  //               checked={paymentMethod === "eSewa"}
-  //               onChange={handlePaymentChange}
-  //             />
-  //             Pay with eSewa (Coming Soon)
-  //           </label>
-  //         </div>
-
-  //         <div className="checkout-summary">
-  //           <p className="checkout-total">Total: {formattedTotal}</p>
-
-  //           <button
-  //             className="checkout-button"
-  //             onClick={handlePlaceOrder}
-  //             disabled={isPlacingOrder}
-  //           >
-  //             {paymentMethod === "Khalti" && !location.state?.khaltiPaid
-  //               ? "Proceed to Pay"
-  //               : isPlacingOrder
-  //               ? "Placing Order..."
-  //               : "Place Order"}
-  //           </button>
-  //         </div>
-  //       </>
-  //     )}
-  //   </div>
-  // );
 
   return (
     <div className="checkout-page">

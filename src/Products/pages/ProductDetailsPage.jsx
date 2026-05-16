@@ -20,7 +20,7 @@ export default function ProductDetailsPage() {
     const fetchProduct = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5001/api/products/${id}`
+          `http://localhost:5001/api/products/${id}`,
         );
         if (!response.ok) throw new Error("Failed to fetch product.");
         const data = await response.json();
@@ -31,8 +31,8 @@ export default function ProductDetailsPage() {
         // Fetch related products by category (assuming your API supports this)
         const relatedResponse = await fetch(
           `http://localhost:5001/api/products?category=${encodeURIComponent(
-            data.category
-          )}&exclude=${id}`
+            data.category,
+          )}&exclude=${id}`,
         );
         if (relatedResponse.ok) {
           const relatedData = await relatedResponse.json();
@@ -49,7 +49,7 @@ export default function ProductDetailsPage() {
   const handleQuantityChange = (e) => {
     const val = Math.max(
       1,
-      Math.min(parseInt(e.target.value) || 1, product.quantity)
+      Math.min(parseInt(e.target.value) || 1, product.quantity),
     );
     setQuantity(val);
   };
@@ -140,7 +140,7 @@ export default function ProductDetailsPage() {
         <h1 className="details-name">{product.name}</h1>
         <p className="price">₹{product.price}</p>
         {product.originalPrice && (
-          <p className="original-price">MRP: ₹{product.originalPrice}</p>
+          <p className="original-price">NRS: ₹{product.originalPrice}</p>
         )}
         {product.discount && (
           <p className="discount">{product.discount}% OFF</p>
