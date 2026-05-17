@@ -18,7 +18,7 @@ const orderSchema = new mongoose.Schema({
         required: true,
       },
       name: { type: String, required: true },
-      price: { type: Number, required: true },
+      price: { type: Number, default: 0 },
       quantity: { type: Number, required: true },
     },
   ],
@@ -38,7 +38,6 @@ const orderSchema = new mongoose.Schema({
     default: "pending",
   },
 
-  // ✅ tracks who cancelled — "user" or "admin"
   cancelledBy: { type: String, enum: ["user", "admin"], default: null },
 
   refundStatus: {

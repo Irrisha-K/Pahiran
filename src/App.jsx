@@ -18,6 +18,8 @@ import SkirtPage from "./Products/pages/SkirtsPage";
 import CoordPage from "./Products/pages/Coord";
 import SearchResultsPage from "./shared/pages/SearchResultsPage";
 import DressesPages from "./Products/pages/DressesPages";
+// import KhaltiPaymentPage from "./users/pages/KhaltiPaymentPage";
+import KhaltiWalletPage from "./users/pages/KhaltiWalletPage";
 import AdminProductForm from "./users/Admin/AddProduct";
 import AuthProvider from "./store/AuthProvider";
 import UsersHomePage from "./users/pages/UsersHomePage";
@@ -94,6 +96,7 @@ const routes = [
       { path: "/search", element: <SearchResultsPage /> },
       { path: "/mypurchasehistory", element: <UserPurchases /> },
       { path: "/userpurchasehistory", element: <Adminviewpurchase /> },
+      { path: "/khalti-wallet", element: <KhaltiWalletPage /> },
       {
         path: "/add",
         element: (

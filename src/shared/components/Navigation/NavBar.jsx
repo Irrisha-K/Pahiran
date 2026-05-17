@@ -151,6 +151,16 @@ export default function Navbar() {
             </NavLink>
           )}
 
+          {auth.isLoggedIn && auth.role === "user" && (
+            <NavLink
+              to="/khalti-wallet"
+              title="Khalti Wallet"
+              style={{ fontSize: "1.1rem" }}
+            >
+              💳
+            </NavLink>
+          )}
+
           {/* {auth.isLoggedIn && } */}
           {auth.role === "user" ? (
             <NavLink to="/cart" className="cart-icon">
